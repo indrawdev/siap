@@ -161,7 +161,13 @@ class Uploadkehadiran extends CI_Controller
 
 				// check time in first row XML
 				$periode_xml = date("Y-m", strtotime($xml->ROWDATA->ROW['CHECKTIME']));
-
+				
+				/* check file if same periode it self
+				foreach ($xml->ROWDATA->ROW as $val) {
+					echo $val['CHECKTIME'];
+				}
+				*/
+				
 				if ($periode_param == $periode_xml) {
 					// delete old rows before replace new rows 
 					// hapus data sesuai kode cabang dan parameter bulan di table tx_checkinput
@@ -201,7 +207,6 @@ class Uploadkehadiran extends CI_Controller
 							'hasil' => 'Synchronize Data Sukses!!'
 					);
 					echo json_encode($hasil);
-
 				} else {
 					$update = array(
 									'fs_flag_deleted' => 1

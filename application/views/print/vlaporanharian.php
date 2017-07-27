@@ -4,12 +4,12 @@
 			<td width="5%"></td>
 			<td width="40%" align="left">LAPORAN HARIAN</td>
 			<td width="10%"></td>
-			<td width="40%" align="right">JUNE, 2017</td>
+			<td width="40%" align="right"></td>
 			<td width="5%"></td>
 		</tr>
-		<br>
 	</thead>
 	<tbody>
+		<br>
 		<tr>
 			<td width="100%">
 				<table border="1" width="100%">
@@ -50,9 +50,42 @@
 						</tr>
 					</thead>
 					<tbody>
+						<?php foreach ($report as $key) : ?>
 						<tr>
-							<td></td>
+							<td width="15%"><?php echo $key->fs_nama; ?></td>
+							<td width="2%"><?php echo $key->fn_1; ?></td>
+							<td width="2%"><?php echo $key->fn_2; ?></td>
+							<td width="2%"><?php echo $key->fn_3; ?></td>
+							<td width="2%"><?php echo $key->fn_4; ?></td>
+							<td width="2%"><?php echo $key->fn_5; ?></td>
+							<td width="2%"><?php echo $key->fn_6; ?></td>
+							<td width="2%"><?php echo $key->fn_7; ?></td>
+							<td width="2%"><?php echo $key->fn_8; ?></td>
+							<td width="2%"><?php echo $key->fn_9; ?></td>
+							<td width="2%"><?php echo $key->fn_10; ?></td>
+							<td width="2%"><?php echo $key->fn_11; ?></td>
+							<td width="2%"><?php echo $key->fn_12; ?></td>
+							<td width="2%"><?php echo $key->fn_13; ?></td>
+							<td width="2%"><?php echo $key->fn_14; ?></td>
+							<td width="2%"><?php echo $key->fn_15; ?></td>
+							<td width="2%"><?php echo $key->fn_16; ?></td>
+							<td width="2%"><?php echo $key->fn_17; ?></td>
+							<td width="2%"><?php echo $key->fn_18; ?></td>
+							<td width="2%"><?php echo $key->fn_19; ?></td>
+							<td width="2%"><?php echo $key->fn_20; ?></td>
+							<td width="2%"><?php echo $key->fn_21; ?></td>
+							<td width="2%"><?php echo $key->fn_22; ?></td>
+							<td width="2%"><?php echo $key->fn_23; ?></td>
+							<td width="2%"><?php echo $key->fn_24; ?></td>
+							<td width="2%"><?php echo $key->fn_25; ?></td>
+							<td width="2%"><?php echo $key->fn_26; ?></td>
+							<td width="2%"><?php echo $key->fn_27; ?></td>
+							<td width="2%"><?php echo $key->fn_28; ?></td>
+							<td width="2%"><?php echo $key->fn_29; ?></td>
+							<td width="2%"><?php echo $key->fn_30; ?></td>
+							<td width="2%"><?php echo $key->fn_31; ?></td>
 						</tr>
+						<?php endforeach; ?>
 					</tbody>
 				</table>
 			</td>

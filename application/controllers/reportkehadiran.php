@@ -174,15 +174,75 @@ class Reportkehadiran extends CI_Controller
 		echo '({"total":"'.$xTotal.'","hasil":'.json_encode($xArr).'})';
 	}
 
-	function previewharian()
+	function checkprintpusat()
+	{
+		$kdcabang = trim($this->input->post('fs_kode_cabang'));
+		$mmyy = trim(substr($this->input->post('fd_mmyy'), 0, 10));
+		
+		$insert = array(
+					'fs_kode_cabang' => $kdcabang,
+					'fd_tanggal' => $mmyy,
+					'fs_iduser_cetak' => trim($this->session->userdata('gUser')),
+					'fd_tanggal_cetak' => trim(date('Y-m-d H:i:s'))
+				);
+		$exec = $this->db->insert('tx_absensi_cetak', $insert);
+		if ($exec) {
+			$hasil = array(
+				'sukses'	=> true,
+				'url'		=> 'reportkehadiran/preview/',
+				'kdcabang' 	=> $kdcabang,
+				'periode' 	=> $mmyy,
+				'hasil'		=> 'Printing Success'
+			);
+			echo json_encode($hasil);
+		}
+		else {
+			$hasil = array(
+				'sukses'	=> false,
+				'hasil'		=> 'Printing Failed'
+			);
+			echo json_encode($hasil);
+		}
+	}
+
+	function checkprintcabang()
+	{
+		$kdcabang = trim($this->session->userdata('gKodeCabang'));
+		$mmyy = trim(substr($this->input->post('fd_mmyy'), 0, 10));
+		
+		$insert = array(
+					'fs_kode_cabang' => $kdcabang,
+					'fd_tanggal' => $mmyy,
+					'fs_iduser_cetak' => trim($this->session->userdata('gUser')),
+					'fd_tanggal_cetak' => trim(date('Y-m-d H:i:s'))
+				);
+		$exec = $this->db->insert('tx_absensi_cetak', $insert);
+		if ($exec) {
+			$hasil = array(
+				'sukses'	=> true,
+				'url'		=> 'reportkehadiran/preview/',
+				'kdcabang' 	=> $kdcabang,
+				'periode' 	=> $mmyy,
+				'hasil'		=> 'Printing Success'
+			);
+			echo json_encode($hasil);
+		}
+		else {
+			$hasil = array(
+				'sukses'	=> false,
+				'hasil'		=> 'Printing Failed'
+			);
+			echo json_encode($hasil);
+		}
+	}
+
+	function preview($sKdCab, $sMY)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReportKehadiran');
-		$mmyy = trim(substr($this->input->post('fd_mmyy'), 0, 10));
-		//$data['harian'] = $this->mReportKehadiran->previewDaily($mmyy);
-		$data = '';
+		$data['report'] = $this->mReportKehadiran->previewDaily($sKdCab, $sMY);
 		$html = $this->load->view('print/vlaporanharian', $data, true);
-		$pdf = new Pdf('L', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PREVIEW LAPORAN HARIAN');
 		$pdf->SetPrintHeader(false);
 		$pdf->SetPrintFooter(false);
@@ -190,7 +250,7 @@ class Reportkehadiran extends CI_Controller
 		$pdf->SetAuthor('SIAP');
 		$pdf->SetDisplayMode('real', 'default');
 		$pdf->SetFont('', '', 7.4, '', false);
-		$pdf->AddPage('L', 'A4');
+		$pdf->AddPage('P', 'A4');
 		$pdf->writeHTML($html, true, false, true, false, '');
 		$pdf->lastPage();
 		$pdf->Output('laporan-harian.pdf', 'I');

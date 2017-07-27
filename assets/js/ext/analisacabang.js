@@ -1455,13 +1455,6 @@ Ext.onReady(function() {
 							text: 'Close',
 							handler: function() {
 								vMask.hide();
-
-								//var win = window;
-								//win.document.write('<iframe id="tes" height="450" width="942" src="'+ url + noapk +'"></iframe>');
-								
-								//win.print();
-								//win.close();
-								//win.destroy();
 								popUp.hide();
 							}
 						}]
@@ -1850,6 +1843,105 @@ Ext.onReady(function() {
 					iconCls: 'icon-reset',
 					text: 'Reset',
 					handler: fnReset
+				}]
+			},{
+				id: 'tab3',
+				bodyStyle: 'background-color: '.concat(gBasePanel),
+				border: false,
+				frame: false,
+				title: 'Batal Keputusan',
+				xtype: 'form',
+				items: [{
+					fieldDefaults: {
+						labelAlign: 'right',
+						labelSeparator: '',
+						labelWidth: 100,
+						msgTarget: 'side'
+					},
+					anchor: '100%',
+					style: 'padding: 5px;',
+					title: 'Batal Keputusan',
+					xtype: 'fieldset',
+					items: [{
+						anchor: '100%',
+						layout: 'hbox',
+						xtype: 'container',
+						items: [{
+							flex: 2,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+
+								]
+							}]
+						},{
+							flex: 1,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									
+								]
+							}]
+						},{
+							flex: 1,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									
+								]
+							}]
+						}]
+					}]
+				},{
+					fieldDefaults: {
+						labelAlign: 'right',
+						labelSeparator: '',
+						labelWidth: 150,
+						msgTarget: 'side'
+					},
+					title: 'Keputusan Kredit',
+					xtype: 'fieldset',
+					items: [{
+						anchor: '100%',
+						layout: 'hbox',
+						xtype: 'container',
+						items: [{
+							flex: 2,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									
+								]
+							}]
+						}]
+					}]
+				}],
+				buttons: [{
+					iconCls: 'icon-save',
+					id: 'btnSave1',
+					name: 'btnSave1',
+					text: 'Save',
+					//handler: fnCekSave
+				},{
+					iconCls: 'icon-reset',
+					text: 'Reset',
+					//handler: fnReset
 				}]
 			}]
 		}]

@@ -384,7 +384,14 @@ Ext.onReady(function() {
 								radius: 4,
 								lineWidth: 2,
 								fill: 'white'
-							}
+							},
+							tooltip: {
+				                trackMouse: true,
+				                style: 'background: #fff',
+				                renderer: function(storeItem, item) {
+				                    this.setHtml('TANGGAL ' + storeItem.get('name') + ' : ' + storeItem.get(item.series.getYField()) + ' JAM');
+				                }
+				            }
 						}]
 					});				
 
@@ -675,7 +682,77 @@ Ext.onReady(function() {
 
 	function fnPreview()
 	{
+		if (this.up('form').getForm().isValid()) {
+			Ext.MessageBox.show({
+				buttons: Ext.MessageBox.YESNO,
+				closable: false,
+				icon: Ext.Msg.QUESTION,
+				msg: 'Apakah anda yakin akan mencetak?',
+				title: 'HRD',
+				fn: function(btn) {
+					if (btn == 'yes') {
+						Ext.Ajax.on('beforerequest', fnMaskShow);
+						Ext.Ajax.on('requestcomplete', fnMaskHide);
+						Ext.Ajax.on('requestexception', fnMaskHide);
+						
+						Ext.Ajax.request({
+							method: 'POST',
+							url: 'reportkehadiran/checkprintcabang',
+							params: {
+								'fd_mmyy': Ext.getCmp('blnFilter').getValue()
+							},
+							success: function(response) {
+								var xtext = Ext.decode(response.responseText);
+								Ext.MessageBox.show({
+									buttons: Ext.MessageBox.OK,
+									closable: false,
+									icon: Ext.MessageBox.INFO,
+									msg: xtext.hasil,
+									title: 'HRD'
+								});
+								
+								var url = xtext.url;
+								var kdcabang = xtext.kdcabang;
+								var periode = xtext.periode;
 
+								if (xtext.sukses === true) {
+									var popUp = Ext.create('Ext.window.Window', {
+											border: false,
+											closable: false,
+											frame: false,
+						                    height: 450,
+						                    width: 950,
+						                    layout:'anchor',
+						                    title: 'HRD',
+						                    buttons: [{
+												text: 'OK',
+												handler: function() {
+													vMask.hide();
+													popUp.hide();
+											}
+										}]
+					                });
+					                
+									popUp.add({html: '<iframe height="450", width="942" src="'+ url + kdcabang + '/' + periode + '"></iframe>'});
+					                popUp.show();
+								}
+							},
+							failure: function(response) {
+								var xtext = Ext.decode(response.responseText);
+								Ext.MessageBox.show({
+									buttons: Ext.MessageBox.OK,
+									closable: false,
+									icon: Ext.MessageBox.INFO,
+									msg: 'Printing Failed, Connection Failed!!',
+									title: 'HRD'
+								});
+								fnMaskHide();
+							}
+						});
+					}
+				}
+			});
+		}
 	}
 
 	var frmKehadiran = Ext.create('Ext.form.Panel', {
