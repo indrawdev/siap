@@ -41,6 +41,7 @@ class Kontrak extends CI_Controller
 			{
 				$pjj = $xRow->fs_kode_lokasi.$xRow->fs_nomor_dealer.$xRow->fs_jenis_piutang.$xRow->fs_pola_transaksi.$xRow->fn_nomor_perjanjian;
 				$xArr[] = array(
+						'fs_kode_cabang' => ascii_to_entities(trim($xRow->fs_kode_cabang)),
 						'fn_no_apk' => ascii_to_entities(trim($xRow->fn_no_apk)),
 						'fs_pjj' => ascii_to_entities(trim($pjj)),
 						'fs_nama_konsumen' => ascii_to_entities(trim($xRow->fs_nama_konsumen)),
@@ -90,15 +91,15 @@ class Kontrak extends CI_Controller
 
 	function cekprint()
 	{
+		$kdcab = trim($this->input->post('fs_kode_cabang'));
 		$noapk = trim($this->input->post('fn_no_apk'));
 		$kddok = trim($this->input->post('fs_kode_dokumen'));
 
-		$cabang = trim($this->session->userdata('gKodeCabang'));
-		if (trim($noapk) <> '' && trim($kddok) <> '')
+		if (trim($noapk) <> '' && trim($kddok) <> '' && trim($kdcab) <> '')
 		{
 			$this->load->model('mKontrak');
 			$xkddoc = $this->mKontrak->dokumen($kddok);
-			$xhitung = $this->mKontrak->hitung($kddok, $cabang);
+			$xhitung = $this->mKontrak->hitung($kddok, $kdcab, $noapk);
 			$xtotal = $xhitung->num_rows();
 
 			if ($xtotal <= $xkddoc->fn_batas_cetak)
@@ -129,12 +130,13 @@ class Kontrak extends CI_Controller
 
 	function print()
 	{
+		$kdcab = trim($this->input->post('fs_kode_cabang'));
 		$noapk = trim($this->input->post('fn_no_apk'));
 		$kddok = trim($this->input->post('fs_kode_dokumen'));
 		$cek = trim($this->input->post('fs_cek'));
 
 		$insert = array(
-					'fs_kode_cabang' => trim($this->session->userdata('gKodeCabang')),
+					'fs_kode_cabang' => $kdcab,
 					'fn_no_apk' => $noapk,
 					'fs_kode_dokumen' => $kddok,
 					'fs_iduser_cetak' => trim($this->session->userdata('gUser')),

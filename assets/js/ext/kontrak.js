@@ -68,7 +68,8 @@ Ext.onReady(function() {
 		store: grupApk,
 		columns: [
 			{xtype: 'rownumberer', width: 45},
-			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true, width: 120},
+			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
+			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true},
 			{text: "No. PJJ", dataIndex: 'fs_pjj', locked: true, menuDisabled: true, width: 120},
 			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
 			{text: "KTP Konsumen", dataIndex: 'fs_ktp_konsumen', menuDisabled: true, width: 150},
@@ -126,6 +127,7 @@ Ext.onReady(function() {
 		listeners: {
 			itemdblclick: function(grid, record)
 			{
+				Ext.getCmp('txtKdCab').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
 				Ext.getCmp('cboApk').setValue(record.get('fs_nama_konsumen'));
 				winCari.hide();
@@ -343,6 +345,13 @@ Ext.onReady(function() {
 		xtype: 'checkboxfield'
 	};
 
+	var txtKdCab = {
+		id: 'txtKdCab',
+		name: 'txtKdCab',
+		xtype: 'textfield',
+		hidden: true
+	};
+
 	var txtNoApk = {
 		id: 'txtNoApk',
 		name: 'txtNoApk',
@@ -382,6 +391,7 @@ Ext.onReady(function() {
 							method: 'POST',
 							url: 'kontrak/cekprint',
 							params: {
+								'fs_kode_cabang': Ext.getCmp('txtKdCab').getValue(),
 								'fn_no_apk': Ext.getCmp('txtNoApk').getValue(),
 								'fs_kode_dokumen': Ext.getCmp('txtKdDok').getValue()
 							},
@@ -430,7 +440,7 @@ Ext.onReady(function() {
 
 	function fnPrint() 
 	{
-		
+		var kdcab = Ext.getCmp('txtKdCab').getValue();
 		var noapk = Ext.getCmp('txtNoApk').getValue();
 		var cek = Ext.getCmp('cekKop').getValue();
 		var kop = 0;
@@ -447,6 +457,7 @@ Ext.onReady(function() {
 			method: 'POST',
 			url: 'kontrak/print',
 			params: {
+				'fs_kode_cabang': kdcab,
 				'fn_no_apk': noapk,
 				'fs_kode_dokumen': Ext.getCmp('txtKdDok').getValue()
 			},
@@ -481,7 +492,7 @@ Ext.onReady(function() {
 						}]
                 	});
 
-					popUp.add({html: '<iframe height="450", width="942" src="'+ url + noapk + '/' + kop +'"></iframe>'});
+					popUp.add({html: '<iframe height="450", width="942" src="'+ url + kdcab + '/' + noapk + '/' + kop +'"></iframe>'});
 	                popUp.show();
 					fnReset();
 				}
@@ -504,6 +515,7 @@ Ext.onReady(function() {
 	{
 		Ext.getCmp('cboApk').setValue('');
 		Ext.getCmp('cboDok').setValue('');
+		Ext.getCmp('txtKdCab').setValue('');
 		Ext.getCmp('txtNoApk').setValue('');
 		Ext.getCmp('txtKdDok').setValue('');
 		Ext.getCmp('cekKop').setValue('');
@@ -537,6 +549,7 @@ Ext.onReady(function() {
 					items: [
 						cboApk,
 						cboDok,
+						txtKdCab,
 						txtNoApk,
 						txtKdDok
 					]

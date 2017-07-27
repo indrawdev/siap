@@ -106,18 +106,21 @@ class MKontrak extends CI_Model
 			FROM tm_dokumen_cetak
 			WHERE fs_kode_dokumen = ".trim($nKode)."
 		");
+		
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function hitung($nKode, $nCabang)
+	function hitung($nKode, $nCabang, $nApk)
 	{
 		$xSQL = ("
 			SELECT *
 			FROM tx_apk_cetak
 			WHERE fs_kode_dokumen = ".trim($nKode)."
 			AND fs_kode_cabang = ".trim($nCabang)."
+			AND fn_no_apk = ".trim($nApk)."
 		");
+
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL;
 	}

@@ -1352,6 +1352,232 @@ Ext.onReady(function() {
 		handler: fnCheckingFamily
 	};
 
+
+	/* TAB BATAL KEPUTUSAN */
+	var grupApk = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fn_no_apk','fs_pjj','fs_nama_konsumen',
+			'fd_tgl_apk','fs_alamat_konsumen',
+			'fs_kelurahan_konsumen', 'fs_kecamatan_konsumen',
+			'fs_kota_konsumen', 'fs_kodepos_konsumen',
+			'fs_ktp_konsumen','fs_masa_ktp_konsumen',
+			'fs_masa_ktp_konsumen','fs_telepon_konsumen',
+			'fs_handphone_konsumen'
+		],
+		pageSize: 25,
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				rootProperty: 'hasil',
+				totalProperty: 'total',
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/gridbatal'
+		},
+		listeners: {
+			beforeload: function(store) {
+				Ext.apply(store.getProxy().extraParams, {
+					'fs_cari': Ext.getCmp('txtCari').getValue()
+				});
+			}
+		}
+	});
+
+	var winGrid = Ext.create('Ext.grid.Panel', {
+		anchor: '100%',
+		autoDestroy: true,
+		height: 450,
+		width: 750,
+		sortableColumns: false,
+		store: grupApk,
+		columns: [
+			{xtype: 'rownumberer', width: 45},
+			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true, width: 120},
+			{text: "No. PJJ", dataIndex: 'fs_pjj', locked: true, menuDisabled: true, width: 120},
+			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
+			{text: "KTP Konsumen", dataIndex: 'fs_ktp_konsumen', menuDisabled: true, width: 150},
+			{text: "Tanggal APK", dataIndex: 'fd_tgl_apk', menuDisabled: true, width: 70},
+			{text: "Alamat Konsumen", dataIndex: 'fs_alamat_konsumen', menuDisabled: true, width: 250},
+			{text: "Kelurahan", dataIndex: 'fs_kelurahan_konsumen', menuDisabled: true, width: 100},
+			{text: "Kecamatan", dataIndex: 'fs_kecamatan_konsumen', menuDisabled: true, width: 100},
+			{text: "Kota", dataIndex: 'fs_kota_konsumen', menuDisabled: true, width: 100},
+			{text: "Kode Pos", dataIndex: 'fs_kodepos_konsumen', menuDisabled: true, width: 100},
+			{text: "Telepon", dataIndex: 'fs_telepon_konsumen', menuDisabled: true, width: 100},
+			{text: "Handphone", dataIndex: 'fs_handphone_konsumen', menuDisabled: true, width: 100}
+		],
+		tbar: [{
+			flex: 1,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '98%',
+				emptyText: 'Nama Konsumen',
+				id: 'txtCari3',
+				name: 'txtCari3',
+				xtype: 'textfield'
+			}]
+		},{
+			flex: 0.2,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '100%',
+				text: 'Search',
+				xtype: 'button',
+				handler: function() {
+					grupApk.load();
+				}
+			}]
+		},{
+			flex: 0.5,
+			layout: 'anchor',
+			xtype: 'container',
+			items: []
+		}],
+		bbar: Ext.create('Ext.PagingToolbar', {
+			displayInfo: true,
+			pageSize: 25,
+			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
+			store: grupApk,
+			items:[
+				'-', {
+				text: 'Exit',
+				handler: function() {
+					winCari.hide();
+				}
+			}]
+		}),
+		listeners: {
+			itemdblclick: function(grid, record)
+			{
+				//Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
+				//Ext.getCmp('cboApk').setValue(record.get('fs_nama_konsumen'));
+				winCari.hide();
+			}
+		},
+		viewConfig: {
+			getRowClass: function() {
+				return 'rowwrap';
+			},
+			markDirty: false
+		}
+	});
+
+	var winCari = Ext.create('Ext.window.Window', {
+		border: false,
+		closable: false,
+		draggable: true,
+		frame: false,
+		layout: 'fit',
+		plain: true,
+		resizable: false,
+		title: 'Searching...',
+		items: [
+			winGrid
+		],
+		listeners: {
+			beforehide: function() {
+				vMask.hide();
+			},
+			beforeshow: function() {
+				grupApk.load();
+				vMask.show();
+			}
+		}
+	});
+
+	var cboApk = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '100%',
+		fieldLabel: 'No. PJJ',
+		id: 'cboApk',
+		name: 'cboApk',
+		xtype: 'textfield',
+		triggers: {
+			reset: {
+				cls: 'x-form-clear-trigger',
+				handler: function(field) {
+					field.setValue('');
+				}
+			},
+			cari: {
+				cls: 'x-form-search-trigger',
+				handler: function() {
+					winCari.show();
+					winCari.center();
+				}
+			}
+		}
+	};
+
+	var txtNama2 = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '100%',
+		fieldLabel: 'Nama Konsumen',
+		fieldStyle: 'background-color: #eee; background-image: none;',
+		readOnly: true,
+		id: 'txtNama2',
+		name: 'txtNama2',
+		xtype: 'textfield'
+	};
+
+	// button preview pemeriksa 2
+	var btnPrevP2 = {
+		anchor: '100%',
+		scale: 'medium',
+		id: 'btnPrevP2',
+		name: 'btnPrevP2',
+		text: 'Preview Pemeriksaan APK',
+		xtype: 'button',
+		height: 28,
+		//handler: fnCekPrint2
+	};
+
+	// button preview data pendukung 2
+	var btnPrevD2 = {
+		anchor: '100%',
+		scale: 'medium',
+		id: 'btnPrevD2',
+		name: 'btnPrevD2',
+		text: 'Preview Data Pendukung',
+		xtype: 'button',
+		height: 28,
+		//handler: fnPreviewData
+	};
+
+	var cboBatal = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '50%',
+		displayField: 'fs_nm_strx',
+		editable: false,
+		fieldLabel: 'Batal Keputusan',
+		id: 'cboBatal',
+		name: 'cboBatal',
+		//store: grupKeputusan,
+		valueField: 'fs_kd_strx',
+		xtype: 'combobox',
+	};
+
+	var txtCatAlasan = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '100%',
+		height : 80,
+		fieldLabel: 'Alasan Batal',
+		emptyText: 'Alasan Batal Keputusan (semua aktifitas Batal Keputusan terdapat tembusan email)',
+		id: 'txtCatAlasan',
+		name: 'txtCatAlasan',
+		xtype: 'textareafield',
+	};
+
+
 	function fnCekPrint()
 	{
 		Ext.MessageBox.show({
@@ -1418,6 +1644,7 @@ Ext.onReady(function() {
 
 	function fnPrint()
 	{
+		var kdcab = Ext.getCmp('txtKdCab').getValue();
 		var noapk = Ext.getCmp('txtNoApk').getValue();
 		Ext.Ajax.on('beforerequest', fnMaskShow);
 		Ext.Ajax.on('requestcomplete', fnMaskHide);
@@ -1460,7 +1687,7 @@ Ext.onReady(function() {
 						}]
                 	});
 
-                	popUp.add({html: '<iframe height="450" width="942" src="'+ url + noapk +'"></iframe>'});
+                	popUp.add({html: '<iframe height="450" width="942" src="'+ url + kdcab + '/' + noapk +'"></iframe>'});
                 	popUp.show();
 
 				}
@@ -1618,6 +1845,51 @@ Ext.onReady(function() {
 		Ext.getCmp('btnSave').setDisabled(false);
 		grupRetail.load();
 		grupFleet.load();
+	}
+
+	/* FUNCTION BATAL GROUP */
+	function fnCekSave2()
+	{
+		if (this.up('form').getForm().isValid()) {
+			Ext.Ajax.on('beforerequest', fnMaskShow);
+			Ext.Ajax.on('requestcomplete', fnMaskHide);
+			Ext.Ajax.on('requestexception', fnMaskHide);
+			Ext.Ajax.request({
+				method: 'POST',
+				url: 'analisa/ceksavebatal',
+				params: {
+					'fn_no_apk': '',
+				},
+				success: function(response) {
+				},
+				failure: function(response) {
+				}
+			});
+		}
+	}
+
+	function fnSave2()
+	{
+		Ext.Ajax.on('beforerequest', fnMaskShow);
+		Ext.Ajax.on('requestcomplete', fnMaskHide);
+		Ext.Ajax.on('requestexception', fnMaskHide);
+		Ext.Ajax.request({
+			method: 'POST',
+			url: 'analisa/savebatal',
+			params: {
+				'fs_kode_cabang': '',
+				'fn_no_apk': '',
+			},
+			success: function(response) {
+			},
+			failure: function(response) {
+			}
+		});
+	}
+
+	function fnReset2()
+	{
+
 	}
 
 	var frmAnalisa = Ext.create('Ext.form.Panel', {
@@ -1855,7 +2127,7 @@ Ext.onReady(function() {
 					fieldDefaults: {
 						labelAlign: 'right',
 						labelSeparator: '',
-						labelWidth: 100,
+						labelWidth: 140,
 						msgTarget: 'side'
 					},
 					anchor: '100%',
@@ -1875,7 +2147,8 @@ Ext.onReady(function() {
 								style: 'padding: 5px;',
 								xtype: 'fieldset',
 								items: [
-
+									cboApk,
+									txtNama2
 								]
 							}]
 						},{
@@ -1887,7 +2160,7 @@ Ext.onReady(function() {
 								style: 'padding: 5px;',
 								xtype: 'fieldset',
 								items: [
-									
+									btnPrevP2
 								]
 							}]
 						},{
@@ -1899,7 +2172,7 @@ Ext.onReady(function() {
 								style: 'padding: 5px;',
 								xtype: 'fieldset',
 								items: [
-									
+									btnPrevD2
 								]
 							}]
 						}]
@@ -1908,7 +2181,7 @@ Ext.onReady(function() {
 					fieldDefaults: {
 						labelAlign: 'right',
 						labelSeparator: '',
-						labelWidth: 150,
+						labelWidth: 140,
 						msgTarget: 'side'
 					},
 					title: 'Keputusan Kredit',
@@ -1926,7 +2199,8 @@ Ext.onReady(function() {
 								style: 'padding: 5px;',
 								xtype: 'fieldset',
 								items: [
-									
+									cboBatal,
+									txtCatAlasan
 								]
 							}]
 						}]

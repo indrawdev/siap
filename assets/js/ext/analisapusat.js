@@ -1389,7 +1389,9 @@ Ext.onReady(function() {
 
 	function fnPrint()
 	{
+		var kdcab = Ext.getCmp('txtKdCab').getValue();
 		var noapk = Ext.getCmp('txtNoApk').getValue();
+
 		Ext.Ajax.on('beforerequest', fnMaskShow);
 		Ext.Ajax.on('requestcomplete', fnMaskHide);
 		Ext.Ajax.on('requestexception', fnMaskHide);
@@ -1431,7 +1433,7 @@ Ext.onReady(function() {
 						}]
                 	});
 
-                	popUp.add({html: '<iframe height="450" width="942" src="'+ url + noapk +'"></iframe>'});
+                	popUp.add({html: '<iframe height="450" width="942" src="'+ url + kdcab + '/' + noapk +'"></iframe>'});
                 	popUp.show();
 
 				}
