@@ -8,13 +8,13 @@ class MReport extends CI_Model
 		$this->load->database();
 	}
 
-	function detail($nApk)
+	function detail($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT *
 			FROM tx_apk
 			WHERE fn_no_apk = '".trim($nApk)."'
-			AND fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
@@ -25,7 +25,7 @@ class MReport extends CI_Model
     	return false;
 	}
 
-	function pjj($nApk)
+	function pjj($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT CONCAT(fs_kode_lokasi, fs_nomor_dealer, 
@@ -33,14 +33,14 @@ class MReport extends CI_Model
 			AS fs_pjj
 			FROM tx_apk
 			WHERE fn_no_apk = '".trim($nApk)."'
-			AND fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function cabang($nApk)
+	function cabang($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_cabang, b.fs_alamat_cabang, 
@@ -51,14 +51,14 @@ class MReport extends CI_Model
 			FROM tx_apk a 
 			JOIN tm_cabang b ON b.fs_kode_cabang = a.fs_kode_cabang
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function detailltransaksi($nApk)
+	function detailltransaksi($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_kode_transaksi,
@@ -68,14 +68,14 @@ class MReport extends CI_Model
 			b.fn_no_apk = a.fn_no_apk AND
 			b.fs_kode_cabang = a.fs_kode_cabang
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->result();
 	}
 
-	function pengurus($nApk)
+	function pengurus($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT c.fs_nama_jabatan, b.fs_nama_pengurus
@@ -84,315 +84,315 @@ class MReport extends CI_Model
 			b.fs_kode_cabang = a.fs_kode_cabang
 			JOIN tm_jabatan c ON c.fs_kode_jabatan = b.fs_kode_jabatan 
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->result();
 	}
 
-	function dati($nApk)
+	function dati($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_dati
 			FROM tx_apk a JOIN tm_dati b ON 
 			b.fs_kode_dati = a.fs_kode_dati_konsumen
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_agama($nApk)
+	function ref_agama($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_agama_konsumen
 			WHERE b.fs_kode_referensi = 'agama' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_bentuk_perusahaan($nApk)
+	function ref_bentuk_perusahaan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_bentuk_perusahaan
 			WHERE b.fs_kode_referensi = 'bentuk_perusahaan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_cara_bayar($nApk)
+	function ref_cara_bayar($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_cara_bayar
 			WHERE b.fs_kode_referensi = 'cara_bayar' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_jenis_asuransi($nApk)
+	function ref_jenis_asuransi($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_jenis_asuransi
 			WHERE b.fs_kode_referensi = 'jenis_asuransi' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_jenis_kendaraan($nApk)
+	function ref_jenis_kendaraan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_jenis_kendaraan
 			WHERE b.fs_kode_referensi = 'jenis_kendaraan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_jenis_piutang($nApk)
+	function ref_jenis_piutang($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_jenis_piutang
 			WHERE b.fs_kode_referensi = 'jenis_piutang' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_keputusan_kredit($nApk)
+	function ref_keputusan_kredit($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_keputusan_kredit
 			WHERE b.fs_kode_referensi = 'keputusan_kredit' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_kode_pekerjaan($nApk)
+	function ref_kode_pekerjaan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_usaha_pekerjaan_konsumen
 			WHERE b.fs_kode_referensi = 'kode_pekerjaan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_kondisi_kantor($nApk)
+	function ref_kondisi_kantor($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_kondisi_kantor
 			WHERE b.fs_kode_referensi = 'kondisi_kantor' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_kondisi_lingkungan($nApk)
+	function ref_kondisi_lingkungan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_kondisi_lingkungan
 			WHERE b.fs_kode_referensi = 'kondisi_lingkungan_setempat' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_merek_kendaraan($nApk)
+	function ref_merek_kendaraan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_kode_kendaraan
 			WHERE b.fs_kode_referensi = 'merek_kendaraan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_pekerjaan($nApk)
+	function ref_pekerjaan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_usaha_pekerjaan_konsumen
 			WHERE b.fs_kode_referensi = 'pekerjaan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_pendidikan($nApk)
+	function ref_pendidikan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_pendidikan_konsumen
 			WHERE b.fs_kode_referensi = 'pendidikan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_pola_angsuran($nApk)
+	function ref_pola_angsuran($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_pola_angsuran
 			WHERE b.fs_kode_referensi = 'pola_angsuran' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_pola_transaksi($nApk)
+	function ref_pola_transaksi($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_pola_transaksi
 			WHERE b.fs_kode_referensi = 'pola_transaksi' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_skala_perusahaan($nApk)
+	function ref_skala_perusahaan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_skala_perusahaan_konsumen
 			WHERE b.fs_kode_referensi = 'skala_perusahaan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_status_konsumen($nApk)
+	function ref_status_konsumen($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_status_konsumen
 			WHERE b.fs_kode_referensi = 'status_konsumen' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_status_perusahaan($nApk)
+	function ref_status_perusahaan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_status_perusahaan
 			WHERE b.fs_kode_referensi = 'status_perusahaan' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_status_rumah($nApk)
+	function ref_status_rumah($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_status_rumah
 			WHERE b.fs_kode_referensi = 'status_rumah' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_status_tempat_usaha($nApk)
+	function ref_status_tempat_usaha($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_status_tempat_usaha
 			WHERE b.fs_kode_referensi = 'status_tempat_usaha' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function ref_wilayah_asuransi($nApk)
+	function ref_wilayah_asuransi($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_referensi
 			FROM tx_apk a JOIN tm_referensi b ON 
 			b.fs_nilai1_referensi = a.fs_wilayah_asuransi
 			WHERE b.fs_kode_referensi = 'wilayah_asuransi' AND a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
@@ -400,63 +400,63 @@ class MReport extends CI_Model
 	}
 
 
-	function kategori_usaha($nApk)
+	function kategori_usaha($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_sektor_ekonomi
 			FROM tx_apk a JOIN tm_usaha b ON 
 			b.fs_kode_sektor_ekonomi = a.fs_kategori_usaha_konsumen
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function usaha_konsumen($nApk)
+	function usaha_konsumen($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_sektor_ekonomi
 			FROM tx_apk a JOIN tm_usaha b ON 
 			b.fs_kode_sektor_ekonomi = a.fs_kategori_usaha_konsumen
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function usaha_pasangan($nApk)
+	function usaha_pasangan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_sektor_ekonomi
 			FROM tx_apk a JOIN tm_usaha b ON 
 			b.fs_kode_sektor_ekonomi = a.fs_usaha_pasangan
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function usaha_penjamin($nApk)
+	function usaha_penjamin($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_sektor_ekonomi
 			FROM tx_apk a JOIN tm_usaha b ON 
 			b.fs_kode_sektor_ekonomi = a.fs_usaha_penjamin
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function kendaraan($nApk)
+	function kendaraan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_model_kendaraan, b.fs_jenis_kendaraan, 
@@ -464,28 +464,28 @@ class MReport extends CI_Model
 			FROM tx_apk a JOIN tm_kendaraan b ON 
 			b.fs_kode_kendaraan = a.fs_kode_kendaraan
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function lembaga_keuangan($nApk)
+	function lembaga_keuangan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_lembaga_keuangan
 			FROM tx_apk a JOIN tm_lembagakeuangan b ON 
 			b.fs_kode_lembaga_keuangan1 = a.fs_kode_lokasi
 			WHERE a.fn_no_apk = '".trim($nApk)."' 
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."' LIMIT 1
+			AND a.fs_kode_cabang = '".trim($sKdCab)."' LIMIT 1
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function dealer($nApk)
+	function dealer($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_dealer, b.fs_alamat_dealer
@@ -494,14 +494,14 @@ class MReport extends CI_Model
 			AND b.fs_kode_dealer2 = a.fs_kode_dealer2
 			AND b.fn_cabang_dealer = a.fn_cabang_dealer
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function asuransi($nApk)
+	function asuransi($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fs_nama_perusahaan_asuransi, 
@@ -510,14 +510,14 @@ class MReport extends CI_Model
 			b.fs_kode_asuransi1 = a.fs_kode_asuransi1
 			AND b.fs_kode_asuransi2 = a.fs_kode_asuransi2
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function internal_checking($nApk)
+	function internal_checking($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT DISTINCT a.fn_no_apk, a.fs_nama_konsumen, a.fd_tgl_apk, 
@@ -535,14 +535,14 @@ class MReport extends CI_Model
 			OR b.fs_npwp_konsumen = a.fs_npwp_konsumen
 			OR b.fs_siup_perusahaan = a.fs_siup_perusahaan
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 			");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function reject_checking($nApk)
+	function reject_checking($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT DISTINCT a.fn_no_apk, a.fn_no_batch,
@@ -562,13 +562,13 @@ class MReport extends CI_Model
 			END
 			AND (c.fs_keputusan_kredit = 'N' AND c.fd_tgl_apk <= a.fd_tgl_apk)
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function family_checking($nApk)
+	function family_checking($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT DISTINCT a.fn_no_apk, a.fn_no_batch,
@@ -599,21 +599,21 @@ class MReport extends CI_Model
 			END
 			AND d.fd_tgl_apk < a.fd_tgl_apk
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();
 	}
 
-	function data_asuransi($nApk)
+	function data_asuransi($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fn_tahun_ke,
 			b.fs_jenis_asuransi
 			FROM tx_apk a LEFT JOIN tx_apk_asuransi b ON 
-			b.fn_no_apk = a.fn_no_apk
+			b.fn_no_apk = a.fn_no_apk AND a.fs_kode_cabang = b.fs_kode_cabang
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = b.fs_kode_cabang
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 			ORDER BY b.fn_tahun_ke ASC
 		");
 
@@ -621,7 +621,7 @@ class MReport extends CI_Model
 		return $sSQL->result();
 	}
 
-	function data_asuransi_notmix($nApk)
+	function data_asuransi_notmix($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT fn_bulan_masa_angsuran_dealer,
@@ -634,7 +634,7 @@ class MReport extends CI_Model
 		return $sSQL->row();
 	}
 
-	function data_perluasan($nApk)
+	function data_perluasan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fn_tahun_ke, 
@@ -642,21 +642,21 @@ class MReport extends CI_Model
 			FROM tx_apk a JOIN tx_apk_perluasan b ON 
 			b.fn_no_apk = a.fn_no_apk
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->result();
 	}
 
-	function tanggal_cetak_spk($nApk)
+	function tanggal_cetak_spk($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fd_tanggal_cetak
 			FROM tx_apk a JOIN tx_apk_cetak b ON 
 			b.fn_no_apk = a.fn_no_apk
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 			AND b.fs_kode_dokumen = '016'
 			ORDER BY b.fd_tanggal_cetak DESC LIMIT 1
 		");
@@ -665,14 +665,14 @@ class MReport extends CI_Model
 		return $sSQL->row();
 	}
 
-	function tanggal_cetak_spo($nApk)
+	function tanggal_cetak_spo($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT b.fd_tanggal_cetak
 			FROM tx_apk a JOIN tx_apk_cetak b ON 
 			b.fn_no_apk = a.fn_no_apk
 			WHERE a.fn_no_apk = '".trim($nApk)."'
-			AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			AND a.fs_kode_cabang = '".trim($sKdCab)."'
 			AND b.fs_kode_dokumen = '017'
 			ORDER BY b.fd_tanggal_cetak DESC LIMIT 1
 		");
@@ -681,7 +681,7 @@ class MReport extends CI_Model
 		return $sSQL->row();
 	}
 
-	function data_kendaraan($nApk)
+	function data_kendaraan($sKdCab, $nApk)
 	{
 		$xSQL = ("
 			SELECT fs_model_kendaraan

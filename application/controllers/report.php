@@ -53,51 +53,51 @@ class Report extends CI_Controller
 
 	}
 
-	function previewbadanusaha($apk)
+	function previewbadanusaha($kdcab, $apk)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['user'] = $this->session->userdata('gUser');
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 
 		// referensi
-		$data['jenis_piutang'] = $this->mReport->ref_jenis_piutang($apk);
-		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($apk);
-		$data['pola_angsuran'] = $this->mReport->ref_pola_angsuran($apk);
-		$data['agama'] = $this->mReport->ref_agama($apk);
-		$data['pendidikan'] = $this->mReport->ref_pendidikan($apk);
-		$data['cara_bayar'] = $this->mReport->ref_cara_bayar($apk);
-		$data['status_konsumen'] = $this->mReport->ref_status_konsumen($apk);
-		$data['status_rumah'] = $this->mReport->ref_status_rumah($apk);
-		$data['skala_perusahaan'] = $this->mReport->ref_skala_perusahaan($apk);
-		$data['kondisi_lingkungan'] = $this->mReport->ref_kondisi_lingkungan($apk);
-		$data['kondisi_kantor'] = $this->mReport->ref_kondisi_kantor($apk);
-		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($apk);
-		$data['keputusan_kredit'] = $this->mReport->ref_keputusan_kredit($apk);
+		$data['jenis_piutang'] = $this->mReport->ref_jenis_piutang($kdcab, $apk);
+		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);
+		$data['pola_angsuran'] = $this->mReport->ref_pola_angsuran($kdcab, $apk);
+		$data['agama'] = $this->mReport->ref_agama($kdcab, $apk);
+		$data['pendidikan'] = $this->mReport->ref_pendidikan($kdcab, $apk);
+		$data['cara_bayar'] = $this->mReport->ref_cara_bayar($kdcab, $apk);
+		$data['status_konsumen'] = $this->mReport->ref_status_konsumen($kdcab, $apk);
+		$data['status_rumah'] = $this->mReport->ref_status_rumah($kdcab, $apk);
+		$data['skala_perusahaan'] = $this->mReport->ref_skala_perusahaan($kdcab, $apk);
+		$data['kondisi_lingkungan'] = $this->mReport->ref_kondisi_lingkungan($kdcab, $apk);
+		$data['kondisi_kantor'] = $this->mReport->ref_kondisi_kantor($kdcab, $apk);
+		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($kdcab, $apk);
+		$data['keputusan_kredit'] = $this->mReport->ref_keputusan_kredit($kdcab, $apk);
 
 		// bidang usaha
-		$data['lembaga_keuangan'] = $this->mReport->lembaga_keuangan($apk);
-		$data['dealer'] = $this->mReport->dealer($apk);
-		$data['dati'] = $this->mReport->dati($apk);
-		$data['kategori_usaha'] = $this->mReport->kategori_usaha($apk);
-		$data['usaha_konsumen'] = $this->mReport->usaha_konsumen($apk);
-		$data['usaha_pasangan'] = $this->mReport->usaha_pasangan($apk);
-		$data['usaha_penjamin'] = $this->mReport->usaha_penjamin($apk);
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['lembaga_keuangan'] = $this->mReport->lembaga_keuangan($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
+		$data['dati'] = $this->mReport->dati($kdcab, $apk);
+		$data['kategori_usaha'] = $this->mReport->kategori_usaha($kdcab, $apk);
+		$data['usaha_konsumen'] = $this->mReport->usaha_konsumen($kdcab, $apk);
+		$data['usaha_pasangan'] = $this->mReport->usaha_pasangan($kdcab, $apk);
+		$data['usaha_penjamin'] = $this->mReport->usaha_penjamin($kdcab, $apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$data['denda_perhari'] = $this->mReport->denda_perhari();
-		$data['detailltransaksi'] = $this->mReport->detailltransaksi($apk);
-		$data['asuransi'] = $this->mReport->asuransi($apk);
-		$data['pengurus'] = $this->mReport->pengurus($apk);
-		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($apk);
-		$data['data_asuransi'] = $this->mReport->data_asuransi($apk);
-		$data['data_perluasan'] = $this->mReport->data_perluasan($apk);
-		$data['internal_checking'] = $this->mReport->internal_checking($apk);
-		$data['reject_checking'] = $this->mReport->reject_checking($apk);
-		$data['family_checking'] = $this->mReport->family_checking($apk);
-		$data['tanggal_cetak_spk'] = $this->mReport->tanggal_cetak_spk($apk);
-		$data['tanggal_cetak_spo'] = $this->mReport->tanggal_cetak_spo($apk);
+		$data['detailltransaksi'] = $this->mReport->detailltransaksi($kdcab, $apk);
+		$data['asuransi'] = $this->mReport->asuransi($kdcab, $apk);
+		$data['pengurus'] = $this->mReport->pengurus($kdcab, $apk);
+		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
+		$data['data_asuransi'] = $this->mReport->data_asuransi($kdcab, $apk);
+		$data['data_perluasan'] = $this->mReport->data_perluasan($kdcab, $apk);
+		$data['internal_checking'] = $this->mReport->internal_checking($kdcab, $apk);
+		$data['reject_checking'] = $this->mReport->reject_checking($kdcab, $apk);
+		$data['family_checking'] = $this->mReport->family_checking($kdcab, $apk);
+		$data['tanggal_cetak_spk'] = $this->mReport->tanggal_cetak_spk($kdcab, $apk);
+		$data['tanggal_cetak_spo'] = $this->mReport->tanggal_cetak_spo($kdcab, $apk);
 
 		$html = $this->load->view('print/vbadanusaha', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -114,50 +114,50 @@ class Report extends CI_Controller
 		$pdf->Output('daftar-pemeriksaan-badan-usaha.pdf', 'I');
 	}
 
-	function previewperorangan($apk)
+	function previewperorangan($kdcab, $apk)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['user'] = $this->session->userdata('gUser');
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 
 		// referensi
-		$data['jenis_piutang'] = $this->mReport->ref_jenis_piutang($apk);
-		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($apk);
-		$data['pola_angsuran'] = $this->mReport->ref_pola_angsuran($apk);
-		$data['agama'] = $this->mReport->ref_agama($apk);
-		$data['pendidikan'] = $this->mReport->ref_pendidikan($apk);
-		$data['cara_bayar'] = $this->mReport->ref_cara_bayar($apk);
-		$data['status_konsumen'] = $this->mReport->ref_status_konsumen($apk);
-		$data['status_rumah'] = $this->mReport->ref_status_rumah($apk);
-		$data['skala_perusahaan'] = $this->mReport->ref_skala_perusahaan($apk);
-		$data['kondisi_lingkungan'] = $this->mReport->ref_kondisi_lingkungan($apk);
-		$data['kondisi_kantor'] = $this->mReport->ref_kondisi_kantor($apk);
-		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($apk);
-		$data['keputusan_kredit'] = $this->mReport->ref_keputusan_kredit($apk);
+		$data['jenis_piutang'] = $this->mReport->ref_jenis_piutang($kdcab, $apk);
+		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);
+		$data['pola_angsuran'] = $this->mReport->ref_pola_angsuran($kdcab, $apk);
+		$data['agama'] = $this->mReport->ref_agama($kdcab, $apk);
+		$data['pendidikan'] = $this->mReport->ref_pendidikan($kdcab, $apk);
+		$data['cara_bayar'] = $this->mReport->ref_cara_bayar($kdcab, $apk);
+		$data['status_konsumen'] = $this->mReport->ref_status_konsumen($kdcab, $apk);
+		$data['status_rumah'] = $this->mReport->ref_status_rumah($kdcab, $apk);
+		$data['skala_perusahaan'] = $this->mReport->ref_skala_perusahaan($kdcab, $apk);
+		$data['kondisi_lingkungan'] = $this->mReport->ref_kondisi_lingkungan($kdcab, $apk);
+		$data['kondisi_kantor'] = $this->mReport->ref_kondisi_kantor($kdcab, $apk);
+		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($kdcab, $apk);
+		$data['keputusan_kredit'] = $this->mReport->ref_keputusan_kredit($kdcab, $apk);
 
 		// bidang usaha
-		$data['lembaga_keuangan'] = $this->mReport->lembaga_keuangan($apk);
-		$data['dealer'] = $this->mReport->dealer($apk);
-		$data['dati'] = $this->mReport->dati($apk);
-		$data['kategori_usaha'] = $this->mReport->kategori_usaha($apk);
-		$data['usaha_konsumen'] = $this->mReport->usaha_konsumen($apk);
-		$data['usaha_pasangan'] = $this->mReport->usaha_pasangan($apk);
-		$data['usaha_penjamin'] = $this->mReport->usaha_penjamin($apk);
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['lembaga_keuangan'] = $this->mReport->lembaga_keuangan($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
+		$data['dati'] = $this->mReport->dati($kdcab, $apk);
+		$data['kategori_usaha'] = $this->mReport->kategori_usaha($kdcab, $apk);
+		$data['usaha_konsumen'] = $this->mReport->usaha_konsumen($kdcab, $apk);
+		$data['usaha_pasangan'] = $this->mReport->usaha_pasangan($kdcab, $apk);
+		$data['usaha_penjamin'] = $this->mReport->usaha_penjamin($kdcab, $apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$data['denda_perhari'] = $this->mReport->denda_perhari();
-		$data['detailltransaksi'] = $this->mReport->detailltransaksi($apk);
-		$data['asuransi'] = $this->mReport->asuransi($apk);
-		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($apk);
-		$data['data_asuransi'] = $this->mReport->data_asuransi($apk);
-		$data['data_perluasan'] = $this->mReport->data_perluasan($apk);
-		$data['internal_checking'] = $this->mReport->internal_checking($apk);
-		$data['reject_checking'] = $this->mReport->reject_checking($apk);
-		$data['family_checking'] = $this->mReport->family_checking($apk);
-		$data['tanggal_cetak_spk'] = $this->mReport->tanggal_cetak_spk($apk);
-		$data['tanggal_cetak_spo'] = $this->mReport->tanggal_cetak_spo($apk);
+		$data['detailltransaksi'] = $this->mReport->detailltransaksi($kdcab, $apk);
+		$data['asuransi'] = $this->mReport->asuransi($kdcab, $apk);
+		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
+		$data['data_asuransi'] = $this->mReport->data_asuransi($kdcab, $apk);
+		$data['data_perluasan'] = $this->mReport->data_perluasan($kdcab, $apk);
+		$data['internal_checking'] = $this->mReport->internal_checking($kdcab, $apk);
+		$data['reject_checking'] = $this->mReport->reject_checking($kdcab, $apk);
+		$data['family_checking'] = $this->mReport->family_checking($kdcab, $apk);
+		$data['tanggal_cetak_spk'] = $this->mReport->tanggal_cetak_spk($kdcab, $apk);
+		$data['tanggal_cetak_spo'] = $this->mReport->tanggal_cetak_spo($kdcab, $apk);
 
 		$html = $this->load->view('print/vperorangan', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -174,13 +174,13 @@ class Report extends CI_Controller
 		$pdf->Output('daftar-pemeriksaan-perorangan.pdf', 'I');
 	}
 
-	function angsuran($apk,$kop)
+	function angsuran($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdfcustom');
 		$this->load->model('mReport');
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$html = $this->load->view('print/vangsuran', $data, true);
 		$pdf = new Pdfcustom('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PERJANJIAN PEMBELIAN DENGAN PEMBAYARAN SECARA ANGSURAN');
@@ -198,20 +198,20 @@ class Report extends CI_Controller
 		$pdf->Output('perjanjian-pembelian-dengan-pembayaran-secara-angsuran.pdf', 'I');	
 	}
 
-	function struktur($apk,$kop)
+	function struktur($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 
 		// referensi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
-		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($apk);
-		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($apk);
-		$data['kategori_usaha'] = $this->mReport->kategori_usaha($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);
+		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($kdcab, $apk);
+		$data['kategori_usaha'] = $this->mReport->kategori_usaha($kdcab, $apk);
 
 		$html = $this->load->view('print/vstruktur', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -234,14 +234,14 @@ class Report extends CI_Controller
 		$pdf->Output('struktur-perjanjian.pdf', 'I');	
 	}
 
-	function tambahan($apk,$kop)
+	function tambahan($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$html = $this->load->view('print/vtambahan', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PERJANJIAN TAMBAHAN');
@@ -263,13 +263,13 @@ class Report extends CI_Controller
 		$pdf->Output('perjanjian-tambahan.pdf', 'I');	
 	}
 
-	function syaratumum($apk,$kop)
+	function syaratumum($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$html = $this->load->view('print/vsyaratumum', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SYARAT-SYARAT UMUM');
@@ -290,16 +290,16 @@ class Report extends CI_Controller
 		$pdf->Output('syarat-syarat-umum.pdf', 'I');	
 	}
 
-	function persetujuankuasa($apk,$kop)
+	function persetujuankuasa($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		// referensi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 
 		$html = $this->load->view('print/vpersetujuankuasa', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -322,16 +322,16 @@ class Report extends CI_Controller
 		$pdf->Output('pernyataan-persetujuan-dan-kuasa.pdf', 'I');	
 	}
 
-	function fidusia($apk,$kop)
+	function fidusia($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		// referensi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 
 		$html = $this->load->view('print/vfidusia', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -354,14 +354,14 @@ class Report extends CI_Controller
 		$pdf->Output('perjanjian-penyerahan-hak-milih-secara-fidusia.pdf', 'I');	
 	}
 
-	function jaminanfidusia($apk,$kop)
+	function jaminanfidusia($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$html = $this->load->view('print/vjaminanfidusia', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT KUASA PEMBEBANAN JAMINAN FIDUSIA');
@@ -384,14 +384,14 @@ class Report extends CI_Controller
 	}
 
 
-	function asuransi($apk,$kop)
+	function asuransi($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$html = $this->load->view('print/vasuransi', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PERNYATAAN ASURANSI');
@@ -413,14 +413,14 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pernyataan-asuransi.pdf', 'I');
 	}
 
-	function bedadata($apk,$kop)
+	function bedadata($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$html = $this->load->view('print/vbedadata', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PERNYATAAN BERHUBUNGAN DENGAN AD');
@@ -442,16 +442,16 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pernyataan-beda-data-identitas-perorangan.pdf', 'I');
 	}
 
-	function berhubunganad($apk,$kop)
+	function berhubunganad($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		// relasi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 
 		$html = $this->load->view('print/vberhubunganad', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -474,17 +474,17 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pernyataan-berhubungan-dengan-ad.pdf', 'I');
 	}
 
-	function jualbeli($apk,$kop)
+	function jualbeli($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		// relasi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
-		$data['dealer'] = $this->mReport->dealer($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
 
 		$html = $this->load->view('print/vjualbeli', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -507,14 +507,14 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pernyataan-jual-beli.pdf', 'I');
 	}
 
-	function masatenggang($apk,$kop)
+	function masatenggang($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$html = $this->load->view('print/vmasatenggang', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PERNYATAAN MASA TENGGANG');
@@ -536,20 +536,20 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pernyataan-masa-tenggang.pdf', 'I');
 	}
 
-	function unitmilikpribadi($apk,$kop)
+	function unitmilikpribadi($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 
 		// relasi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
-		$data['pekerjaan'] = $this->mReport->ref_pekerjaan($apk);
-		$data['usaha_konsumen'] = $this->mReport->usaha_konsumen($apk);
-		$data['dealer'] = $this->mReport->dealer($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['pekerjaan'] = $this->mReport->ref_pekerjaan($kdcab, $apk);
+		$data['usaha_konsumen'] = $this->mReport->usaha_konsumen($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
 
 		$html = $this->load->view('print/vunitmilikpribadi', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -572,15 +572,15 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pernyataan-unit-milik-pribadi.pdf', 'I');
 	}
 
-	function pemesanan($apk,$kop)
+	function pemesanan($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		// relasi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$html = $this->load->view('print/vpemesanan', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PEMESANAN KENDARAAN');
@@ -602,17 +602,17 @@ class Report extends CI_Controller
 		$pdf->Output('surat-pemesanan-kendaraan.pdf', 'I');
 	}
 
-	function purchase($apk,$kop)
+	function purchase($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
-		$data['dealer'] = $this->mReport->dealer($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
 		// relasi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$html = $this->load->view('print/vpurchase', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PURCHASE ORDER');
@@ -634,17 +634,17 @@ class Report extends CI_Controller
 		$pdf->Output('purchase-order.pdf', 'I');
 	}
 
-	function pemblokiran($apk,$kop)
+	function pemblokiran($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
 		$this->load->model('mReport');
 		$data['kop'] = $kop;
-		$data['cabang'] = $this->mReport->cabang($apk);
-		$data['detail'] = $this->mReport->detail($apk);
-		$data['pjj'] = $this->mReport->pjj($apk);
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		// relasi
-		$data['kendaraan'] = $this->mReport->kendaraan($apk);
-		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);
 		
 		$html = $this->load->view('print/vpemblokiran', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
