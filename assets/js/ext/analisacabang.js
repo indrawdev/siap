@@ -84,7 +84,7 @@ Ext.onReady(function() {
 	var task = runner.start({
 		run: updateCronJob,
 		fireOnStart: false,
-		interval: 15000
+		interval: 60000
 	});
 	/* START CRONJOB SERVICE */
 
@@ -267,13 +267,14 @@ Ext.onReady(function() {
 			itemdblclick: function(grid, record) {
 				Ext.getCmp('txtKdCab').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtPJJ').setValue(record.get('fs_pjj'));
 				Ext.getCmp('txtNama').setValue(record.get('fs_nama_konsumen'));
 				Ext.getCmp('txtJnsPembiayaan').setValue(record.get('fs_jenis_pembiayaan'));
 				Ext.getCmp('cboInternalChecking').setValue(record.get('fs_status_blacklist'));
 				Ext.getCmp('cboRejectChecking').setValue(record.get('fs_status_reject'));
 				Ext.getCmp('cboFamilyChecking').setValue(record.get('fs_status_family'));
-				Ext.getCmp('cboAPKGrade').setValue(record.get('fs_grade'));
-				Ext.getCmp('cboAPKScore').setValue(record.get('fs_score'));
+				Ext.getCmp('cboPJJGrade').setValue(record.get('fs_grade'));
+				Ext.getCmp('cboPJJScore').setValue(record.get('fs_score'));
 
 				// clear field
 				Ext.getCmp('txtNoBatch').setValue('');
@@ -479,13 +480,14 @@ Ext.onReady(function() {
 				Ext.getCmp('txtKdCab').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoBatch').setValue(record.get('fn_no_batch'));
 				Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtPJJ').setValue(record.get('fs_pjj'));
 				Ext.getCmp('txtNama').setValue(record.get('fs_nama_konsumen'));
 				Ext.getCmp('txtJnsPembiayaan').setValue(record.get('fs_jenis_pembiayaan'));
 				Ext.getCmp('cboInternalChecking').setValue(record.get('fs_status_blacklist'));
 				Ext.getCmp('cboRejectChecking').setValue(record.get('fs_status_reject'));
 				Ext.getCmp('cboFamilyChecking').setValue(record.get('fs_status_family'));
-				Ext.getCmp('cboAPKGrade').setValue(record.get('fs_grade'));
-				Ext.getCmp('cboAPKScore').setValue(record.get('fs_score'));
+				Ext.getCmp('cboPJJGrade').setValue(record.get('fs_grade'));
+				Ext.getCmp('cboPJJScore').setValue(record.get('fs_score'));
 
 				// clear field
 				Ext.getCmp('cboKeputusan').setValue('');
@@ -527,6 +529,13 @@ Ext.onReady(function() {
 	var txtNoBatch = {
 		id: 'txtNoBatch',
 		name: 'txtNoBatch',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtPJJ = {
+		id: 'txtPJJ',
+		name: 'txtPJJ',
 		xtype: 'textfield',
 		hidden: true
 	};
@@ -580,23 +589,23 @@ Ext.onReady(function() {
 		xtype: 'textfield'
 	};
 
-	var cboAPKGrade = {
+	var cboPJJGrade = {
 		anchor: '60%',
 		fieldLabel: 'APK Grade',
 		fieldStyle: 'background-color: #eee; background-image: none;',
 		readOnly: true,
-		id: 'cboAPKGrade',
-		name: 'cboAPKGrade',
+		id: 'cboPJJGrade',
+		name: 'cboPJJGrade',
 		xtype: 'textfield'
 	};
 
-	var cboAPKScore = {
+	var cboPJJScore = {
 		anchor: '60%',
 		fieldLabel: 'APK Score',
 		fieldStyle: 'background-color: #eee; background-image: none;',
 		readOnly: true,
-		id: 'cboAPKScore',
-		name: 'cboAPKScore',
+		id: 'cboPJJScore',
+		name: 'cboPJJScore',
 		xtype: 'textfield'
 	};
 
@@ -1354,16 +1363,12 @@ Ext.onReady(function() {
 
 
 	/* TAB BATAL KEPUTUSAN */
-	var grupApk = Ext.create('Ext.data.Store', {
+	var grupBatalRetail = Ext.create('Ext.data.Store', {
 		autoLoad: false,
 		fields: [
-			'fn_no_apk','fs_pjj','fs_nama_konsumen',
-			'fd_tgl_apk','fs_alamat_konsumen',
-			'fs_kelurahan_konsumen', 'fs_kecamatan_konsumen',
-			'fs_kota_konsumen', 'fs_kodepos_konsumen',
-			'fs_ktp_konsumen','fs_masa_ktp_konsumen',
-			'fs_masa_ktp_konsumen','fs_telepon_konsumen',
-			'fs_handphone_konsumen'
+			'fs_kode_cabang','fn_no_apk','fs_pjj','fs_nama_konsumen',
+			'fs_score','fs_grade','fs_internal_checking',
+			'fs_reject_checking','fs_family_checking'
 		],
 		pageSize: 25,
 		proxy: {
@@ -1376,7 +1381,7 @@ Ext.onReady(function() {
 				type: 'json'
 			},
 			type: 'ajax',
-			url: 'analisa/gridbatal'
+			url: 'analisa/gridretailbatal'
 		},
 		listeners: {
 			beforeload: function(store) {
@@ -1387,27 +1392,53 @@ Ext.onReady(function() {
 		}
 	});
 
-	var winGrid = Ext.create('Ext.grid.Panel', {
+	var grupBatalFleet = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kode_cabang','fn_no_apk','fs_pjj','fn_no_batch',
+			'fs_nama_konsumen','fs_score','fs_grade','fs_internal_checking',
+			'fs_reject_checking','fs_family_checking'
+		],
+		pageSize: 25,
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				rootProperty: 'hasil',
+				totalProperty: 'total',
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/gridfleetbatal'
+		},
+		listeners: {
+			beforeload: function(store) {
+				Ext.apply(store.getProxy().extraParams, {
+					'fs_cari': Ext.getCmp('txtCari').getValue()
+				});
+			}
+		}
+	});
+
+	var winGridRetail = Ext.create('Ext.grid.Panel', {
 		anchor: '100%',
 		autoDestroy: true,
-		height: 450,
+		height: 225,
 		width: 750,
 		sortableColumns: false,
-		store: grupApk,
+		store: grupBatalRetail,
 		columns: [
 			{xtype: 'rownumberer', width: 45},
-			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true, width: 120},
+			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
+			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true},
 			{text: "No. PJJ", dataIndex: 'fs_pjj', locked: true, menuDisabled: true, width: 120},
 			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
-			{text: "KTP Konsumen", dataIndex: 'fs_ktp_konsumen', menuDisabled: true, width: 150},
-			{text: "Tanggal APK", dataIndex: 'fd_tgl_apk', menuDisabled: true, width: 70},
-			{text: "Alamat Konsumen", dataIndex: 'fs_alamat_konsumen', menuDisabled: true, width: 250},
-			{text: "Kelurahan", dataIndex: 'fs_kelurahan_konsumen', menuDisabled: true, width: 100},
-			{text: "Kecamatan", dataIndex: 'fs_kecamatan_konsumen', menuDisabled: true, width: 100},
-			{text: "Kota", dataIndex: 'fs_kota_konsumen', menuDisabled: true, width: 100},
-			{text: "Kode Pos", dataIndex: 'fs_kodepos_konsumen', menuDisabled: true, width: 100},
-			{text: "Telepon", dataIndex: 'fs_telepon_konsumen', menuDisabled: true, width: 100},
-			{text: "Handphone", dataIndex: 'fs_handphone_konsumen', menuDisabled: true, width: 100}
+			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
+			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 50},
+			{text: "Internal Checking", dataIndex: 'fs_internal_checking', menuDisabled: true, width: 130},
+			{text: "Reject Checking", dataIndex: 'fs_reject_checking', menuDisabled: true, width: 130},
+			{text: "Family Checking", dataIndex: 'fs_family_checking', menuDisabled: true, width: 130}
 		],
 		tbar: [{
 			flex: 1,
@@ -1429,7 +1460,7 @@ Ext.onReady(function() {
 				text: 'Search',
 				xtype: 'button',
 				handler: function() {
-					grupApk.load();
+					grupBatalRetail.load();
 				}
 			}]
 		},{
@@ -1442,20 +1473,95 @@ Ext.onReady(function() {
 			displayInfo: true,
 			pageSize: 25,
 			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
-			store: grupApk,
-			items:[
-				'-', {
-				text: 'Exit',
-				handler: function() {
-					winCari.hide();
-				}
-			}]
+			store: grupBatalRetail
 		}),
 		listeners: {
 			itemdblclick: function(grid, record)
 			{
-				//Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
-				//Ext.getCmp('cboApk').setValue(record.get('fs_nama_konsumen'));
+				Ext.getCmp('txtKdCab2').setValue(record.get('fs_kode_cabang'));
+				Ext.getCmp('txtNoApk2').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('cboPJJ').setValue(record.get('fs_pjj'));
+				Ext.getCmp('txtNama2').setValue(record.get('fs_nama_konsumen'));
+
+				// clear field
+				Ext.getCmp('txtNoBatch2').setValue('');
+
+				winCari.hide();
+
+			}
+		},
+		viewConfig: {
+			getRowClass: function() {
+				return 'rowwrap';
+			},
+			markDirty: false
+		}
+	});
+
+	var winGridFleet = Ext.create('Ext.grid.Panel', {
+		anchor: '100%',
+		autoDestroy: true,
+		height: 225,
+		width: 750,
+		sortableColumns: false,
+		store: grupBatalFleet,
+		columns: [
+			{xtype: 'rownumberer', width: 45},
+			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
+			{text: "No. Batch", dataIndex: 'fn_no_batch', locked: true, menuDisabled: true, width: 120},
+			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
+			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
+			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 50},
+			{text: "Internal Checking", dataIndex: 'fs_internal_checking', menuDisabled: true, width: 130},
+			{text: "Reject Checking", dataIndex: 'fs_reject_checking', menuDisabled: true, width: 130},
+			{text: "Family Checking", dataIndex: 'fs_family_checking', menuDisabled: true, width: 130}
+		],
+		tbar: [{
+			flex: 1,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '98%',
+				emptyText: 'Nama Konsumen',
+				id: 'txtCari4',
+				name: 'txtCari4',
+				xtype: 'textfield'
+			}]
+		},{
+			flex: 0.2,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '100%',
+				text: 'Search',
+				xtype: 'button',
+				handler: function() {
+					grupBatalFleet.load();
+				}
+			}]
+		},{
+			flex: 0.5,
+			layout: 'anchor',
+			xtype: 'container',
+			items: []
+		}],
+		bbar: Ext.create('Ext.PagingToolbar', {
+			displayInfo: true,
+			pageSize: 25,
+			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
+			store: grupBatalFleet
+		}),
+		listeners: {
+			itemdblclick: function(grid, record)
+			{
+				Ext.getCmp('txtKdCab2').setValue(record.get('fs_kode_cabang'));
+				Ext.getCmp('txtNoBatch2').setValue(record.get('fn_no_batch'));
+				Ext.getCmp('cboPJJ').setValue(record.get('fn_no_batch'));
+				Ext.getCmp('txtNama2').setValue(record.get('fs_nama_konsumen'));
+
+				// clear field
+				Ext.getCmp('txtNoApk2').setValue('');
+
 				winCari.hide();
 			}
 		},
@@ -1471,32 +1577,69 @@ Ext.onReady(function() {
 		border: false,
 		closable: false,
 		draggable: true,
-		frame: false,
+		frame: true,
 		layout: 'fit',
 		plain: true,
 		resizable: false,
-		title: 'Searching...',
-		items: [
-			winGrid
-		],
+		title: 'No. PJJ',
+		items: [{
+			anchor: '100%',
+			layout: 'vbox',
+			xtype: 'container',
+			items: [{
+				flex: 2,
+				layout: 'anchor',
+				xtype: 'container',
+				style: 'padding: 5px;',
+				items: [{
+					style: 'padding: 5px;',
+					title: 'Retail',
+					xtype: 'fieldset',
+					items: [
+						winGridRetail
+					]
+				}]
+			},{
+				flex: 2,
+				layout: 'anchor',
+				xtype: 'container',
+				style: 'padding: 5px;',
+				items: [{
+					style: 'padding: 5px;',
+					title: 'Fleet',
+					xtype: 'fieldset',
+					items: [
+						winGridFleet
+					]
+				}]
+			}]
+		}],
 		listeners: {
 			beforehide: function() {
 				vMask.hide();
 			},
 			beforeshow: function() {
-				grupApk.load();
+				grupBatalRetail.load();
+				grupBatalFleet.load();
 				vMask.show();
 			}
-		}
+		},
+		buttons: [{
+			text: 'OK',
+			handler: function() {
+				vMask.hide();
+				winCari.hide();
+			}
+		}]
 	});
 
-	var cboApk = {
+	var cboPJJ = {
 		afterLabelTextTpl: required,
 		allowBlank: false,
 		anchor: '100%',
-		fieldLabel: 'No. PJJ',
-		id: 'cboApk',
-		name: 'cboApk',
+		fieldLabel: 'No. PJJ / No. Batch',
+		id: 'cboPJJ',
+		name: 'cboPJJ',
 		xtype: 'textfield',
 		triggers: {
 			reset: {
@@ -1551,6 +1694,23 @@ Ext.onReady(function() {
 		//handler: fnPreviewData
 	};
 
+	var grupBatal = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kd_strx','fs_nm_strx'
+		],
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/cb_batal'
+		}
+	});
+
 	var cboBatal = {
 		afterLabelTextTpl: required,
 		allowBlank: false,
@@ -1560,7 +1720,7 @@ Ext.onReady(function() {
 		fieldLabel: 'Batal Keputusan',
 		id: 'cboBatal',
 		name: 'cboBatal',
-		//store: grupKeputusan,
+		store: grupBatal,
 		valueField: 'fs_kd_strx',
 		xtype: 'combobox',
 	};
@@ -1577,6 +1737,33 @@ Ext.onReady(function() {
 		xtype: 'textareafield',
 	};
 
+	var txtKdCab2 = {
+		id: 'txtKdCab2',
+		name: 'txtKdCab2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtNoApk2 = {
+		id: 'txtNoApk2',
+		name: 'txtNoApk2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtNoBatch2 = {
+		id: 'txtNoBatch2',
+		name: 'txtNoBatch2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtPJJ2 = {
+		id: 'txtPJJ2',
+		name: 'txtPJJ2',
+		xtype: 'textfield',
+		hidden: true
+	};
 
 	function fnCekPrint()
 	{
@@ -1797,7 +1984,12 @@ Ext.onReady(function() {
 				'arr_no_apk': xnoapk,
 				'fs_keputusan_kredit': Ext.getCmp('cboKeputusan').getValue(),
 				'fs_catatan_analisa': Ext.getCmp('txtCatAnalisa').getValue(),
-				'fs_grade': Ext.getCmp('cboAPKGrade').getValue()
+				'fs_pjj': Ext.getCmp('txtPJJ').getValue(),
+				'fs_status_blacklist': Ext.getCmp('cboInternalChecking').getValue(),
+				'fs_status_reject': Ext.getCmp('cboRejectChecking').getValue(),
+				'fs_status_family': Ext.getCmp('cboFamilyChecking').getValue(),
+				'fs_grade': Ext.getCmp('cboPJJGrade').getValue(),
+				'fs_score': Ext.getCmp('cboPJJScore').getValue(),
 			},
 			success: function(response) {
 				var xtext = Ext.decode(response.responseText);
@@ -1838,8 +2030,8 @@ Ext.onReady(function() {
 		Ext.getCmp('cboInternalChecking').setValue('');
 		Ext.getCmp('cboRejectChecking').setValue('');
 		Ext.getCmp('cboFamilyChecking').setValue('');
-		Ext.getCmp('cboAPKGrade').setValue('');
-		Ext.getCmp('cboAPKScore').setValue('');
+		Ext.getCmp('cboPJJGrade').setValue('');
+		Ext.getCmp('cboPJJScore').setValue('');
 		Ext.getCmp('cboKeputusan').setValue('');
 		Ext.getCmp('txtCatAnalisa').setValue('');
 		Ext.getCmp('btnSave').setDisabled(false);
@@ -1972,6 +2164,7 @@ Ext.onReady(function() {
 									txtKdCab,
 									txtNoApk,
 									txtNoBatch,
+									txtPJJ,
 									txtJnsPembiayaan,
 									txtNama
 								]
@@ -2028,8 +2221,8 @@ Ext.onReady(function() {
 									cboInternalChecking,
 									cboRejectChecking,
 									cboFamilyChecking,
-									cboAPKGrade,
-									cboAPKScore
+									cboPJJGrade,
+									cboPJJScore
 								]
 							}]
 						},{
@@ -2147,8 +2340,11 @@ Ext.onReady(function() {
 								style: 'padding: 5px;',
 								xtype: 'fieldset',
 								items: [
-									cboApk,
-									txtNama2
+									cboPJJ,
+									txtNama2,
+									txtKdCab2,
+									txtNoApk2,
+									txtNoBatch2
 								]
 							}]
 						},{

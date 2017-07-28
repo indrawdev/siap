@@ -30,7 +30,6 @@ class Analisa extends CI_Controller
 	function cb_keputusan()
 	{
 		$sCari = trim($this->input->post('fs_cari'));
-
 		$this->db->query(NOLOCK);
 		$this->load->model('mAnalisa');
 		$sSQL = $this->mAnalisa->ambilReferensi($sCari);
@@ -49,6 +48,15 @@ class Analisa extends CI_Controller
 		echo json_encode($xArr);
 	}
 
+	function cb_batal()
+	{
+		$array = array(
+		  2 => array("Y",'YA'),
+		  4 => array("T",'TIDAK')
+		);
+		$out = array_values($array);
+		echo json_encode($out);
+	}
 
 	// CABANG 
 	function gridretail()
@@ -168,22 +176,13 @@ class Analisa extends CI_Controller
 				$xArr[] = array(
 					'fs_kode_cabang' => ascii_to_entities(trim($xRow->fs_kode_cabang)),
 					'fn_no_apk' => ascii_to_entities(trim($xRow->fn_no_apk)),
+					'fs_nama_konsumen' => ascii_to_entities(trim($xRow->fs_nama_konsumen)),
 					'fs_pjj' => ascii_to_entities(trim($pjj)),
-					'fs_kode_lokasi' => ascii_to_entities(trim($xRow->fs_kode_lokasi)),
-					'fs_nomor_dealer' => ascii_to_entities(trim($xRow->fs_nomor_dealer)),
-					'fs_jenis_piutang' => ascii_to_entities(trim($xRow->fs_jenis_piutang)),
-					'fs_pola_transaksi' => ascii_to_entities(trim($xRow->fs_pola_transaksi)),
-					'fn_nomor_perjanjian' => ascii_to_entities(trim($xRow->fn_nomor_perjanjian)),
 					'fs_score' => ascii_to_entities(trim($xRow->fs_score)),
-					'fs_grade' => ascii_to_entities(trim($xRow->fs_kode_cabang)),
+					'fs_grade' => ascii_to_entities(trim($xRow->fs_grade)),
 					'fs_internal_checking' => ascii_to_entities(trim($xRow->fs_internal_checking)),
 					'fs_reject_checking' => ascii_to_entities(trim($xRow->fs_reject_checking)),
 					'fs_family_checking' => ascii_to_entities(trim($xRow->fs_family_checking)),
-					'fs_keputusan_kredit' => ascii_to_entities(trim($xRow->fs_keputusan_kredit)),
-					'fs_catatan_analisa' => ascii_to_entities(trim($xRow->fs_catatan_analisa)),
-					'fs_keputusan_kredit_pusat' => ascii_to_entities(trim($xRow->fs_keputusan_kredit_pusat)),
-					'fs_catatan_analisa_pusat' => ascii_to_entities(trim($xRow->fs_catatan_analisa_pusat)),
-					'fs_catatan_batal_keputusan' => ascii_to_entities(trim($xRow->fs_catatan_batal_keputusan))
 				);
 			}
 		}
@@ -213,25 +212,17 @@ class Analisa extends CI_Controller
 					'fs_kode_cabang' => ascii_to_entities(trim($xRow->fs_kode_cabang)),
 					'fn_no_apk' => ascii_to_entities(trim($xRow->fn_no_apk)),
 					'fn_no_batch' => ascii_to_entities(trim($xRow->fn_no_batch)),
+					'fs_nama_konsumen' => ascii_to_entities(trim($xRow->fs_nama_konsumen)),
 					'fs_pjj' => ascii_to_entities(trim($pjj)),
-					'fs_kode_lokasi' => ascii_to_entities(trim($xRow->fs_kode_lokasi)),
-					'fs_nomor_dealer' => ascii_to_entities(trim($xRow->fs_nomor_dealer)),
-					'fs_jenis_piutang' => ascii_to_entities(trim($xRow->fs_jenis_piutang)),
-					'fs_pola_transaksi' => ascii_to_entities(trim($xRow->fs_pola_transaksi)),
-					'fn_nomor_perjanjian' => ascii_to_entities(trim($xRow->fn_nomor_perjanjian)),
 					'fs_score' => ascii_to_entities(trim($xRow->fs_score)),
-					'fs_grade' => ascii_to_entities(trim($xRow->fs_kode_cabang)),
+					'fs_grade' => ascii_to_entities(trim($xRow->fs_grade)),
 					'fs_internal_checking' => ascii_to_entities(trim($xRow->fs_internal_checking)),
 					'fs_reject_checking' => ascii_to_entities(trim($xRow->fs_reject_checking)),
 					'fs_family_checking' => ascii_to_entities(trim($xRow->fs_family_checking)),
-					'fs_keputusan_kredit' => ascii_to_entities(trim($xRow->fs_keputusan_kredit)),
-					'fs_catatan_analisa' => ascii_to_entities(trim($xRow->fs_catatan_analisa)),
-					'fs_keputusan_kredit_pusat' => ascii_to_entities(trim($xRow->fs_keputusan_kredit_pusat)),
-					'fs_catatan_analisa_pusat' => ascii_to_entities(trim($xRow->fs_catatan_analisa_pusat)),
-					'fs_catatan_batal_keputusan' => ascii_to_entities(trim($xRow->fs_catatan_batal_keputusan))
 				);
 			}
 		}
+		echo '({"total":"'.$xTotal.'","hasil":'.json_encode($xArr).'})';
 	}
 
 	// PUSAT
@@ -419,39 +410,6 @@ class Analisa extends CI_Controller
 		echo '({"total":"'.$xTotal.'","hasil":'.json_encode($xArr).'})';
 	}
 
-	function griddetil() 
-	{
-		$nStart = trim($this->input->post('start'));
-		$nLimit = trim($this->input->post('limit'));
-
-		$cari = trim($this->input->post('fs_cari'));
-		$flag = trim($this->input->post('fs_flag_survey'));
-
-		$this->db->query(NOLOCK);
-		$this->load->model('mAnalisa');
-		$sSQL = $this->mAnalisa->listKonsumenAll($cari,$flag);
-		$xTotal = $sSQL->num_rows();
-		$sSQL = $this->mAnalisa->listKonsumen($cari,$nStart,$nLimit,$flag);
-		$this->db->query(NOLOCK2);
-		$xArr = array();
-
-		if ($sSQL->num_rows() > 0)
-		{
-			foreach ($sSQL->result() as $xRow)
-			{
-				$pjj = $xRow->fs_kode_lokasi.$xRow->fs_nomor_dealer.$xRow->fs_jenis_piutang.$xRow->fs_pola_transaksi.$xRow->fn_nomor_perjanjian;
-				$xArr[] = array(
-						'fn_no_apk' => ascii_to_entities(trim($xRow->fn_no_apk)),
-						'fs_pjj' => ascii_to_entities(trim($pjj)),
-						'fd_tgl_apk' => ascii_to_entities(trim($xRow->fd_tgl_apk)),
-						'fd_tanggal_survey' => ascii_to_entities(trim($xRow->fd_tanggal_survey)),
-						'fs_nama_konsumen' => ascii_to_entities(trim($xRow->fs_nama_konsumen)),
-					);
-			}
-		}
-		echo '({"total":"'.$xTotal.'","hasil":'.json_encode($xArr).'})';
-	}
-
 	function checkinternal()
 	{
 		$kdcabang = trim($this->input->post('fs_kode_cabang'));
@@ -626,7 +584,7 @@ class Analisa extends CI_Controller
 			if (trim($noapk) <> '')
 			{
 				$xkddoc = $this->mKontrak->dokumen('001');
-				$xhitung = $this->mKontrak->hitung('001', $cabang);
+				$xhitung = $this->mKontrak->hitung('001', $cabang, $noapk);
 				$xtotal = $xhitung->num_rows();
 
 				if ($xtotal <= $xkddoc->fn_batas_cetak)
@@ -660,7 +618,7 @@ class Analisa extends CI_Controller
 			if(trim($noapk) <> '')
 			{
 				$xkddoc2 = $this->mKontrak->dokumen('002');
-				$xhitung2 = $this->mKontrak->hitung('002', $cabang);
+				$xhitung2 = $this->mKontrak->hitung('002', $cabang, $noapk);
 				$xtotal2 = $xhitung2->num_rows();
 
 				if ($xtotal2 <= $xkddoc2->fn_batas_cetak)
@@ -825,9 +783,9 @@ class Analisa extends CI_Controller
 		$this->db->query(NOLOCK);
 		$this->load->model('mAnalisa');
 		
-		$sSQL = $this->mAnalisa->listdetailAll($nBatch);
+		$sSQL = $this->mAnalisa->listdetailAll($nBatch, $kdcabang);
 		$xTotal = $sSQL->num_rows();
-		$sSQL = $this->mAnalisa->listdetail($nStart, $nLimit, $nBatch);
+		$sSQL = $this->mAnalisa->listdetail($nStart, $nLimit, $nBatch, $kdcabang);
 		$this->db->query(NOLOCK2);
 		$xArr = array();
 
@@ -895,7 +853,20 @@ class Analisa extends CI_Controller
 
 		$grade = trim($this->input->post('fs_grade'));
 
+		/* field batal keputusan */
+		$kode_lokasi = trim(substr($this->input->post('fs_pjj'), 0, 2));
+		$nomor_dealer = trim(substr($this->input->post('fs_pjj'), 2, 2));
+		$jenis_piutang = trim(substr($this->input->post('fs_pjj'), 4, 1));
+		$pola_transaksi = trim(substr($this->input->post('fs_pjj'), 5, 2));
+		$nomor_perjanjian = trim(substr($this->input->post('fs_pjj'), 7, 6));
+
+		$status_blacklist = trim($this->input->post('fs_status_blacklist'));
+		$status_reject = trim($this->input->post('fs_status_reject'));
+		$status_family = trim($this->input->post('fs_status_family'));
+		$score = trim($this->input->post('fs_score'));
+
 		if (trim($keputusan) == 'N') {
+			// jika keputusan ditolak. langsung diputus dicabang tanpa ke pusat
 			$data = array(
 				'fs_keputusan_kredit' => $keputusan,
 				'fs_catatan_analisa' => $cat_analisa,
@@ -907,6 +878,68 @@ class Analisa extends CI_Controller
 				'fs_iduser_buat_keputusan' => trim($this->session->userdata('gUser')),
 				'fd_tanggal_buat_keputusan' => trim(date('Y-m-d H:i:s'))
 			);
+		}
+		else if (trim($keputusan) == 'B'){
+			// jika keputusan batal. insert ke tabel tx_apk_batal_keputusan
+
+			if (!empty($nobatch)) {
+				// jika fleet kemudian (looping)
+				$this->load->model('mAnalisa');
+				$xnoapk = $this->mAnalisa->detail($nobatch, $kdcabang);
+				foreach ($xnoapk->result() as $row) {
+					$insert = array(
+						'fs_kode_cabang' => $kdcabang,
+						'fn_no_apk' => $row->fn_no_apk,
+						'fn_no_batch' => $row->fn_no_batch,
+						'fs_kode_lokasi' => $row->fs_kode_lokasi,
+						'fs_nomor_dealer' => $row->fs_nomor_dealer,
+						'fs_jenis_piutang' => $row->fs_jenis_piutang,
+						'fs_pola_transaksi' => $row->fs_pola_transaksi,
+						'fn_nomor_perjanjian' => $row->fn_nomor_perjanjian,
+						'fs_score' => $row->fs_score,
+						'fs_grade' => $row->fs_grade,
+						'fs_internal_checking' => $status_blacklist,
+						'fs_reject_checking' => $status_reject,
+						'fs_family_checking' => $status_family,
+						'fs_keputusan_kredit' => $keputusan,
+						'fs_catatan_analisa' => $cat_analisa,
+						'fs_iduser_buat' => trim($this->session->userdata('gUser')),
+						'fd_tanggal_buat' => trim(date('Y-m-d'))
+					);
+					$this->db->insert('tx_apk_batal_keputusan', $insert);
+				}
+
+			} else {
+				// jika retail (hanya insert 1 record)
+				$insert = array(
+					'fs_kode_cabang' => $kdcabang,
+					'fn_no_apk' => $noapk,
+					'fn_no_batch' => $nobatch,
+					'fs_kode_lokasi' => $kode_lokasi,
+					'fs_nomor_dealer' => $nomor_dealer,
+					'fs_jenis_piutang' => $jenis_piutang,
+					'fs_pola_transaksi' => $pola_transaksi,
+					'fn_nomor_perjanjian' => $nomor_perjanjian,
+					'fs_score' => $score,
+					'fs_grade' => $grade,
+					'fs_internal_checking' => $status_blacklist,
+					'fs_reject_checking' => $status_reject,
+					'fs_family_checking' => $status_family,
+					'fs_keputusan_kredit' => $keputusan,
+					'fs_catatan_analisa' => $cat_analisa,
+					'fs_iduser_buat' => trim($this->session->userdata('gUser')),
+					'fd_tanggal_buat' => trim(date('Y-m-d'))
+				);
+				$this->db->insert('tx_apk_batal_keputusan', $insert);
+			}
+
+			$data = array(
+					'fs_keputusan_kredit' => $keputusan,
+					'fs_catatan_analisa' => $cat_analisa,
+					'fs_flag_keputusan' => 1,
+					'fs_iduser_buat_keputusan' => trim($this->session->userdata('gUser')),
+					'fd_tanggal_buat_keputusan' => trim(date('Y-m-d'))
+				);
 		} else {
 			if (trim($grade) == 'C' || trim($grade) == 'D') {
 				$data = array(

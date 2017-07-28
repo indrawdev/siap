@@ -179,6 +179,68 @@ class MAnalisa extends CI_Model
 		return $sSQL;
 	}
 
+	function listRetailBatalAll($sCari)
+	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+		");
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function listRetailBatal($sCari,$nStart,$nLimit)
+	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+		");
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$xSQL = $xSQL.("
+			ORDER BY a.fn_no_apk DESC LIMIT ".$nStart.",".$nLimit."
+		");
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
 	function listFleetAll($sCari,$sFlag)
 	{
 		$xSQL = ("
@@ -339,6 +401,75 @@ class MAnalisa extends CI_Model
 		return $sSQL;
 	}
 
+	function listFleetBatalAll($sCari)
+	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+		");
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$xSQL = $xSQL.("
+			GROUP BY a.fn_no_batch
+			ORDER BY a.fn_no_batch ASC
+		");
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function listFleetBatal($sCari,$nStart,$nLimit)
+	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+		");
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$xSQL = $xSQL.("
+			GROUP BY a.fn_no_batch
+			ORDER BY a.fn_no_batch ASC LIMIT ".$nStart.",".$nLimit."
+		");
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+
 	/* PUSAT */
 	function listRetailPusatAll($sCari, $sFlag)
 	{
@@ -480,6 +611,16 @@ class MAnalisa extends CI_Model
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL;
+	}
+
+	function listRetailBatalPusatAll($sCari)
+	{
+
+	}
+
+	function listRetailBatalPusat($sCari,$nStart,$nLimit)
+	{
+
 	}
 
 	function listFleetPusatAll($sCari,$sFlag)
@@ -658,41 +799,38 @@ class MAnalisa extends CI_Model
 		return $sSQL;
 	}
 
-	function listdetailAll($nBatch)
+	function listdetailAll($nBatch, $nKdCab)
 	{
 		$xSQL = ("
 			SELECT *
 			FROM tx_apk
 			WHERE fn_no_batch = '".trim($nBatch)."'
-			AND fs_flag_survey = 1
+			AND fs_flag_survey = '1'
+			AND fs_flag_keputusan = '0'
 		");
 
-		if ($this->session->userdata('gKodeCabang') != '00') {
-			$xSQL = $xSQL.(" 
-				AND fs_flag_keputusan = 0
-				AND fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
-			");
-		}
+		$xSQL = $xSQL.(" 
+			AND fs_kode_cabang = '".trim($nKdCab)."'
+		");
+
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL;
 	}
 
-	function listdetail($nStart,$nLimit,$nBatch)
+	function listdetail($nStart,$nLimit,$nBatch, $nKdCab)
 	{
 		$xSQL = ("
 			SELECT * 
 			FROM tx_apk
 			WHERE fn_no_batch = '".trim($nBatch)."'
-			AND fs_flag_survey = 1
+			AND fs_flag_survey = '1'
+			AND fs_flag_keputusan = '0'
 		");
 
-		if ($this->session->userdata('gKodeCabang') != '00') {
-			$xSQL = $xSQL.("
-				AND fs_flag_keputusan = 0
-				AND fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
-			");
-		}
+		$xSQL = $xSQL.(" 
+			AND fs_kode_cabang = '".trim($nKdCab)."'
+		");
 
 		$xSQL = $xSQL.("
 			ORDER BY fn_no_apk ASC LIMIT ".$nStart.",".$nLimit."
