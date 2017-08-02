@@ -219,6 +219,7 @@ Ext.onReady(function() {
 			itemdblclick: function(grid, record) {
 				Ext.getCmp('txtKdCab').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtPJJ').setValue(record.get('fs_pjj'));
 				Ext.getCmp('txtNama').setValue(record.get('fs_nama_konsumen'));
 				Ext.getCmp('txtJnsPembiayaan').setValue(record.get('fs_jenis_pembiayaan'));
 				Ext.getCmp('cboInternalChecking').setValue(record.get('fs_status_blacklist'));
@@ -438,6 +439,7 @@ Ext.onReady(function() {
 				Ext.getCmp('txtKdCab').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoBatch').setValue(record.get('fn_no_batch'));
 				Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtPJJ').setValue(record.get('fs_pjj'));
 				Ext.getCmp('txtNama').setValue(record.get('fs_nama_konsumen'));
 				Ext.getCmp('txtJnsPembiayaan').setValue(record.get('fs_jenis_pembiayaan'));
 				Ext.getCmp('cboInternalChecking').setValue(record.get('fs_status_blacklist'));
@@ -487,6 +489,13 @@ Ext.onReady(function() {
 	var txtNoBatch = {
 		id: 'txtNoBatch',
 		name: 'txtNoBatch',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtPJJ = {
+		id: 'txtPJJ',
+		name: 'txtPJJ',
 		xtype: 'textfield',
 		hidden: true
 	};
@@ -1323,6 +1332,549 @@ Ext.onReady(function() {
 		handler: fnCheckingFamily
 	};
 
+	/* TAB BATAL KEPUTUSAN */
+	var grupBatalRetail = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kode_cabang','fn_no_apk','fs_pjj','fs_nama_konsumen',
+			'fs_score','fs_grade','fs_internal_checking',
+			'fs_reject_checking','fs_family_checking','fs_jenis_pembiayaan'
+		],
+		pageSize: 25,
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				rootProperty: 'hasil',
+				totalProperty: 'total',
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/gridretailbatalpusat'
+		},
+		listeners: {
+			beforeload: function(store) {
+				Ext.apply(store.getProxy().extraParams, {
+					'fs_cari': Ext.getCmp('txtCari').getValue()
+				});
+			}
+		}
+	});
+
+	var grupBatalFleet = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kode_cabang','fn_no_apk','fs_pjj','fn_no_batch',
+			'fs_nama_konsumen','fs_score','fs_grade','fs_internal_checking',
+			'fs_reject_checking','fs_family_checking','fs_jenis_pembiayaan'
+		],
+		pageSize: 25,
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				rootProperty: 'hasil',
+				totalProperty: 'total',
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/gridfleetbatalpusat'
+		},
+		listeners: {
+			beforeload: function(store) {
+				Ext.apply(store.getProxy().extraParams, {
+					'fs_cari': Ext.getCmp('txtCari').getValue()
+				});
+			}
+		}
+	});
+
+	var winGridRetail = Ext.create('Ext.grid.Panel', {
+		anchor: '100%',
+		autoDestroy: true,
+		height: 225,
+		width: 750,
+		sortableColumns: false,
+		store: grupBatalRetail,
+		columns: [
+			{xtype: 'rownumberer', width: 45},
+			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
+			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true},
+			{text: "Jenis Pembiayaan", dataIndex: 'fs_jenis_pembiayaan', hidden: true, menuDisabled: true},
+			{text: "No. PJJ", dataIndex: 'fs_pjj', locked: true, menuDisabled: true, width: 120},
+			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
+			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
+			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 50},
+			{text: "Internal Checking", dataIndex: 'fs_internal_checking', menuDisabled: true, width: 130},
+			{text: "Reject Checking", dataIndex: 'fs_reject_checking', menuDisabled: true, width: 130},
+			{text: "Family Checking", dataIndex: 'fs_family_checking', menuDisabled: true, width: 130}
+		],
+		tbar: [{
+			flex: 1,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '98%',
+				emptyText: 'Nama Konsumen',
+				id: 'txtCari3',
+				name: 'txtCari3',
+				xtype: 'textfield'
+			}]
+		},{
+			flex: 0.2,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '100%',
+				text: 'Search',
+				xtype: 'button',
+				handler: function() {
+					grupBatalRetail.load();
+				}
+			}]
+		},{
+			flex: 0.5,
+			layout: 'anchor',
+			xtype: 'container',
+			items: []
+		}],
+		bbar: Ext.create('Ext.PagingToolbar', {
+			displayInfo: true,
+			pageSize: 25,
+			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
+			store: grupBatalRetail
+		}),
+		listeners: {
+			itemdblclick: function(grid, record)
+			{
+				Ext.getCmp('txtKdCab2').setValue(record.get('fs_kode_cabang'));
+				Ext.getCmp('txtNoApk2').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtJnsPembiayaan2').setValue(record.get('fs_jenis_pembiayaan'));
+				Ext.getCmp('cboPJJ').setValue(record.get('fs_pjj'));
+				Ext.getCmp('txtNama2').setValue(record.get('fs_nama_konsumen'));
+
+				// clear field
+				Ext.getCmp('txtNoBatch2').setValue('');
+
+				winCari.hide();
+
+			}
+		},
+		viewConfig: {
+			getRowClass: function() {
+				return 'rowwrap';
+			},
+			markDirty: false
+		}
+	});
+
+	var winGridFleet = Ext.create('Ext.grid.Panel', {
+		anchor: '100%',
+		autoDestroy: true,
+		height: 225,
+		width: 750,
+		sortableColumns: false,
+		store: grupBatalFleet,
+		columns: [
+			{xtype: 'rownumberer', width: 45},
+			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
+			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true},
+			{text: "Jenis Pembiayaan", dataIndex: 'fs_jenis_pembiayaan', hidden: true, menuDisabled: true},
+			{text: "No. Batch", dataIndex: 'fn_no_batch', locked: true, menuDisabled: true, width: 120},
+			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
+			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
+			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 50},
+			{text: "Internal Checking", dataIndex: 'fs_internal_checking', menuDisabled: true, width: 130},
+			{text: "Reject Checking", dataIndex: 'fs_reject_checking', menuDisabled: true, width: 130},
+			{text: "Family Checking", dataIndex: 'fs_family_checking', menuDisabled: true, width: 130}
+		],
+		tbar: [{
+			flex: 1,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '98%',
+				emptyText: 'Nama Konsumen',
+				id: 'txtCari4',
+				name: 'txtCari4',
+				xtype: 'textfield'
+			}]
+		},{
+			flex: 0.2,
+			layout: 'anchor',
+			xtype: 'container',
+			items: [{
+				anchor: '100%',
+				text: 'Search',
+				xtype: 'button',
+				handler: function() {
+					grupBatalFleet.load();
+				}
+			}]
+		},{
+			flex: 0.5,
+			layout: 'anchor',
+			xtype: 'container',
+			items: []
+		}],
+		bbar: Ext.create('Ext.PagingToolbar', {
+			displayInfo: true,
+			pageSize: 25,
+			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
+			store: grupBatalFleet
+		}),
+		listeners: {
+			itemdblclick: function(grid, record)
+			{
+				Ext.getCmp('txtKdCab2').setValue(record.get('fs_kode_cabang'));
+				Ext.getCmp('txtNoApk2').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtNoBatch2').setValue(record.get('fn_no_batch'));
+				Ext.getCmp('txtJnsPembiayaan2').setValue(record.get('fs_jenis_pembiayaan'));
+				Ext.getCmp('cboPJJ').setValue(record.get('fn_no_batch'));
+				Ext.getCmp('txtNama2').setValue(record.get('fs_nama_konsumen'));
+
+				// clear field
+
+				winCari.hide();
+			}
+		},
+		viewConfig: {
+			getRowClass: function() {
+				return 'rowwrap';
+			},
+			markDirty: false
+		}
+	});
+
+	var winCari = Ext.create('Ext.window.Window', {
+		border: false,
+		closable: false,
+		draggable: true,
+		frame: true,
+		layout: 'fit',
+		plain: true,
+		resizable: false,
+		title: 'No. PJJ',
+		items: [{
+			anchor: '100%',
+			layout: 'vbox',
+			xtype: 'container',
+			items: [{
+				flex: 2,
+				layout: 'anchor',
+				xtype: 'container',
+				style: 'padding: 5px;',
+				items: [{
+					style: 'padding: 5px;',
+					title: 'Retail',
+					xtype: 'fieldset',
+					items: [
+						winGridRetail
+					]
+				}]
+			},{
+				flex: 2,
+				layout: 'anchor',
+				xtype: 'container',
+				style: 'padding: 5px;',
+				items: [{
+					style: 'padding: 5px;',
+					title: 'Fleet',
+					xtype: 'fieldset',
+					items: [
+						winGridFleet
+					]
+				}]
+			}]
+		}],
+		listeners: {
+			beforehide: function() {
+				vMask.hide();
+			},
+			beforeshow: function() {
+				grupBatalRetail.load();
+				grupBatalFleet.load();
+				vMask.show();
+			}
+		},
+		buttons: [{
+			text: 'OK',
+			handler: function() {
+				vMask.hide();
+				winCari.hide();
+			}
+		}]
+	});
+
+	var grupPreData2 = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kode_cabang',
+			'fs_kode_dokumen','fs_dokumen_upload',
+			'fd_tanggal_buat', 'fs_iduser_buat'
+		],
+		pageSize: 25,
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				rootProperty: 'hasil',
+				totalProperty: 'total',
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/predatapendukung'
+		},
+		listeners: {
+			beforeload: function(store) {
+				Ext.apply(store.getProxy().extraParams, {
+					'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+					'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+					'fn_no_batch': Ext.getCmp('txtNoBatch2').getValue()
+				});
+			}
+		}
+	});
+
+	var gridPreData2 = Ext.create('Ext.grid.Panel',{
+		anchor: '100%',
+		autoDestroy: true,
+		height: 450,
+		width: 550,
+		sortableColumns: false,
+		store: grupPreData2,
+		columns: [
+			{xtype: 'rownumberer', width: 45},
+			{text: "Kode Dokumen", dataIndex: 'fs_kode_dokumen', menuDisabled: true, width: 100},
+			{text: "Nama Dokumen", dataIndex: 'fs_nama_dokumen', menuDisabled: true, width: 250},
+			{text: "File", dataIndex: 'fs_dokumen_upload', menuDisabled: true, hidden: true},
+			{text: "Tanggal", dataIndex: 'fd_tanggal_buat', menuDisabled: true, width: 100},
+			{text: "User", dataIndex: 'fs_iduser_buat', menuDisabled: true, width: 50}
+		],
+		bbar: Ext.create('Ext.PagingToolbar', {
+			displayInfo: true,
+			pageSize: 25,
+			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
+			store: grupPreData2,
+			items:[
+				'-', {
+				text: 'Exit',
+				handler: function() {
+					winPreData2.hide();
+				}
+			}]
+		}),
+		listeners: {
+			celldblclick: function (grid, td, cellIndex, record, tr, rowIndex, e, eOpts)
+			{
+				var dokumen_name = record.get('fs_nama_dokumen');
+				var dokumen_url = 'uploads/' + record.get('fs_dokumen_upload');
+
+				var viewImage =  Ext.create('Ext.Panel', {
+					items: Ext.create('Ext.view.View', {
+						xtype: 'dataview',
+						tpl: [
+							'<div style="overflow: auto; width:888; height:465; text-align:center;">',
+					        '<img src="' + dokumen_url + '" height:"100%" width:"100%"/>',
+					        '</div>'
+					    	],
+					})
+				});
+
+				var winImage = Ext.create('Ext.window.Window', {
+					title: dokumen_name,
+					border: false,
+					frame: false,
+					autoScroll: false,
+					width: 900,
+					height: 500,
+					collapsible: false,
+					resizable: true,
+					layout: 'fit',
+					items: [
+						viewImage
+					]
+				});
+
+				winImage.show();
+			}
+		},
+		viewConfig: {
+			enableTextSelection: true
+		}
+	});
+
+	var winPreData2 = Ext.create('Ext.window.Window', {
+		border: false,
+		closable: false,
+		draggable: true,
+		frame: false,
+		layout: 'fit',
+		plain: true,
+		resizable: false,
+		title: 'Preview Data Pendukung',
+		items: [
+			gridPreData2
+		],
+		listeners: {
+			beforehide: function() {
+				vMask.hide();
+			},
+			beforeshow: function() {
+				grupPreData2.load();
+				vMask.show();
+			}
+		}
+	});
+
+	function fnPreviewData2()
+	{
+		winPreData2.show();
+		winPreData2.center();
+	}
+
+	var cboPJJ = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '100%',
+		fieldLabel: 'No. PJJ / No. Batch',
+		id: 'cboPJJ',
+		name: 'cboPJJ',
+		xtype: 'textfield',
+		triggers: {
+			reset: {
+				cls: 'x-form-clear-trigger',
+				handler: function(field) {
+					field.setValue('');
+				}
+			},
+			cari: {
+				cls: 'x-form-search-trigger',
+				handler: function() {
+					winCari.show();
+					winCari.center();
+				}
+			}
+		}
+	};
+
+	var txtNama2 = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '100%',
+		fieldLabel: 'Nama Konsumen',
+		fieldStyle: 'background-color: #eee; background-image: none;',
+		readOnly: true,
+		id: 'txtNama2',
+		name: 'txtNama2',
+		xtype: 'textfield'
+	};
+
+	// button preview pemeriksa 2
+	var btnPrevP2 = {
+		anchor: '100%',
+		scale: 'medium',
+		id: 'btnPrevP2',
+		name: 'btnPrevP2',
+		text: 'Preview Pemeriksaan APK',
+		xtype: 'button',
+		height: 28,
+		handler: fnCekPrint2
+	};
+
+	// button preview data pendukung 2
+	var btnPrevD2 = {
+		anchor: '100%',
+		scale: 'medium',
+		id: 'btnPrevD2',
+		name: 'btnPrevD2',
+		text: 'Preview Data Pendukung',
+		xtype: 'button',
+		height: 28,
+		handler: fnPreviewData2
+	};
+
+	var grupBatal = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kd_strx','fs_nm_strx'
+		],
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/cb_batal'
+		}
+	});
+
+	var cboBatal = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '50%',
+		displayField: 'fs_nm_strx',
+		editable: false,
+		fieldLabel: 'Batal Keputusan',
+		id: 'cboBatal',
+		name: 'cboBatal',
+		store: grupBatal,
+		valueField: 'fs_kd_strx',
+		xtype: 'combobox',
+	};
+
+	var txtCatAlasan = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
+		anchor: '100%',
+		height : 80,
+		fieldLabel: 'Alasan Batal',
+		emptyText: 'Alasan Batal Keputusan (semua aktifitas Batal Keputusan terdapat tembusan email)',
+		id: 'txtCatAlasan',
+		name: 'txtCatAlasan',
+		xtype: 'textareafield',
+	};
+
+	var txtKdCab2 = {
+		id: 'txtKdCab2',
+		name: 'txtKdCab2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtNoApk2 = {
+		id: 'txtNoApk2',
+		name: 'txtNoApk2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtNoBatch2 = {
+		id: 'txtNoBatch2',
+		name: 'txtNoBatch2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtPJJ2 = {
+		id: 'txtPJJ2',
+		name: 'txtPJJ2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtJnsPembiayaan2 = {
+		id: 'txtJnsPembiayaan2',
+		name: 'txtJnsPembiayaan2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
 	function fnCekPrint()
 	{
 		Ext.MessageBox.show({
@@ -1452,6 +2004,134 @@ Ext.onReady(function() {
 		});
 	}
 
+	function fnCekPrint2()
+	{
+		Ext.MessageBox.show({
+			buttons: Ext.MessageBox.YESNO,
+			closable: false,
+			icon: Ext.Msg.QUESTION,
+			msg: 'Apakah anda yakin akan mencetak?',
+			title: 'SIAP',
+			fn: function(btn) {
+				if (btn == 'yes') {
+					Ext.Ajax.on('beforerequest', fnMaskShow);
+					Ext.Ajax.on('requestcomplete', fnMaskHide);
+					Ext.Ajax.on('requestexception', fnMaskHide);
+
+					Ext.Ajax.request({
+						method: 'POST',
+						url: 'analisa/cekprint',
+						params: {
+							'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+							'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+							'fs_jenis_pembiayaan': Ext.getCmp('txtJnsPembiayaan2').getValue()
+						},
+						success: function(response) {
+							var xtext = Ext.decode(response.responseText);
+							if (xtext.sukses === false) {
+								Ext.MessageBox.show({
+									buttons: Ext.MessageBox.OK,
+									closable: false,
+									icon: Ext.MessageBox.INFO,
+									msg: xtext.hasil,
+									title: 'SIAP'
+								});
+							}
+							else {
+								if (xtext.sukses === true && xtext.hasil == 'lanjut') {
+									fnPrint2();
+								}
+								else if (xtext.sukses === true && xtext.hasil == 'habis') {
+									Ext.MessageBox.show({
+										buttons: Ext.MessageBox.OK,
+										closable: false,
+										icon: Ext.MessageBox.INFO,
+										msg: 'Batas Cetak Kontrak Habis!!',
+										title: 'SIAP'
+									});
+								}
+							}
+						},
+						failure: function(response) {
+							var xtext = Ext.decode(response.responseText);
+							Ext.MessageBox.show({
+								buttons: Ext.MessageBox.OK,
+								closable: false,
+								icon: Ext.MessageBox.INFO,
+								msg: 'Printing Failed, Connection Failed!!',
+								title: 'SIAP'
+							});
+						}
+					});
+				}
+			}
+		});
+	}
+
+	function fnPrint2()
+	{
+		var kdcab = Ext.getCmp('txtKdCab2').getValue();
+		var noapk = Ext.getCmp('txtNoApk2').getValue();
+		Ext.Ajax.on('beforerequest', fnMaskShow);
+		Ext.Ajax.on('requestcomplete', fnMaskHide);
+		Ext.Ajax.on('requestexception', fnMaskHide);
+		
+		Ext.Ajax.request({
+			method: 'POST',
+			url: 'analisa/print',
+			params: {
+				'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+				'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+				'fs_jenis_pembiayaan': Ext.getCmp('txtJnsPembiayaan2').getValue()
+			},
+			success: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: xtext.hasil,
+					title: 'SIAP'
+				});
+
+				var url = xtext.url;
+				var title = xtext.title;
+				if (xtext.sukses === true) {
+					var popUp = Ext.create('Ext.window.Window', {
+						closable: false,
+	                    height: 450,
+	                    modal: true, 
+	                    width: 950,
+	                    layout:'anchor',
+	                    title: title,
+	                    buttons: [{
+							text: 'Close',
+							handler: function() {
+								vMask.hide();
+								popUp.hide();
+							}
+						}]
+                	});
+
+                	popUp.add({html: '<iframe height="450" width="942" src="'+ url + kdcab + '/' + noapk +'"></iframe>'});
+                	popUp.show();
+
+				}
+			},
+			failure: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: 'Printing Failed, Connection Failed!!',
+					title: 'SIAP'
+				});
+				fnMaskHide();
+			}
+		});
+	}
+
 	function fnCekSave()
 	{
 		if (this.up('form').getForm().isValid()) {
@@ -1521,7 +2201,7 @@ Ext.onReady(function() {
 	}
 
 	function fnSave()
-	{
+ 	{
 		var xnoapk = '';
 		var xcek = '';
 		var store = gridParsial.getStore();
@@ -1544,7 +2224,13 @@ Ext.onReady(function() {
 				'fn_no_batch': Ext.getCmp('txtNoBatch').getValue(),
 				'arr_no_apk': xnoapk,
 				'fs_keputusan_kredit': Ext.getCmp('cboKeputusan').getValue(),
-				'fs_catatan_analisa': Ext.getCmp('txtCatAnalisa').getValue()
+				'fs_catatan_analisa': Ext.getCmp('txtCatAnalisa').getValue(),
+				'fs_pjj': Ext.getCmp('txtPJJ').getValue(),
+				'fs_status_blacklist': Ext.getCmp('cboInternalChecking').getValue(),
+				'fs_status_reject': Ext.getCmp('cboRejectChecking').getValue(),
+				'fs_status_family': Ext.getCmp('cboFamilyChecking').getValue(),
+				'fs_grade': Ext.getCmp('cboAPKGrade').getValue(),
+				'fs_score': Ext.getCmp('cboAPKScore').getValue(),
 			},
 			success: function(response) {
 				var xtext = Ext.decode(response.responseText);
@@ -1591,6 +2277,124 @@ Ext.onReady(function() {
 		Ext.getCmp('txtCatAnalisaCabang').setValue('');
 		Ext.getCmp('txtCatAnalisa').setValue('');
 		Ext.getCmp('btnSave').setDisabled(false);
+		grupRetail.load();
+		grupFleet.load();
+	}
+
+	/* FUNCTION BATAL GROUP */
+	function fnCekSave2()
+	{
+		if (this.up('form').getForm().isValid()) {
+			Ext.Ajax.on('beforerequest', fnMaskShow);
+			Ext.Ajax.on('requestcomplete', fnMaskHide);
+			Ext.Ajax.on('requestexception', fnMaskHide);
+			Ext.Ajax.request({
+				method: 'POST',
+				url: 'analisa/ceksavebatalpusat',
+				params: {
+					'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+					'fn_no_batch': Ext.getCmp('txtNoBatch2').getValue(),
+				},
+				success: function(response) {
+					var xtext = Ext.decode(response.responseText);
+					if (xtext.sukses === false) {
+						Ext.MessageBox.show({
+							buttons: Ext.MessageBox.OK,
+							closable: false,
+							icon: Ext.MessageBox.INFO,
+							msg: xtext.hasil,
+							title: 'SIAP'
+						});
+					}
+					else {
+						if (xtext.sukses === true && xtext.hasil == 'lanjut') {
+							fnSave2();
+						}
+						else {
+							Ext.MessageBox.show({
+								buttons: Ext.MessageBox.YESNO,
+								closable: false,
+								icon: Ext.Msg.QUESTION,
+								msg: xtext.hasil,
+								title: 'SIAP',
+								fn: function(btn) {
+									if (btn == 'yes') {
+										fnSave2();
+									}
+								}
+							});
+						}
+					}
+				},
+				failure: function(response) {
+					var xtext = Ext.decode(response.responseText);
+					Ext.MessageBox.show({
+						buttons: Ext.MessageBox.OK,
+						closable: false,
+						icon: Ext.MessageBox.INFO,
+						msg: 'Saving Failed, Connection Failed!!',
+						title: 'SIAP'
+					});
+					fnMaskHide();
+				}
+			});
+		}
+	}
+
+	function fnSave2()
+	{
+		Ext.Ajax.on('beforerequest', fnMaskShow);
+		Ext.Ajax.on('requestcomplete', fnMaskHide);
+		Ext.Ajax.on('requestexception', fnMaskHide);
+		Ext.Ajax.request({
+			method: 'POST',
+			url: 'analisa/savebatalpusat',
+			params: {
+				'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+				'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+				'fn_no_batch': Ext.getCmp('txtNoBatch2').getValue(),
+				'fs_catatan_batal_keputusan': Ext.getCmp('txtCatAlasan').getValue()
+			},
+			success: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: xtext.hasil,
+					title: 'SIAP'
+				});
+				if (xtext.sukses === true) {
+					var tabPanel = Ext.ComponentQuery.query('tabpanel')[0];
+					tabPanel.setActiveTab('tab1');
+					fnReset2();
+				}
+			},
+			failure: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: 'Saving Failed, Connection Failed!!',
+					title: 'SIAP'
+				});
+				fnMaskHide();
+			}
+		});
+	}
+ 
+	function fnReset2()
+	{
+		Ext.getCmp('txtKdCab2').setValue('');
+		Ext.getCmp('txtNoApk2').setValue('');
+		Ext.getCmp('txtNoBatch2').setValue('');
+		Ext.getCmp('txtJnsPembiayaan2').setValue('');
+		Ext.getCmp('cboPJJ').setValue('');
+		Ext.getCmp('txtNama2').setValue('');
+		Ext.getCmp('cboBatal').setValue('');
+		Ext.getCmp('txtCatAlasan').setValue('');
+		Ext.getCmp('btnSave1').setDisabled(false);
 		grupRetail.load();
 		grupFleet.load();
 	}
@@ -1675,6 +2479,7 @@ Ext.onReady(function() {
 									txtKdCab,
 									txtNoApk,
 									txtNoBatch,
+									txtPJJ,
 									txtJnsPembiayaan,
 									txtNama
 								]
@@ -1819,6 +2624,111 @@ Ext.onReady(function() {
 					iconCls: 'icon-reset',
 					text: 'Reset',
 					handler: fnReset
+				}]
+			},{
+				id: 'tab3',
+				bodyStyle: 'background-color: '.concat(gBasePanel),
+				border: false,
+				frame: false,
+				title: 'Batal Keputusan',
+				xtype: 'form',
+				items: [{
+					fieldDefaults: {
+						labelAlign: 'right',
+						labelSeparator: '',
+						labelWidth: 140,
+						msgTarget: 'side'
+					},
+					anchor: '100%',
+					style: 'padding: 5px;',
+					title: 'Batal Keputusan',
+					xtype: 'fieldset',
+					items: [{
+						anchor: '100%',
+						layout: 'hbox',
+						xtype: 'container',
+						items: [{
+							flex: 2,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									cboPJJ,
+									txtNama2,
+									txtKdCab2,
+									txtNoApk2,
+									txtNoBatch2,
+									txtJnsPembiayaan2
+								]
+							}]
+						},{
+							flex: 1,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									btnPrevP2
+								]
+							}]
+						},{
+							flex: 1,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									btnPrevD2
+								]
+							}]
+						}]
+					}]
+				},{
+					fieldDefaults: {
+						labelAlign: 'right',
+						labelSeparator: '',
+						labelWidth: 140,
+						msgTarget: 'side'
+					},
+					title: 'Keputusan Kredit',
+					xtype: 'fieldset',
+					items: [{
+						anchor: '100%',
+						layout: 'hbox',
+						xtype: 'container',
+						items: [{
+							flex: 2,
+							layout: 'anchor',
+							xtype: 'container',
+							style: 'padding: 5px;',
+							items: [{
+								style: 'padding: 5px;',
+								xtype: 'fieldset',
+								items: [
+									cboBatal,
+									txtCatAlasan
+								]
+							}]
+						}]
+					}]
+				}],
+				buttons: [{
+					iconCls: 'icon-save',
+					id: 'btnSave1',
+					name: 'btnSave1',
+					text: 'Save',
+					handler: fnCekSave2
+				},{
+					iconCls: 'icon-reset',
+					text: 'Reset',
+					handler: fnReset2
 				}]
 			}]
 		}]

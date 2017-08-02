@@ -615,12 +615,66 @@ class MAnalisa extends CI_Model
 
 	function listRetailBatalPusatAll($sCari)
 	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' 
+			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+		");
 
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
 	}
 
 	function listRetailBatalPusat($sCari,$nStart,$nLimit)
 	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' 
+			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+		");
 
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$xSQL = $xSQL.("
+			ORDER BY a.fn_no_apk DESC LIMIT ".$nStart.",".$nLimit."
+		");
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
 	}
 
 	function listFleetPusatAll($sCari,$sFlag)
@@ -751,6 +805,76 @@ class MAnalisa extends CI_Model
 			AND a.fn_no_batch IS NOT NULL
 			AND (a.fs_grade = 'C' OR a.fs_grade = 'D')
 			AND (a.fn_pokok_pembiayaan_dealer > e.fn_maks_plafon OR e.fs_maks_score != a.fs_score)
+		");
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$xSQL = $xSQL.("
+			GROUP BY a.fn_no_batch
+			ORDER BY a.fn_no_batch ASC LIMIT ".$nStart.",".$nLimit."
+		");
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function listFleetBatalPusatAll($sCari)
+	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1'
+			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+		");
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND (a.fs_nama_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_handphone_konsumen LIKE '%".trim($sCari)."%'
+					OR a.fs_telepon_konsumen LIKE '%".trim($sCari)."%')
+			");
+		}
+
+		$xSQL = $xSQL.("
+			GROUP BY a.fn_no_batch
+			ORDER BY a.fn_no_batch ASC
+		");
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function listFleetBatalPusat($sCari,$nStart,$nLimit)
+	{
+		$xSQL = ("
+			SELECT DISTINCT 
+				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
+				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
+				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
+				b.fs_reject_checking, b.fs_family_checking
+			FROM tx_apk a
+			LEFT JOIN tx_apk_batal_keputusan b 
+			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
+			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' 
+			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
+			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
 		");
 
 		if (trim($sCari) <> '')

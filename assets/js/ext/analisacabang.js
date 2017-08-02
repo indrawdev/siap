@@ -1368,7 +1368,7 @@ Ext.onReady(function() {
 		fields: [
 			'fs_kode_cabang','fn_no_apk','fs_pjj','fs_nama_konsumen',
 			'fs_score','fs_grade','fs_internal_checking',
-			'fs_reject_checking','fs_family_checking'
+			'fs_reject_checking','fs_family_checking','fs_jenis_pembiayaan'
 		],
 		pageSize: 25,
 		proxy: {
@@ -1397,7 +1397,7 @@ Ext.onReady(function() {
 		fields: [
 			'fs_kode_cabang','fn_no_apk','fs_pjj','fn_no_batch',
 			'fs_nama_konsumen','fs_score','fs_grade','fs_internal_checking',
-			'fs_reject_checking','fs_family_checking'
+			'fs_reject_checking','fs_family_checking','fs_jenis_pembiayaan'
 		],
 		pageSize: 25,
 		proxy: {
@@ -1432,6 +1432,7 @@ Ext.onReady(function() {
 			{xtype: 'rownumberer', width: 45},
 			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
 			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true},
+			{text: "Jenis Pembiayaan", dataIndex: 'fs_jenis_pembiayaan', hidden: true, menuDisabled: true},
 			{text: "No. PJJ", dataIndex: 'fs_pjj', locked: true, menuDisabled: true, width: 120},
 			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
 			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
@@ -1480,6 +1481,7 @@ Ext.onReady(function() {
 			{
 				Ext.getCmp('txtKdCab2').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoApk2').setValue(record.get('fn_no_apk'));
+				Ext.getCmp('txtJnsPembiayaan2').setValue(record.get('fs_jenis_pembiayaan'));
 				Ext.getCmp('cboPJJ').setValue(record.get('fs_pjj'));
 				Ext.getCmp('txtNama2').setValue(record.get('fs_nama_konsumen'));
 
@@ -1508,6 +1510,8 @@ Ext.onReady(function() {
 		columns: [
 			{xtype: 'rownumberer', width: 45},
 			{text: "Kode Cabang", dataIndex: 'fs_kode_cabang', hidden: true, menuDisabled: true},
+			{text: "No. APK", dataIndex: 'fn_no_apk', hidden: true, menuDisabled: true},
+			{text: "Jenis Pembiayaan", dataIndex: 'fs_jenis_pembiayaan', hidden: true, menuDisabled: true},
 			{text: "No. Batch", dataIndex: 'fn_no_batch', locked: true, menuDisabled: true, width: 120},
 			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
 			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
@@ -1555,12 +1559,13 @@ Ext.onReady(function() {
 			itemdblclick: function(grid, record)
 			{
 				Ext.getCmp('txtKdCab2').setValue(record.get('fs_kode_cabang'));
+				Ext.getCmp('txtNoApk2').setValue(record.get('fn_no_apk'));
 				Ext.getCmp('txtNoBatch2').setValue(record.get('fn_no_batch'));
+				Ext.getCmp('txtJnsPembiayaan2').setValue(record.get('fs_jenis_pembiayaan'));
 				Ext.getCmp('cboPJJ').setValue(record.get('fn_no_batch'));
 				Ext.getCmp('txtNama2').setValue(record.get('fs_nama_konsumen'));
 
 				// clear field
-				Ext.getCmp('txtNoApk2').setValue('');
 
 				winCari.hide();
 			}
@@ -1633,6 +1638,134 @@ Ext.onReady(function() {
 		}]
 	});
 
+	var grupPreData2 = Ext.create('Ext.data.Store', {
+		autoLoad: false,
+		fields: [
+			'fs_kode_cabang',
+			'fs_kode_dokumen','fs_dokumen_upload',
+			'fd_tanggal_buat', 'fs_iduser_buat'
+		],
+		pageSize: 25,
+		proxy: {
+			actionMethods: {
+				read: 'POST'
+			},
+			reader: {
+				rootProperty: 'hasil',
+				totalProperty: 'total',
+				type: 'json'
+			},
+			type: 'ajax',
+			url: 'analisa/predatapendukung'
+		},
+		listeners: {
+			beforeload: function(store) {
+				Ext.apply(store.getProxy().extraParams, {
+					'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+					'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+					'fn_no_batch': Ext.getCmp('txtNoBatch2').getValue()
+				});
+			}
+		}
+	});
+
+	var gridPreData2 = Ext.create('Ext.grid.Panel',{
+		anchor: '100%',
+		autoDestroy: true,
+		height: 450,
+		width: 550,
+		sortableColumns: false,
+		store: grupPreData2,
+		columns: [
+			{xtype: 'rownumberer', width: 45},
+			{text: "Kode Dokumen", dataIndex: 'fs_kode_dokumen', menuDisabled: true, width: 100},
+			{text: "Nama Dokumen", dataIndex: 'fs_nama_dokumen', menuDisabled: true, width: 250},
+			{text: "File", dataIndex: 'fs_dokumen_upload', menuDisabled: true, hidden: true},
+			{text: "Tanggal", dataIndex: 'fd_tanggal_buat', menuDisabled: true, width: 100},
+			{text: "User", dataIndex: 'fs_iduser_buat', menuDisabled: true, width: 50}
+		],
+		bbar: Ext.create('Ext.PagingToolbar', {
+			displayInfo: true,
+			pageSize: 25,
+			plugins: Ext.create('Ext.ux.ProgressBarPager', {}),
+			store: grupPreData2,
+			items:[
+				'-', {
+				text: 'Exit',
+				handler: function() {
+					winPreData2.hide();
+				}
+			}]
+		}),
+		listeners: {
+			celldblclick: function (grid, td, cellIndex, record, tr, rowIndex, e, eOpts)
+			{
+				var dokumen_name = record.get('fs_nama_dokumen');
+				var dokumen_url = 'uploads/' + record.get('fs_dokumen_upload');
+
+				var viewImage =  Ext.create('Ext.Panel', {
+					items: Ext.create('Ext.view.View', {
+						xtype: 'dataview',
+						tpl: [
+							'<div style="overflow: auto; width:888; height:465; text-align:center;">',
+					        '<img src="' + dokumen_url + '" height:"100%" width:"100%"/>',
+					        '</div>'
+					    	],
+					})
+				});
+
+				var winImage = Ext.create('Ext.window.Window', {
+					title: dokumen_name,
+					border: false,
+					frame: false,
+					autoScroll: false,
+					width: 900,
+					height: 500,
+					collapsible: false,
+					resizable: true,
+					layout: 'fit',
+					items: [
+						viewImage
+					]
+				});
+
+				winImage.show();
+			}
+		},
+		viewConfig: {
+			enableTextSelection: true
+		}
+	});
+
+	var winPreData2 = Ext.create('Ext.window.Window', {
+		border: false,
+		closable: false,
+		draggable: true,
+		frame: false,
+		layout: 'fit',
+		plain: true,
+		resizable: false,
+		title: 'Preview Data Pendukung',
+		items: [
+			gridPreData2
+		],
+		listeners: {
+			beforehide: function() {
+				vMask.hide();
+			},
+			beforeshow: function() {
+				grupPreData2.load();
+				vMask.show();
+			}
+		}
+	});
+
+	function fnPreviewData2()
+	{
+		winPreData2.show();
+		winPreData2.center();
+	}
+
 	var cboPJJ = {
 		afterLabelTextTpl: required,
 		allowBlank: false,
@@ -1679,7 +1812,7 @@ Ext.onReady(function() {
 		text: 'Preview Pemeriksaan APK',
 		xtype: 'button',
 		height: 28,
-		//handler: fnCekPrint2
+		handler: fnCekPrint2
 	};
 
 	// button preview data pendukung 2
@@ -1691,7 +1824,7 @@ Ext.onReady(function() {
 		text: 'Preview Data Pendukung',
 		xtype: 'button',
 		height: 28,
-		//handler: fnPreviewData
+		handler: fnPreviewData2
 	};
 
 	var grupBatal = Ext.create('Ext.data.Store', {
@@ -1761,6 +1894,13 @@ Ext.onReady(function() {
 	var txtPJJ2 = {
 		id: 'txtPJJ2',
 		name: 'txtPJJ2',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtJnsPembiayaan2 = {
+		id: 'txtJnsPembiayaan2',
+		name: 'txtJnsPembiayaan2',
 		xtype: 'textfield',
 		hidden: true
 	};
@@ -1844,6 +1984,134 @@ Ext.onReady(function() {
 				'fs_kode_cabang': Ext.getCmp('txtKdCab').getValue(),
 				'fn_no_apk': Ext.getCmp('txtNoApk').getValue(),
 				'fs_jenis_pembiayaan': Ext.getCmp('txtJnsPembiayaan').getValue()
+			},
+			success: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: xtext.hasil,
+					title: 'SIAP'
+				});
+
+				var url = xtext.url;
+				var title = xtext.title;
+				if (xtext.sukses === true) {
+					var popUp = Ext.create('Ext.window.Window', {
+						closable: false,
+	                    height: 450,
+	                    modal: true, 
+	                    width: 950,
+	                    layout:'anchor',
+	                    title: title,
+	                    buttons: [{
+							text: 'Close',
+							handler: function() {
+								vMask.hide();
+								popUp.hide();
+							}
+						}]
+                	});
+
+                	popUp.add({html: '<iframe height="450" width="942" src="'+ url + kdcab + '/' + noapk +'"></iframe>'});
+                	popUp.show();
+
+				}
+			},
+			failure: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: 'Printing Failed, Connection Failed!!',
+					title: 'SIAP'
+				});
+				fnMaskHide();
+			}
+		});
+	}
+
+	function fnCekPrint2()
+	{
+		Ext.MessageBox.show({
+			buttons: Ext.MessageBox.YESNO,
+			closable: false,
+			icon: Ext.Msg.QUESTION,
+			msg: 'Apakah anda yakin akan mencetak?',
+			title: 'SIAP',
+			fn: function(btn) {
+				if (btn == 'yes') {
+					Ext.Ajax.on('beforerequest', fnMaskShow);
+					Ext.Ajax.on('requestcomplete', fnMaskHide);
+					Ext.Ajax.on('requestexception', fnMaskHide);
+
+					Ext.Ajax.request({
+						method: 'POST',
+						url: 'analisa/cekprint',
+						params: {
+							'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+							'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+							'fs_jenis_pembiayaan': Ext.getCmp('txtJnsPembiayaan2').getValue()
+						},
+						success: function(response) {
+							var xtext = Ext.decode(response.responseText);
+							if (xtext.sukses === false) {
+								Ext.MessageBox.show({
+									buttons: Ext.MessageBox.OK,
+									closable: false,
+									icon: Ext.MessageBox.INFO,
+									msg: xtext.hasil,
+									title: 'SIAP'
+								});
+							}
+							else {
+								if (xtext.sukses === true && xtext.hasil == 'lanjut') {
+									fnPrint2();
+								}
+								else if (xtext.sukses === true && xtext.hasil == 'habis') {
+									Ext.MessageBox.show({
+										buttons: Ext.MessageBox.OK,
+										closable: false,
+										icon: Ext.MessageBox.INFO,
+										msg: 'Batas Cetak Kontrak Habis!!',
+										title: 'SIAP'
+									});
+								}
+							}
+						},
+						failure: function(response) {
+							var xtext = Ext.decode(response.responseText);
+							Ext.MessageBox.show({
+								buttons: Ext.MessageBox.OK,
+								closable: false,
+								icon: Ext.MessageBox.INFO,
+								msg: 'Printing Failed, Connection Failed!!',
+								title: 'SIAP'
+							});
+						}
+					});
+				}
+			}
+		});
+	}
+
+	function fnPrint2()
+	{
+		var kdcab = Ext.getCmp('txtKdCab2').getValue();
+		var noapk = Ext.getCmp('txtNoApk2').getValue();
+		Ext.Ajax.on('beforerequest', fnMaskShow);
+		Ext.Ajax.on('requestcomplete', fnMaskHide);
+		Ext.Ajax.on('requestexception', fnMaskHide);
+		
+		Ext.Ajax.request({
+			method: 'POST',
+			url: 'analisa/print',
+			params: {
+				'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+				'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+				'fs_jenis_pembiayaan': Ext.getCmp('txtJnsPembiayaan2').getValue()
 			},
 			success: function(response) {
 				var xtext = Ext.decode(response.responseText);
@@ -2050,11 +2318,50 @@ Ext.onReady(function() {
 				method: 'POST',
 				url: 'analisa/ceksavebatal',
 				params: {
-					'fn_no_apk': '',
+					'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+					'fn_no_batch': Ext.getCmp('txtNoBatch2').getValue(),
 				},
 				success: function(response) {
+					var xtext = Ext.decode(response.responseText);
+					if (xtext.sukses === false) {
+						Ext.MessageBox.show({
+							buttons: Ext.MessageBox.OK,
+							closable: false,
+							icon: Ext.MessageBox.INFO,
+							msg: xtext.hasil,
+							title: 'SIAP'
+						});
+					}
+					else {
+						if (xtext.sukses === true && xtext.hasil == 'lanjut') {
+							fnSave2();
+						}
+						else {
+							Ext.MessageBox.show({
+								buttons: Ext.MessageBox.YESNO,
+								closable: false,
+								icon: Ext.Msg.QUESTION,
+								msg: xtext.hasil,
+								title: 'SIAP',
+								fn: function(btn) {
+									if (btn == 'yes') {
+										fnSave2();
+									}
+								}
+							});
+						}
+					}
 				},
 				failure: function(response) {
+					var xtext = Ext.decode(response.responseText);
+					Ext.MessageBox.show({
+						buttons: Ext.MessageBox.OK,
+						closable: false,
+						icon: Ext.MessageBox.INFO,
+						msg: 'Saving Failed, Connection Failed!!',
+						title: 'SIAP'
+					});
+					fnMaskHide();
 				}
 			});
 		}
@@ -2069,19 +2376,53 @@ Ext.onReady(function() {
 			method: 'POST',
 			url: 'analisa/savebatal',
 			params: {
-				'fs_kode_cabang': '',
-				'fn_no_apk': '',
+				'fs_kode_cabang': Ext.getCmp('txtKdCab2').getValue(),
+				'fn_no_apk': Ext.getCmp('txtNoApk2').getValue(),
+				'fn_no_batch': Ext.getCmp('txtNoBatch2').getValue(),
+				'fs_catatan_batal_keputusan': Ext.getCmp('txtCatAlasan').getValue()
 			},
 			success: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: xtext.hasil,
+					title: 'SIAP'
+				});
+				if (xtext.sukses === true) {
+					var tabPanel = Ext.ComponentQuery.query('tabpanel')[0];
+					tabPanel.setActiveTab('tab1');
+					fnReset2();
+				}
 			},
 			failure: function(response) {
+				var xtext = Ext.decode(response.responseText);
+				Ext.MessageBox.show({
+					buttons: Ext.MessageBox.OK,
+					closable: false,
+					icon: Ext.MessageBox.INFO,
+					msg: 'Saving Failed, Connection Failed!!',
+					title: 'SIAP'
+				});
+				fnMaskHide();
 			}
 		});
 	}
 
 	function fnReset2()
 	{
-
+		Ext.getCmp('txtKdCab2').setValue('');
+		Ext.getCmp('txtNoApk2').setValue('');
+		Ext.getCmp('txtNoBatch2').setValue('');
+		Ext.getCmp('txtJnsPembiayaan2').setValue('');
+		Ext.getCmp('cboPJJ').setValue('');
+		Ext.getCmp('txtNama2').setValue('');
+		Ext.getCmp('cboBatal').setValue('');
+		Ext.getCmp('txtCatAlasan').setValue('');
+		Ext.getCmp('btnSave1').setDisabled(false);
+		grupRetail.load();
+		grupFleet.load();
 	}
 
 	var frmAnalisa = Ext.create('Ext.form.Panel', {
@@ -2344,7 +2685,8 @@ Ext.onReady(function() {
 									txtNama2,
 									txtKdCab2,
 									txtNoApk2,
-									txtNoBatch2
+									txtNoBatch2,
+									txtJnsPembiayaan2
 								]
 							}]
 						},{
@@ -2407,11 +2749,11 @@ Ext.onReady(function() {
 					id: 'btnSave1',
 					name: 'btnSave1',
 					text: 'Save',
-					//handler: fnCekSave
+					handler: fnCekSave2
 				},{
 					iconCls: 'icon-reset',
 					text: 'Reset',
-					//handler: fnReset
+					handler: fnReset2
 				}]
 			}]
 		}]
