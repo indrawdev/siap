@@ -90,8 +90,8 @@ class Report extends CI_Controller
 		$data['detailltransaksi'] = $this->mReport->detailltransaksi($kdcab, $apk);
 		$data['asuransi'] = $this->mReport->asuransi($kdcab, $apk);
 		$data['pengurus'] = $this->mReport->pengurus($kdcab, $apk);
-		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
 		$data['data_asuransi'] = $this->mReport->data_asuransi($kdcab, $apk);
+		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
 		$data['data_perluasan'] = $this->mReport->data_perluasan($kdcab, $apk);
 		$data['internal_checking'] = $this->mReport->internal_checking($kdcab, $apk);
 		$data['reject_checking'] = $this->mReport->reject_checking($kdcab, $apk);
@@ -150,8 +150,8 @@ class Report extends CI_Controller
 		$data['denda_perhari'] = $this->mReport->denda_perhari();
 		$data['detailltransaksi'] = $this->mReport->detailltransaksi($kdcab, $apk);
 		$data['asuransi'] = $this->mReport->asuransi($kdcab, $apk);
-		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
 		$data['data_asuransi'] = $this->mReport->data_asuransi($kdcab, $apk);
+		$data['data_asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
 		$data['data_perluasan'] = $this->mReport->data_perluasan($kdcab, $apk);
 		$data['internal_checking'] = $this->mReport->internal_checking($kdcab, $apk);
 		$data['reject_checking'] = $this->mReport->reject_checking($kdcab, $apk);
@@ -209,9 +209,21 @@ class Report extends CI_Controller
 
 		// referensi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
+		$data['asuransi'] = $this->mReport->asuransi($kdcab, $apk);
 		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);
 		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($kdcab, $apk);
 		$data['kategori_usaha'] = $this->mReport->kategori_usaha($kdcab, $apk);
+		$data['denda_perhari'] = $this->mReport->denda_perhari($kdcab, $apk);
+		$data['pinalti_lunas'] = $this->mReport->pinalti_lunas($kdcab, $apk);
+		$data['asuransi_mix'] = $this->mReport->data_asuransi_mix($kdcab, $apk);
+		$data['asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
+		
+		// biaya
+		$data['biaya_survey'] = $this->mReport->biaya_survey($kdcab, $apk);
+		$data['biaya_asuransi'] = $this->mReport->biaya_asuransi($kdcab, $apk);
+		$data['biaya_provisi'] = $this->mReport->biaya_provisi($kdcab, $apk);
+		$data['biaya_notaris'] = $this->mReport->biaya_notaris($kdcab, $apk);
 
 		$html = $this->load->view('print/vstruktur', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);

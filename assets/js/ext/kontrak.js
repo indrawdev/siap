@@ -479,7 +479,7 @@ Ext.onReady(function() {
 						border: false,
 						closable: false,
 						frame: false,
-	                    height: 450,
+	                    height: 650,
 	                    width: 950,
 	                    layout:'anchor',
 	                    title: title,
@@ -492,7 +492,7 @@ Ext.onReady(function() {
 						}]
                 	});
 
-					popUp.add({html: '<iframe height="450", width="942" src="'+ url + kdcab + '/' + noapk + '/' + kop +'"></iframe>'});
+					popUp.add({html: '<iframe height="650", width="942" src="'+ url + kdcab + '/' + noapk + '/' + kop +'"></iframe>'});
 	                popUp.show();
 					fnReset();
 				}

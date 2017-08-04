@@ -826,7 +826,7 @@
 						<tr>
 							<td>TLO</td>
 							<?php 
-								if (!empty($data_asuransi)) {
+								if (count($data_asuransi) > 0) {
 									$count = 0;
 									foreach ($data_asuransi as $key) {
 										$count = $count + 1;
@@ -878,7 +878,7 @@
 						<tr>
 							<td>ALLRISK</td>
 							<?php 
-								if (!empty($data_asuransi)) {
+								if (count($data_asuransi) > 0) {
 									$count = 0;
 									foreach ($data_asuransi as $key) {
 										$count = $count + 1;
@@ -1232,6 +1232,31 @@
 					</tbody>
 				</table>
 			</td>
+		</tr>
+		<br>
+		<tr>
+			<td width="30%"></td>
+			<td width="40%" align="center"><b>NFIS REPORT</b></td>
+			<td width="30%"></td>
+		</tr>
+		<tr>
+			<td width="100%"><hr></td>
+		</tr>
+		<tr>
+			<td width="30%"></td>
+			<td width="40%" align="center">
+				<b><u>KONSUMEN DIATAS TIDAK DITEMUKAN DI NFIS-APPI</u></b>
+			</td>
+			<td width="30%"></td>
+		</tr>
+		<br>
+		<tr>
+			<td width="100%" align="justify">
+				<i>This NFIS Report is furnished by Biro Kredit Indonesia in strict confidence under the rules prescribed by Biro Kredit Indonesia for your exclusive use an a basis for marketing/credit business decision and for no other purpose.</i> 
+			</td>
+		</tr>
+		<tr>
+			<td width="100%"><hr></td>
 		</tr>
 		<br>
 		<tr>
