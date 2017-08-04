@@ -47,7 +47,7 @@
 			<td width="3%" align="left">1.</td>
 			<td width="35%" align="left">Jenis Kegiatan Usaha</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php if (!empty($kategori_usaha->fs_nama_sektor_ekonomi)) { echo $kategori_usaha->fs_nama_sektor_ekonomi; } ?></td>
+			<td width="61%" align="left" height="20"><?php if (!empty($kategori_usaha->fs_nama_sektor_ekonomi)) { echo $kategori_usaha->fs_nama_sektor_ekonomi; } ?></td>
 		</tr>
 		<tr>
 			<td width="3%" align="left">2.</td>
@@ -99,7 +99,7 @@
 			<td width="3%" align="left">c.</td>
 			<td width="32%" align="left">Warna</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php echo $detail->fs_warna_kendaraan; ?></td>
+			<td width="61%" align="left"><?php echo strtoupper($detail->fs_warna_kendaraan); ?></td>
 		</tr>
 		<tr>
 			<td width="3%" align="left"></td>
@@ -121,7 +121,7 @@
 			<td width="32%" align="left">Nomor Polisi</td>
 			<td width="1%">:</td>
 			<td width="61%" align="left">
-				<?php echo $detail->fs_kode_wilayah_no_polisi . $detail->fs_no_polisi . $detail->fs_kode_akhir_wilayah_no_polisi; ?>
+				<?php if (!empty($detail->fs_kode_wilayah_no_polisi . $detail->fs_no_polisi . $detail->fs_kode_akhir_wilayah_no_polisi)) { echo $detail->fs_kode_wilayah_no_polisi . $detail->fs_no_polisi . $detail->fs_kode_akhir_wilayah_no_polisi; } else { echo '-'; } ?>
 			</td>
 		</tr>
 		<tr>
@@ -153,7 +153,12 @@
 			<td width="3%" align="left">7.</td>
 			<td width="35%" align="left">Pokok Hutang</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php echo "Rp. " . number_format($detail->fn_piutang_dealer - $detail->fn_bunga_dealer) . ",-"; ?></td>
+			<td width="61%" align="left">
+				<?php
+					$jml = $detail->fn_harga_otr - $detail->fn_uang_muka_dealer + $detail->fn_asuransi_dikredit_dealer;
+					echo "Rp. " . number_format($jml) . ",-";
+				?>
+			</td>
 		</tr>
 		<tr>
 			<td width="3%" align="left">8.</td>
@@ -231,7 +236,8 @@
 		<tr>
 			<td width="3%" align="left">13.</td>
 			<td width="35%" align="left">Asuransi Jiwa</td>
-			<td width="62%"></td>
+			<td width="1%">:</td>
+			<td width="61%" align="left">-</td>
 		</tr>
 		<tr>
 			<td width="3%" align="left">14.</td>

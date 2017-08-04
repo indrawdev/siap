@@ -470,7 +470,7 @@
 			<td width="1%">:</td>
 			<td width="15%" align="left" style="border-right: 1px solid black;"><?php echo number_format($detail->fn_jumlah_angsuran_dimuka); ?></td>
 			<td width="2%"></td>
-			<td width="13%" align="left">U. Muka (<?php if (!empty($detail->fs_uang_muka_dealer)) { echo substr($detail->fs_uang_muka_dealer,0,2); } else { echo ''; } ?>%-<?php if (!empty($detail->fs_uang_muka_dealer)) { echo substr($detail->fs_uang_muka_dealer,0,2); } else { echo ''; } ?>%)</td>
+			<td width="13%" align="left">U. Muka (<?php echo substr($detail->fs_uang_muka_dealer,0,2)?>%-<?php echo substr($detail->fs_uang_muka_dealer,0,2)?>%)</td>
 			<td width="1%">:</td>
 			<td width="14%" align="right"><?php echo number_format($detail->fn_uang_muka_dealer); ?></td>
 			<td width="2%" style="border-right: 1px solid black;"></td>

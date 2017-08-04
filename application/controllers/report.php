@@ -238,7 +238,7 @@ class Report extends CI_Controller
 		if ($kop == 1) {
 			$pdf->setCellHeightRatio(1.24);
 		} else {
-			$pdf->setCellHeightRatio(1.32);
+			$pdf->setCellHeightRatio(1.28);
 		}
 		$pdf->AddPage('P', 'A4');
 		$pdf->writeHTML($html, true, false, true, false, '');
