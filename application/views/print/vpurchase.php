@@ -163,7 +163,14 @@
 		</tr>
 		<tr>
 			<td width="60%"></td>
-			<td width="30%" align="left"><?php echo $cabang->fs_jabatan_pimpinan; ?></td>
+			<td width="30%" align="left">
+				<?php if (!empty($nama->fs_nama_ca)) {
+						echo $nama->fs_nama_ca;
+					} else {
+						echo $cabang->fs_nama_pimpinan;
+					}
+				?>
+			</td>
 			<td width="10%"></td>
 		</tr>
 		<tr>

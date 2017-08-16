@@ -345,6 +345,15 @@ Ext.onReady(function() {
 		xtype: 'checkboxfield'
 	};
 
+	var txtNamaCA = {
+		anchor: '95%',
+		fieldLabel: 'Penanda Tangan',
+		emptyText: 'JIKA DIKOSONGKAN, AKAN DIISI NAMA KEPALA CABANG',
+		id: 'txtNamaCA',
+		name: 'txtNamaCA',
+		xtype: 'textfield'
+	};
+
 	var txtKdCab = {
 		id: 'txtKdCab',
 		name: 'txtKdCab',
@@ -459,7 +468,8 @@ Ext.onReady(function() {
 			params: {
 				'fs_kode_cabang': kdcab,
 				'fn_no_apk': noapk,
-				'fs_kode_dokumen': Ext.getCmp('txtKdDok').getValue()
+				'fs_kode_dokumen': Ext.getCmp('txtKdDok').getValue(),
+				'fs_nama_ca': Ext.getCmp('txtNamaCA').getValue()
 			},
 			success: function(response) {
 				var xtext = Ext.decode(response.responseText);
@@ -518,6 +528,7 @@ Ext.onReady(function() {
 		Ext.getCmp('txtKdCab').setValue('');
 		Ext.getCmp('txtNoApk').setValue('');
 		Ext.getCmp('txtKdDok').setValue('');
+		Ext.getCmp('txtNamaCA').setValue('');
 		Ext.getCmp('cekKop').setValue('');
 		grupApk.load();
 		grupDok.load();
@@ -551,7 +562,8 @@ Ext.onReady(function() {
 						cboDok,
 						txtKdCab,
 						txtNoApk,
-						txtKdDok
+						txtKdDok,
+						txtNamaCA
 					]
 				},{
 					flex: 1,

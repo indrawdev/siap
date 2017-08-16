@@ -785,4 +785,18 @@ class MReport extends CI_Model
 		return $sSQL->row();
 	}
 
+	function check_nama($sKdCab, $nApk)
+	{
+		$xSQL = ("
+			SELECT fs_nama_ca 
+			FROM tx_apk_cetak 
+			WHERE fn_no_apk = '".trim($nApk)."'
+			AND fs_kode_cabang = '".trim($sKdCab)."'
+			ORDER BY fd_tanggal_cetak DESC LIMIT 1
+		");	
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL->row();
+	}
+
 }

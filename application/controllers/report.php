@@ -181,6 +181,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		$html = $this->load->view('print/vangsuran', $data, true);
 		$pdf = new Pdfcustom('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PERJANJIAN PEMBELIAN DENGAN PEMBAYARAN SECARA ANGSURAN');
@@ -206,6 +208,7 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
 
 		// referensi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
@@ -254,6 +257,7 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
 
 		// referensi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
@@ -302,6 +306,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		$html = $this->load->view('print/vtambahan', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PERJANJIAN TAMBAHAN');
@@ -330,6 +336,8 @@ class Report extends CI_Controller
 		$data['kop'] = $kop;
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		$html = $this->load->view('print/vsyaratumum', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SYARAT-SYARAT UMUM');
@@ -358,6 +366,7 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+
 		// referensi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 
@@ -390,6 +399,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		// referensi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 
@@ -422,6 +433,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		$html = $this->load->view('print/vjaminanfidusia', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT KUASA PEMBEBANAN JAMINAN FIDUSIA');
@@ -452,6 +465,7 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+
 		$html = $this->load->view('print/vasuransi', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PERNYATAAN ASURANSI');
@@ -481,6 +495,7 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+
 		$html = $this->load->view('print/vbedadata', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PERNYATAAN BERHUBUNGAN DENGAN AD');
@@ -510,6 +525,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		// relasi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 
@@ -542,6 +559,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		// relasi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
@@ -575,6 +594,7 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+
 		$html = $this->load->view('print/vmasatenggang', $data, true);
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('SURAT PERNYATAAN MASA TENGGANG');
@@ -639,6 +659,8 @@ class Report extends CI_Controller
 		$data['kop'] = $kop;
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		// relasi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$html = $this->load->view('print/vpemesanan', $data, true);
@@ -671,6 +693,8 @@ class Report extends CI_Controller
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
 		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		// relasi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$html = $this->load->view('print/vpurchase', $data, true);
@@ -702,6 +726,8 @@ class Report extends CI_Controller
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+
 		// relasi
 		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
 		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);

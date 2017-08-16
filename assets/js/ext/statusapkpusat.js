@@ -97,6 +97,7 @@ Ext.onReady(function() {
             me.selectMonth = new Date((d[0] + 1) + '/1/' + d[1]);
         }
     });
+
 	Ext.define('DataGridStatus', {
 		extend: 'Ext.data.Model',
 		fields: [
@@ -104,6 +105,9 @@ Ext.onReady(function() {
 			{name: 'fs_pjj', type: 'string'},
 			{name: 'fn_no_apk', type: 'string'},
 			{name: 'fs_nama_konsumen', type: 'string'},
+			{name: 'fs_status_survey', type: 'string'},
+			{name: 'fs_status_keputusan_pusat', type: 'string'},
+			{name: 'fs_status_transfer', type: 'string'},
 			{name: 'fs_keputusan_kredit_pusat', type: 'string'},
 			{name: 'fs_catatan_analisa_pusat', type: 'string'}
 		]
@@ -156,7 +160,7 @@ Ext.onReady(function() {
 			locked: true,
 			width: 240
 		},{
-			text: 'Tanggal APK',
+			text: 'Tanggal Dibuat',
 			dataIndex: 'fd_tgl_apk',
 			menuDisabled: true, 
 			width: 100
@@ -171,10 +175,25 @@ Ext.onReady(function() {
 			menuDisabled: true,
 			width: 140
 		},{
+			text: 'Status Survey',
+			dataIndex: 'fs_status_survey',
+			menuDisabled: true,
+			width: 130
+		},{
+			text: 'Status Keputusan',
+			dataIndex: 'fs_status_keputusan',
+			menuDisabled: true,
+			width: 180
+		},{
 			text: 'Keputusan Kredit',
 			dataIndex: 'fs_keputusan_kredit_pusat',
 			menuDisabled: true,
 			width: 180
+		},{
+			text: 'Status Transfer',
+			dataIndex: 'fs_status_transfer',
+			menuDisabled: true,
+			width: 130
 		},{
 			text: 'Catatan Analisa',
 			dataIndex: 'fs_catatan_analisa_pusat',

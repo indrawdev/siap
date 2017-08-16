@@ -53,7 +53,10 @@ class StatusApk extends CI_Controller
 						'fn_no_apk' => ascii_to_entities(trim($xRow->fn_no_apk)),
 						'fs_pjj' => ascii_to_entities(trim($pjj)),
 						'fs_nama_konsumen' => ascii_to_entities(trim($xRow->fs_nama_konsumen)),
-						'fd_tgl_apk' => ascii_to_entities(trim($xRow->fd_tgl_apk)),
+						'fd_tgl_apk' => ascii_to_entities(trim(date_format(date_create($xRow->fd_tgl_apk), 'd/m/Y'))),
+						'fs_status_survey' => ascii_to_entities(trim($xRow->fs_status_survey)),
+						'fs_status_keputusan' => ascii_to_entities(trim($xRow->fs_status_keputusan)),
+						'fs_status_transfer' => ascii_to_entities(trim($xRow->fs_status_transfer)),
 						'fs_keputusan_kredit' => ascii_to_entities(trim($xRow->keputusan_kredit)),
 						'fs_catatan_analisa' => ascii_to_entities(trim($xRow->fs_catatan_analisa))
 					);
@@ -88,7 +91,10 @@ class StatusApk extends CI_Controller
 						'fn_no_apk' => ascii_to_entities(trim($xRow->fn_no_apk)),
 						'fs_pjj' => ascii_to_entities(trim($pjj)),
 						'fs_nama_konsumen' => ascii_to_entities(trim($xRow->fs_nama_konsumen)),
-						'fd_tgl_apk' => ascii_to_entities(trim($xRow->fd_tgl_apk)),
+						'fd_tgl_apk' => ascii_to_entities(trim(date_format(date_create($xRow->fd_tgl_apk), 'd/m/Y'))),
+						'fs_status_survey' => ascii_to_entities(trim($xRow->fs_status_survey)),
+						'fs_status_keputusan' => ascii_to_entities(trim($xRow->fs_status_keputusan)),
+						'fs_status_transfer' => ascii_to_entities(trim($xRow->fs_status_transfer)),
 						'fs_keputusan_kredit_pusat' => ascii_to_entities(trim($xRow->keputusan_kredit))
 					);
 			}

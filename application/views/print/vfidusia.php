@@ -309,7 +309,14 @@
 		<tr>
 			<td width="30%" align="left" style="border-top: 1px solid black;"><?php echo $detail->fs_nama_konsumen; ?></td>
 			<td width="20%"></td>
-			<td width="30%" align="left" style="border-top: 1px solid black;"><?php echo $cabang->fs_nama_pimpinan; ?></td>
+			<td width="30%" align="left" style="border-top: 1px solid black;">
+				<?php if (!empty($nama->fs_nama_ca)) {
+						echo $nama->fs_nama_ca;
+					} else {
+						echo $cabang->fs_nama_pimpinan;
+					}
+				?>
+			</td>
 			<td width="20%"></td>
 		</tr>
 	</tbody>

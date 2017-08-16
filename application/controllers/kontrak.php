@@ -134,11 +134,13 @@ class Kontrak extends CI_Controller
 		$noapk = trim($this->input->post('fn_no_apk'));
 		$kddok = trim($this->input->post('fs_kode_dokumen'));
 		$cek = trim($this->input->post('fs_cek'));
+		$namaca = trim($this->input->post('fs_nama_ca'));
 
 		$insert = array(
 					'fs_kode_cabang' => $kdcab,
 					'fn_no_apk' => $noapk,
 					'fs_kode_dokumen' => $kddok,
+					'fs_nama_ca' => strtoupper($namaca),
 					'fs_iduser_cetak' => trim($this->session->userdata('gUser')),
 					'fd_tanggal_cetak' => trim(date('Y-m-d H:i:s'))
 				);

@@ -15,6 +15,17 @@ class MStatusApk extends CI_Model
 			SELECT DISTINCT fn_no_apk, fd_tgl_apk, fs_kode_cabang,
 			fs_kode_lokasi, fs_nomor_dealer, fs_jenis_piutang, fs_pola_transaksi,
 			fn_nomor_perjanjian, fs_nama_konsumen, fs_catatan_analisa,
+			CASE fs_flag_survey
+				WHEN '1' THEN 'SUDAH DISURVEY' ELSE 'BELUM DISURVEY' END AS fs_status_survey,
+			CASE 
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
+				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
+				ELSE '-' END AS fs_status_keputusan,
+			CASE fs_flag_transfer
+				WHEN '1' THEN 'SUDAH DITRANSFER' ELSE 'BELUM DITRANSFER' END AS fs_status_transfer,
 			CASE fs_keputusan_kredit 
 				WHEN 'B' THEN 'BATAL' 
 				WHEN 'N' THEN 'DITOLAK'
@@ -55,6 +66,17 @@ class MStatusApk extends CI_Model
 			SELECT DISTINCT fn_no_apk, fd_tgl_apk, fs_kode_cabang,
 			fs_kode_lokasi, fs_nomor_dealer, fs_jenis_piutang, fs_pola_transaksi,
 			fn_nomor_perjanjian, fs_nama_konsumen, fs_catatan_analisa,
+			CASE fs_flag_survey
+				WHEN '1' THEN 'SUDAH DISURVEY' ELSE 'BELUM DISURVEY' END AS fs_status_survey,
+			CASE 
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
+				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
+				ELSE '-' END AS fs_status_keputusan,
+			CASE fs_flag_transfer
+				WHEN '1' THEN 'SUDAH DITRANSFER' ELSE 'BELUM DITRANSFER' END AS fs_status_transfer,
 			CASE fs_keputusan_kredit 
 				WHEN 'B' THEN 'BATAL' 
 				WHEN 'N' THEN 'DITOLAK'
@@ -102,6 +124,17 @@ class MStatusApk extends CI_Model
 			SELECT DISTINCT fn_no_apk, fd_tgl_apk, fs_kode_cabang,
 			fs_kode_lokasi, fs_nomor_dealer, fs_jenis_piutang, fs_pola_transaksi,
 			fn_nomor_perjanjian, fs_nama_konsumen, fs_catatan_analisa, fs_catatan_analisa_pusat,
+			CASE fs_flag_survey
+				WHEN '1' THEN 'SUDAH DISURVEY' ELSE 'BELUM DISURVEY' END AS fs_status_survey,
+			CASE 
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
+				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
+				ELSE '-' END AS fs_status_keputusan,
+			CASE fs_flag_transfer
+				WHEN '1' THEN 'SUDAH DITRANSFER' ELSE 'BELUM DITRANSFER' END AS fs_status_transfer,
 			CASE fs_keputusan_kredit 
 				WHEN 'B' THEN 'BATAL' 
 				WHEN 'N' THEN 'DITOLAK'
@@ -130,6 +163,17 @@ class MStatusApk extends CI_Model
 			SELECT DISTINCT fn_no_apk, fd_tgl_apk, fs_kode_cabang,
 			fs_kode_lokasi, fs_nomor_dealer, fs_jenis_piutang, fs_pola_transaksi,
 			fn_nomor_perjanjian, fs_nama_konsumen, fs_catatan_analisa, fs_catatan_analisa_pusat,
+			CASE fs_flag_survey
+				WHEN '1' THEN 'SUDAH DISURVEY' ELSE 'BELUM DISURVEY' END AS fs_status_survey,
+			CASE 
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
+				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
+				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
+				ELSE '-' END AS fs_status_keputusan,
+			CASE fs_flag_transfer
+				WHEN '1' THEN 'SUDAH DITRANSFER' ELSE 'BELUM DITRANSFER' END AS fs_status_transfer,
 			CASE fs_keputusan_kredit 
 				WHEN 'B' THEN 'BATAL' 
 				WHEN 'N' THEN 'DITOLAK'
