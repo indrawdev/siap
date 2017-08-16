@@ -20,7 +20,7 @@ class MStatusApk extends CI_Model
 			CASE 
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
-				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
 				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
 				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
 				ELSE '-' END AS fs_status_keputusan,
@@ -71,7 +71,7 @@ class MStatusApk extends CI_Model
 			CASE 
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
-				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
 				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
 				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
 				ELSE '-' END AS fs_status_keputusan,
@@ -129,7 +129,7 @@ class MStatusApk extends CI_Model
 			CASE 
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
-				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
 				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
 				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
 				ELSE '-' END AS fs_status_keputusan,
@@ -168,7 +168,7 @@ class MStatusApk extends CI_Model
 			CASE 
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit = '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'MENUNGGU PUSAT'
 				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'C' OR fs_grade = 'D')) THEN 'SUDAH DIPUTUSKAN PUSAT'
-				WHEN (fs_flag_keputusan = '1' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
+				WHEN (fs_flag_keputusan = '1' AND fs_keputusan_kredit <> '' AND (fs_grade = 'A' OR fs_grade = 'B')) THEN 'SUDAH DIPUTUSKAN CABANG'
 				WHEN fs_flag_keputusan = '1' THEN 'SUDAH DIPUTUSKAN CABANG' 
 				WHEN fs_flag_keputusan = '0' THEN 'BELUM DIPUTUSKAN'
 				ELSE '-' END AS fs_status_keputusan,
