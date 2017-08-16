@@ -236,7 +236,7 @@ class Report extends CI_Controller
 		$pdf->SetDisplayMode('real', 'default');
 		$pdf->SetFont('', '', 8.5, '', false);
 		if ($kop == 1) {
-			$pdf->setCellHeightRatio(1.24);
+			$pdf->setCellHeightRatio(1.23);
 		} else {
 			$pdf->setCellHeightRatio(1.28);
 		}
@@ -246,6 +246,54 @@ class Report extends CI_Controller
 		$pdf->Output('struktur-perjanjian.pdf', 'I');	
 	}
 
+	function struktur_old($kdcab, $apk, $kop)
+	{
+		$this->load->library('Pdf');
+		$this->load->model('mReport');
+		$data['kop'] = $kop;
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+
+		// referensi
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
+		$data['asuransi'] = $this->mReport->asuransi($kdcab, $apk);
+		$data['pola_transaksi'] = $this->mReport->ref_pola_transaksi($kdcab, $apk);
+		$data['jenis_asuransi'] = $this->mReport->ref_jenis_asuransi($kdcab, $apk);
+		$data['kategori_usaha'] = $this->mReport->kategori_usaha($kdcab, $apk);
+		$data['denda_perhari'] = $this->mReport->denda_perhari($kdcab, $apk);
+		$data['pinalti_lunas'] = $this->mReport->pinalti_lunas($kdcab, $apk);
+		$data['asuransi_mix'] = $this->mReport->data_asuransi_mix($kdcab, $apk);
+		$data['asuransi_notmix'] = $this->mReport->data_asuransi_notmix($kdcab, $apk);
+		
+		// biaya
+		$data['biaya_survey'] = $this->mReport->biaya_survey($kdcab, $apk);
+		$data['biaya_asuransi'] = $this->mReport->biaya_asuransi($kdcab, $apk);
+		$data['biaya_provisi'] = $this->mReport->biaya_provisi($kdcab, $apk);
+		$data['biaya_notaris'] = $this->mReport->biaya_notaris($kdcab, $apk);
+
+		$html = $this->load->view('print/vstruktur_old', $data, true);
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf->SetTitle('STRUKTUR PERJANJIAN');
+		$pdf->SetPrintHeader(false);
+		$pdf->SetPrintFooter(false);
+		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
+		$pdf->SetAutoPageBreak(True, PDF_MARGIN_FOOTER);
+		$pdf->SetAuthor('SIAP');
+		$pdf->SetDisplayMode('real', 'default');
+		$pdf->SetFont('', '', 8.5, '', false);
+		if ($kop == 1) {
+			$pdf->setCellHeightRatio(1.23);
+		} else {
+			$pdf->setCellHeightRatio(1.28);
+		}
+		$pdf->AddPage('P', 'A4');
+		$pdf->writeHTML($html, true, false, true, false, '');
+		$pdf->lastPage();
+		$pdf->Output('struktur-perjanjian.pdf', 'I');	
+	}
+	
 	function tambahan($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');

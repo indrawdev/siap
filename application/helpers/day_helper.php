@@ -79,3 +79,33 @@
 			return $bulan[ (int)$month ] .' '. $year;
 		}
 	}
+
+	function terbilang ($x) {
+		if (!empty($x)) {
+			$abil = array("", "SATU", "DUA", "TIGA", "EMPAT", "LIMA", "ENAM", "TUJUH", "DELAPAN", "SEMBILAN", "SEPULUH", "SEBELAS");
+			if ($x < 12) {
+				return " " . $abil[$x];
+			}
+			elseif ($x < 20) {
+				return Terbilang($x - 10) . " BELAS";
+			}
+			elseif ($x < 100) {
+				return Terbilang($x / 10) . " PULUH" . Terbilang($x % 10);
+			}
+			elseif ($x < 200) {
+				return " SERATUS" . Terbilang($x - 100);
+			}
+			elseif ($x < 1000) {
+				return Terbilang($x / 100) . " RATUS" . Terbilang($x % 100);
+			}
+			elseif ($x < 2000) {
+				return " SERIBU" . Terbilang($x - 1000);
+			}
+			elseif ($x < 1000000) {
+				return Terbilang($x / 1000) . " RIBU" . Terbilang($x % 1000);
+			}
+			elseif ($x < 1000000000) {
+				return Terbilang($x / 1000000) . " JUTA" . Terbilang($x % 1000000);
+			}
+		}
+    }

@@ -248,6 +248,8 @@ Ext.onReady(function() {
 	};
 
 	var txtKodeDealer1 = {
+		afterLabelTextTpl: required,
+		allowBlank: false,
 		allowDecimals: false,
 		allowNegative: false,
 		anchor: '100%',
@@ -255,8 +257,6 @@ Ext.onReady(function() {
 		id: 'txtKodeDealer1',
 		name: 'txtKodeDealer1',
 		xtype: 'numberfield',
-		fieldStyle: 'background-color: #eee; background-image: none;',
-		readOnly: true,
 		maxValue: 99,
 		minValue: 1,
 		maxLength: 2,
@@ -284,8 +284,7 @@ Ext.onReady(function() {
 		fieldLabel: 'Cabang',
 		id: 'txtCabang',
 		name: 'txtCabang',
-		xtype: 'numberfield',
-		value: 1,
+		xtype: 'textfield',
 		maxValue: 99,
 		minValue: 1,
 		maxLength: 2,
@@ -303,7 +302,7 @@ Ext.onReady(function() {
 		enforceMaxLength: true,
 		minLength: '0',
 		maxLength: '30', 
-		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP .]/,
+		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890 .]/,
 	};
 
 	var txtAlamatCabang = {
@@ -687,7 +686,11 @@ Ext.onReady(function() {
 					msg: xText.hasil,
 					title: 'SIAP'
 				});
-				fnReset();
+				if (xText.sukses === true) {
+					var tabPanel = Ext.ComponentQuery.query('tabpanel')[0];
+					tabPanel.setActiveTab('tab1');
+					fnReset();
+				}
 			},
 			failure: function(response) {
 				var xText = Ext.decode(response.responseText);
@@ -705,7 +708,7 @@ Ext.onReady(function() {
 
 	function fnReset() {
 		Ext.getCmp('cboAktif').setValue('');
-		//Ext.getCmp('txtKodeDealer1').setValue('');
+		Ext.getCmp('txtKodeDealer1').setValue('');
 		Ext.getCmp('txtKodeDealer2').setValue('');
 		Ext.getCmp('txtNamaDealer').setValue('');
 		Ext.getCmp('txtAlamatCabang').setValue('');
