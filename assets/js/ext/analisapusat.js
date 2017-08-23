@@ -163,7 +163,7 @@ Ext.onReady(function() {
 			text: 'Catatan Analisa Cabang',
 			dataIndex: 'fs_catatan_analisa_cabang',
 			menuDisabled: true,
-			width: 250
+			hidden: true
 		},{
 			text: 'Jenis Pembiayaan',
 			dataIndex: 'fs_jenis_pembiayaan',
@@ -382,7 +382,7 @@ Ext.onReady(function() {
 			text: 'Catatan Analisa Cabang',
 			dataIndex: 'fs_catatan_analisa_cabang',
 			menuDisabled: true,
-			width: 250
+			hidden: true
 		},{
 			text: 'Jenis Pembiayaan',
 			dataIndex: 'fs_jenis_pembiayaan',

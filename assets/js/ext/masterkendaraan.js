@@ -429,7 +429,7 @@ Ext.onReady(function() {
 	var txtSilinderKendaraan = {
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		anchor: '20%',
+		anchor: '50%',
 		fieldLabel: 'Silinder Kendaraan',
 		id: 'txtSilinderKendaraan',
 		maxLength: 4,
@@ -442,11 +442,11 @@ Ext.onReady(function() {
 	var txtKodeModelKendaraan = {
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		anchor: '50%',
+		anchor: '80%',
 		fieldLabel: 'Kode Model Kendaraan',
 		id: 'txtKodeModelKendaraan',
 		maxLength: 15,
-		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890.,-]/,
+		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890/|\.,-]/,
 		enforceMaxLength: true,
 		name: 'txtKodeModelKendaraan',
 		xtype: 'textfield'
@@ -455,12 +455,12 @@ Ext.onReady(function() {
 	var txtKodeLama =  {
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		anchor: '50%',
+		anchor: '80%',
 		fieldLabel: 'Kode Lama',
 		id: 'txtKodeLama',
 		maxLength: 6,
 		enforceMaxLength: true,
-		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890.,-]/,
+		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890/|\.,-]/,
 		name: 'txtKodeLama',
 		xtype: 'textfield'
 	};
@@ -468,12 +468,12 @@ Ext.onReady(function() {
 	var txtNamaModelKendaraan =  {
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		anchor: '50%',
+		anchor: '80%',
 		fieldLabel: 'Nama Model Kendaraan',
 		id: 'txtNamaModelKendaraan',
 		maxLength:50,
 		enforceMaxLength: true,
-		maskRe: /[z xcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890.,-]/,
+		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP1234567890/|\.,-]/,
 		name: 'txtNamaModelKendaraan',
 		xtype: 'textfield'
 	};
@@ -481,13 +481,13 @@ Ext.onReady(function() {
 	var txtNamaMerek = {
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		anchor: '50%',
+		anchor: '80%',
 		fieldLabel: 'Nama Merek',
 		id: 'txtNamaMerek',
 		enforceMaxLength: true,
 		minLength: '0',
 		maxLength: '30', 
-		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP .]/,
+		maskRe: /[zxcvbnmasdfghjklqwertyuiopZXCVBNNMASDFGHJKLQWERTYUIOP/|\ .]/,
 		name: 'txtNamaMerek',
 		xtype: 'textfield'
 	};
@@ -884,7 +884,7 @@ Ext.onReady(function() {
 					fieldDefaults: {
 						labelAlign: 'right',
 						labelSeparator: '',
-						labelWidth: 115,
+						labelWidth: 140,
 						msgTarget: 'side'
 					},
 					style: 'padding: 5px;',
@@ -916,7 +916,7 @@ Ext.onReady(function() {
 					fieldDefaults: {
 						labelAlign: 'right',
 						labelSeparator: '',
-						labelWidth: 115,
+						labelWidth: 140,
 						msgTarget: 'side'
 					},
 					style: 'padding: 5px;',

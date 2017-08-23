@@ -115,15 +115,7 @@ class Mastersetup extends CI_Controller
 		if (!empty($kd) && !empty($jns) && $nj <> '' && !empty($ct)) {
 			$this->load->model('mMasterSetup');
 			$sSQL = $this->mMasterSetup->checkCounter($kd, $jns, $nj, $ct);
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses'	=> true,
-					'hasil'		=> 'Data Counter belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses'	=> true,
@@ -134,12 +126,11 @@ class Mastersetup extends CI_Controller
 			else 
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses'	=> true,
+					'hasil'		=> 'Data Counter belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}
-
 		} else {
 			$hasil = array(
 						'sukses' => false,

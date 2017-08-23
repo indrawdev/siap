@@ -78,15 +78,7 @@ class Masterreferensi extends CI_Controller
 		if (!empty($kd) && !empty($nil1)) {
 			$this->load->model('mMasterReferensi');
 			$sSQL = $this->mMasterReferensi->checkReferensi($kd, $nil1);
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses'	=> true,
-					'hasil'		=> 'Data Referensi belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses'	=> true,
@@ -97,8 +89,8 @@ class Masterreferensi extends CI_Controller
 			else 
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses'	=> true,
+					'hasil'		=> 'Data Referensi belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}

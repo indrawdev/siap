@@ -167,17 +167,17 @@ class TransferApk extends CI_Controller
 							date("Ymd", strtotime($row->fd_tanggal_buat_keputusan)), 
 							$row->fs_catatan_analisa, '', $row->fs_salesman, '',
 							date("Ymd", strtotime($row->fd_tanggal_buat)), 
-							$row->fs_kerja_sejak_konsumen, $row->fs_tinggal_sejak,
+							(string) $row->fs_kerja_sejak_konsumen, (string) $row->fs_tinggal_sejak,
 							'mamik wulandari', $row->fs_jenis_asuransi, '', $row->fs_handphone_konsumen,
 							$row->fs_email_konsumen, '', 'X', 1, 1, $row->fs_iduser_buat, 1, 1, $row->fs_iduser_buat, 
-							0, 0, '', '', $row->fs_ktp_konsumen, $row->fs_masa_ktp_konsumen, $row->fs_npwp_konsumen,
+							0, 0, '', '', $row->fs_ktp_konsumen, date("Ymd", strtotime($row->fs_masa_ktp_konsumen)), $row->fs_npwp_konsumen,
 							'', $row->fs_nama_ibu_kandung, $row->fs_usaha_pekerjaan_konsumen, $row->fs_kelurahan_konsumen,
 							$row->fs_kecamatan_konsumen, $row->fs_kode_dati_konsumen, '', ''
 						));
 
 						dbase_add_record($db3, array(
 							'A', $row->fn_no_apk, 1, $row->fs_warna_kendaraan, $row->fn_tahun_kendaraan,
-							0, 0, $row->fs_kota_bpkb, $row->fs_nama_bpkb, '', '', '', '', 0,
+							0, 0, $row->fs_kota_bpkb, $row->fs_nama_bpkb, substr($row->fs_alamat_bpkb, 0, 30), substr($row->fs_alamat_bpkb, 30, 30), '', '', 0,
 							$row->fs_kode_wilayah_no_polisi, $row->fs_no_polisi, $row->fs_kode_akhir_wilayah_no_polisi,
 							0, 0, 0, 0, '', '', '', '', $row->fs_no_rangka, $row->fs_no_mesin, $row->fs_nomor_bpkb
 						));
@@ -185,7 +185,7 @@ class TransferApk extends CI_Controller
 						dbase_add_record($db5, array(
 							'A', $row->fn_no_apk, $row->fs_jenis_pembiayaan, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 							$row->fs_garasi, $row->fs_repeat_order, $row->fs_kondisi_lingkungan, $row->fs_kondisi_kantor,
-							$row->fs_kategori_perusahaan_konsumen, 0, 0, 0, '', $row->fs_score, $row->fs_grade,
+							$row->fs_skala_perusahaan_konsumen, 0, 0, 0, '', $row->fs_score, $row->fs_grade,
 							$row->fs_kode_paket, '', '', $row->fn_premi_asuransi_gross, $row->fn_jumlah_kali_kredit,
 							$row->fs_pertama_kali_kredit, '', '', '', '', '', $row->fs_komersial, 
 							$row->fs_nama_perusahaan_konsumen
@@ -230,11 +230,15 @@ class TransferApk extends CI_Controller
 
 				$dtl = $this->mTransferApk->detail($noapk[$i], $kdcabang);
 				foreach ($dtl->result() as $row) {
+						$cair_dealer = $row->fs_cair_ke_dealer;
+						if ($cair_dealer == 0) {
+							$cair_dealer = '';
+						}
 
 						dbase_add_record($db2, array(
 							'S', $row->fn_no_apk, $row->fs_kode_transaksi, 
 							$row->fs_nama_transaksi, $row->fn_nilai_transaksi, 
-							$row->fs_tagih_ke_konsumen, $row->fs_cair_ke_dealer, ''
+							$row->fs_tagih_ke_konsumen, $cair_dealer, ''
 						));
 				}
 

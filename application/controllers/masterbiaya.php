@@ -265,15 +265,7 @@ class Masterbiaya extends CI_Controller
 			$this->load->model('mMasterBiaya');
 			$sSQL = $this->mMasterBiaya->checkBiayaAdmin($kd, $jns, $pl, $lm);
 
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses'	=> true,
-					'hasil'		=> 'Biaya Admin belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses'	=> true,
@@ -284,8 +276,8 @@ class Masterbiaya extends CI_Controller
 			else 
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses'	=> true,
+					'hasil'		=> 'Biaya Admin belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}
@@ -370,15 +362,7 @@ class Masterbiaya extends CI_Controller
 			$this->load->model('mMasterBiaya');
 			$sSQL = $this->mMasterBiaya->checkBiayaFidusia($kd, $jns, $pl, $min, $max);
 
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses'	=> true,
-					'hasil'		=> 'Biaya Fidusia belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses'	=> true,
@@ -386,11 +370,11 @@ class Masterbiaya extends CI_Controller
 				);
 				echo json_encode($hasil);
 			}
-			else 
+			else
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses'	=> true,
+					'hasil'		=> 'Biaya Fidusia belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}
@@ -481,15 +465,7 @@ class Masterbiaya extends CI_Controller
 			$this->load->model('mMasterBiaya');
 			$sSQL = $this->mMasterBiaya->checkBiayaAsuransi($kd, $wil, $jns, $kom, $min, $max);
 
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses'	=> true,
-					'hasil'		=> 'Biaya Asuransi belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses'	=> true,
@@ -500,8 +476,8 @@ class Masterbiaya extends CI_Controller
 			else 
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses'	=> true,
+					'hasil'		=> 'Biaya Asuransi belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}
@@ -592,15 +568,7 @@ class Masterbiaya extends CI_Controller
 			$this->load->model('mMasterBiaya');
 			$sSQL = $this->mMasterBiaya->checkBiayaPerluasan($kd, $wil, $per);
 
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses' => true,
-					'hasil'	=> 'Biaya Perluasan belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses' => true,
@@ -611,8 +579,8 @@ class Masterbiaya extends CI_Controller
 			else 
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses' => true,
+					'hasil'	=> 'Biaya Perluasan belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}
@@ -687,15 +655,7 @@ class Masterbiaya extends CI_Controller
 			$this->load->model('mMasterBiaya');
 			$sSQL = $this->mMasterBiaya->checkBiayaTJH($jns, $min, $max);
 
-			if ($sSQL->num_rows() == 0)
-			{
-				$hasil = array(
-					'sukses' => true,
-					'hasil'	=> 'Biaya TJH belum ada, apakah Anda ingin menambah baru?'
-				);
-				echo json_encode($hasil);
-			}
-			else if($sSQL->num_rows() == 1)
+			if ($sSQL->num_rows() > 0)
 			{
 				$hasil = array(
 					'sukses' => true,
@@ -706,8 +666,8 @@ class Masterbiaya extends CI_Controller
 			else
 			{
 				$hasil = array(
-					'sukses'	=> false,
-					'hasil'		=> 'Gagal simpan'
+					'sukses' => true,
+					'hasil'	=> 'Biaya TJH belum ada, apakah Anda ingin menambah baru?'
 				);
 				echo json_encode($hasil);
 			}

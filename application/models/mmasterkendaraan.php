@@ -97,6 +97,18 @@ class Mmasterkendaraan extends CI_Model
 		return $sSQL;
 	}
 
+	function CekNamaRef($xKodeModel)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_kendaraan
+			WHERE	fs_kode_kendaraan = '".trim($xKodeModel)."'
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
 	function CekNamaRef2($xKodeModel,$xKodeModelLama)
 	{
 		$xSQL = ("

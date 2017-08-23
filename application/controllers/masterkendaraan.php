@@ -162,7 +162,7 @@ class Masterkendaraan extends CI_Controller
 		$xJenis = trim($this->input->post('fs_jenis_kendaraan'));
 		$xMerek = trim($this->input->post('fs_merek_kendaraan'));
 		$xSilinder = trim($this->input->post('fs_silinder_kendaraan'));
-		$xTglSimpan = trim($this->input->post('fd_tanggal_dibuat'));
+		$xTglSimpan = trim($this->input->post('fd_tanggal_buat'));
 
 		$this->db->trans_begin();
 		
@@ -179,8 +179,8 @@ class Masterkendaraan extends CI_Controller
 					'fs_jenis_kendaraan'	=> trim(strtoupper($xJenis)),
 					'fs_merek_kendaraan'	=> trim(strtoupper($xMerek)),
 					'fs_silinder_kendaraan'	=> trim(strtoupper($xSilinder)),
-					'fd_tanggal_dibuat'	=> trim($xTglSimpan),
-					'fs_iduser_pembuat'			=> trim($this->session->userdata('gUser')),
+					'fd_tanggal_buat'	=> trim($xTglSimpan),
+					'fs_iduser_buat'			=> trim($this->session->userdata('gUser')),
 				);
 
 				$this->db->insert('tm_kendaraan', $xData);
@@ -204,8 +204,8 @@ class Masterkendaraan extends CI_Controller
 					'fs_jenis_kendaraan'	=> trim(strtoupper($xJenis)),
 					'fs_merek_kendaraan'	=> trim(strtoupper($xMerek)),
 					'fs_silinder_kendaraan'	=> trim(strtoupper($xSilinder)),
-					'fd_tanggal_diedit'	=> trim($xTglSimpan),
-					'fs_iduser_pembuat'			=> trim($this->session->userdata('gUser'))
+					'fd_tanggal_edit'	=> trim($xTglSimpan),
+					'fs_iduser_buat'			=> trim($this->session->userdata('gUser'))
 				);
 			
 
