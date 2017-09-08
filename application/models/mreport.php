@@ -551,7 +551,8 @@ class MReport extends CI_Model
 	function dealer($sKdCab, $nApk)
 	{
 		$xSQL = ("
-			SELECT b.fs_nama_dealer, b.fs_alamat_dealer
+			SELECT b.fs_nama_dealer, b.fs_alamat_dealer, 
+			b.fs_kota_dealer, b.fs_nama_pemilik
 			FROM tx_apk a JOIN tm_dealer b ON 
 			b.fs_kode_dealer1 = a.fs_kode_dealer1
 			AND b.fs_kode_dealer2 = a.fs_kode_dealer2
@@ -788,12 +789,25 @@ class MReport extends CI_Model
 	function check_nama($sKdCab, $nApk)
 	{
 		$xSQL = ("
-			SELECT fs_nama_ca 
+			SELECT fs_nama_ca, fs_jabatan_ca 
 			FROM tx_apk_cetak 
 			WHERE fn_no_apk = '".trim($nApk)."'
 			AND fs_kode_cabang = '".trim($sKdCab)."'
 			ORDER BY fd_tanggal_cetak DESC LIMIT 1
 		");	
+
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL->row();
+	}
+
+	function penerima_kuasa($sParam)
+	{
+		$xSQL = ("
+			SELECT fs_nama_referensi
+			FROM tm_referensi
+			WHERE fs_kode_referensi = 'penerima_kuasa'
+			AND fs_nilai1_referensi = '".trim($sParam)."'
+		");
 
 		$sSQL = $this->db->query($xSQL);
 		return $sSQL->row();

@@ -20,7 +20,9 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td width="100%" align="center"><b>SURAT KUASA PEMBEBANAN JAMINAN FIDUSIA</b></td>
+			<td width="15%"></td>
+			<td width="70%" align="center"><b>SURAT KUASA PEMBERIAN JAMINAN FIDUSIA</b></td>
+			<td width="15%"></td>
 		</tr>
 		<tr>
 			<td width="100%"></td>
@@ -30,58 +32,100 @@
 		</tr>
 		<br>
 		<tr>
-			<td width="3%" align="left">I.</td>
-			<td width="97%" align="justify">PEMBERI KUASA, sebagaimana dimaksud dibawah ini, dalam hal ini bertindak untuk diri sendiri dan untuk melakukan tindakan-tindakan hukum tersebut surat ini telah memperoleh persetujuan dari Pasangannya;</td>
+			<td width="20%" align="left">Nama</td>
+			<td width="1%">:</td>
+			<td width="79%" align="left"><?php echo $detail->fs_nama_konsumen; ?></td>
+		</tr>
+		<tr>
+			<td width="20%" align="left">No. KTP</td>
+			<td width="1%">:</td>
+			<td width="79%" align="left"><?php echo $detail->fs_ktp_konsumen; ?></td>
+		</tr>
+		<tr>
+			<td width="20%" align="left">Alamat</td>
+			<td width="1%">:</td>
+			<td width="79%" align="left" height="25"><?php echo $detail->fs_alamat_konsumen; ?></td>
+		</tr>
+		<tr>
+			<td width="100%" align="left">Selanjutnya disebut <strong>Pemberi Kuasa</strong></td>
 		</tr>
 		<br>
 		<tr>
-			<td width="3%" align="left">II.</td>
-			<td width="97%" align="justify">PT. MANDIRI FINANCE INDONESIA, berkedudukan di Jakarta Selatan, dalam hal ini bertindak untuk dan atas nama serta mewakili kepentingan diri sendiri dan pihak sebagaimana tercantum salam Struktur Perjanjian dan/atau lampiran Perjanjian yang menjadi satu kesatuan dan bagian yang tidak terpisahkan dari Perjanjian ini (selanjutnya disebut <b>“PENERIMA KUASA”</b>);</td>
+			<td width="20%" align="left">Nama</td>
+			<td width="1%">:</td>
+			<td width="79%" align="left"><?php echo $pk_nama->fs_nama_referensi; ?></td>
+		</tr>
+		<tr>
+			<td width="20%" align="left">Alamat</td>
+			<td width="1%">:</td>
+			<td width="79%" align="left"><?php echo $pk_alamat->fs_nama_referensi; ?></td>
+		</tr>
+		<tr>
+			<td width="20%" align="left">Jabatan</td>
+			<td width="1%">:</td>
+			<td width="79%" align="left"><?php echo $pk_jabatan->fs_nama_referensi; ?></td>
 		</tr>
 		<br>
 		<tr>
-			<td width="100%" align="justify">dengan ini sepakat untuk menetapkan hal-hal pokok dalam surat ini sebagai berikut:</td>
+			<td width="100%" align="justify">Dalam hal ini bertindak selaku Kuasa Direksi dari dan oleh karena itu bertindak untuk dan atas nama PT. MANDIRI FINANCE INDONESIA berkedudukan dikantor pusat Jakarta "Selanjutnya disebut <strong>Penerima Kuasa</strong>".</td>
 		</tr>
 		<br>
 		<tr>
-			<td width="100%" align="justify"><b>PEMBERI KUASA</b> dengan ini memberikan kuasa penuh dengan hak subtitusi kepada <b>PENERIMA KUASA</b></td>
+			<td width="100%" align="center">------------------------------------------------------------------------- <strong>KHUSUS</strong> -------------------------------------------------------------------------</td>
+		</tr>
+		<br>
+		<tr>
+			<td width="100%" align="justify">Pemberi Kuasa memberikan kuasa kepada Penerima Kuasa untuk mewakili membuat, meyerahkan surat-surat untuk pembuatan akta jaminan fidusia dan menandatangani Akta Notaris jaminan fidusia dihadapan Notaris yang ditunjuk oleh Penerima Kuasa, serta mendaftarkan Akta Jaminan Fidusia pada kantor Pendaftaran Fidusia, berikut penambahan dan atau perubahannya menurut syarat -  syarat dan ketentuan yang berlaku dalam Undang - undang Repulik Indonesia Nomor 42 Tahun 1999 Tentang Jaminan Fidusia beserta peraturan pelaksanaannya yang telah dan atau yang akan berlaku dikemudian hari, menerima serta menyimpan akta notaris jaminan fidusia dan sertifikat jaminan fidusia, dengan data - data objek jaminan fidusia sebagai berikut:</td>
+		</tr>
+		<br>
+		<tr>
+			<td width="30%" align="left">Hutang Pokok Jaminan Fidusia</td>
+			<td width="1%">:</td>
+			<td width="69%" align="left"><?php if (!empty($detail->fn_pokok_pembiayaan_dealer)) { echo 'Rp. ' . number_format($detail->fn_pokok_pembiayaan_dealer); } ?></td>
+		</tr>
+		<tr>
+			<td width="30%" align="left">Merk / Type / Model</td>
+			<td width="1%">:</td>
+			<td width="69%" align="left"><?php if (!empty($kendaraan->fs_merek_kendaraan)) { echo $kendaraan->fs_merek_kendaraan; } ?> <?php if (!empty($kendaraan->fs_model_kendaraan)) { echo $kendaraan->fs_model_kendaraan; } ?></td>
+		</tr>
+		<tr>
+			<td width="30%" align="left">Warna / Tahun</td>
+			<td width="1%">:</td>
+			<td width="69%" align="left"><?php echo $detail->fs_warna_kendaraan; ?> / <?php echo $detail->fn_tahun_kendaraan; ?></td>
+		</tr>
+		<tr>
+			<td width="30%" align="left">No. Rangka / No. Mesin</td>
+			<td width="1%">:</td>
+			<td width="69%" align="left"><?php echo $detail->fs_no_rangka; ?> / <?php echo $detail->fs_no_mesin; ?></td>
+		</tr>
+		<tr>
+			<td width="30%" align="left">No. Polisi</td>
+			<td width="1%">:</td>
+			<td width="69%" align="left"><?php echo strtoupper($detail->fs_kode_wilayah_no_polisi . $detail->fs_no_polisi . $detail->fs_kode_akhir_wilayah_no_polisi); ?></td>
+		</tr>
+		<tr>
+			<td width="30%" align="left">No. BPKB</td>
+			<td width="1%">:</td>
+			<td width="69%" align="left"><?php if (!empty($detail->fs_nomor_bpkb)) { echo $detail->fs_nomor_bpkb; } ?></td>
+		</tr>
+		<br>
+		<tr>
+			<td width="100%" align="justify">Surat Kuasa ini berlaku dan tidak dapat dibatalkan oleh Pemberi Kuasa selama Objek Jaminan Fidusia dibayar lunas kepada Penerima Kuasa dan Surat kuasa ini menyampingkan pasal 1813, 1814, 1816 KUH Perdata. Surat Kuasa ini dibuat tanpa ada paksaan dan tekanan dari pihak lain serta sehat jasmani dan rohani.</td>
+		</tr>
+		<br>
+		<tr>
+			<td width="100%" align="justify">Demikian Surat Kuasa ini dibuat dan ditandatangani di <?php echo $cabang->fs_kota_cabang; ?>, Pada Tanggal <?php echo tanggal_indo($detail->fd_tanggal_perjanjian); ?></td>
 		</tr>
 		<br>
 		<tr>
 			<td width="100%"></td>
 		</tr>
-		<tr>
-			<td width="100%" align="center" style="border-bottom: 1px solid black"><b>K H U S U S</b></td>
-		</tr>
 		<br>
 		<tr>
-			<td width="100%" align="justify">untuk menyuruh membuat dan menandatangani serta mendaftarkan dan/atau menyuruh mendaftarkan Akta jaminan Fidusia berikut penambahan dan/atau perubahannya menurut syarat-syarat dan ketentuan sebagaimana diatur dalam Undang-Undang Nomor 21 tahun 2015 tentang Jaminan Fidusia berikut peraturan pelaksanaannya yang telah dan/atau akan ada dikemudian hari, guna menjamin dan menanggung pembayaran dengan baik segala sesuatu yang terhutang dan harus dibayar oleh KONSUMEN / LESSEE selaku Debitur sejumlah NILAI PEMBIAYAAN yang ditandatangani oleh KONSUMEN / LESSEE dengan PENERIMA KUASA selaku Kreditur dan/atau perjanjian-perjanjian lainnya yang telah dan akan dibuat berikut dengan segenap perubahan, penambahan, perpanjangan, pembaharuan, sehubungan dengan pembiayaan tersebut sampai dengan Nilai Penjaminan sebesar HARGA PEROLEHAN atas OBYEK JAMINAN FIDUSIA berupa Kendaraan Bermotor yang telah atau akan diperoleh PEMBERI KUASA dikemudian hari dengan nilai sebesar HARGA PEROLEHAN tersebut di atas.</td>
-		</tr>
-		<br>
-		<tr>
-			<td width="100%" align="justify">Selanjutnya untuk keperluan tersebut menghadap pejabat (antara lain Notaris) atau instansi yang berwenang (termasuk tetapi terbatas pada Kantor Pendaftaran Fidusia), memberikan dan/atau meminta keterangan-keterangan, memperlihatkan dan menyerahkan surat / formulir, menandatangani surat / formulir yang diperlukan, memilih domisili, memberi pernyataan bahwa OBYEK JAMINAN FIDUSIA adalah benar milik PEMBERI KUASA, tidak dalam keadaan sengketa, bebas dari sitaan dan dari beban-beban apapun, mendaftarkan Jaminan Fidusia atas OBYEK JAMINAN FIDUSIA tersebut dengan melampirkan “Pernyataan Pendaftaran Jaminan Fidusia, serta untuk mengajukan permohonan pendaftaran atas perubahan dalam hal terjadi perubahan atas data yang tercantum dalam Sertifikat Jaminan Fidusia, selanjutnya menerima Sertifikat Jaminan Fidusia dan/atau Pernyataan Perubahan serta dokumen-dokumen yang bertalian untuk keperluan itu, membayar semua biaya dan menerima kuitansi segala uang pembayaran serta selanjutnya melakukan segala tindakan yang perlu, berguna dan menerima kuitansi segala uang pembayaran serta selanjutnya melakukan segala tindakan yang perlu, berguna dan dipandang baik oleh PENERIMA KUASA untuk melaksanakan tindakan-tindakan yang dikuasakan dalam surat kuasa ini, tidak ada yang dikecualikan.</td>
-		</tr>
-		<br>
-		<tr>
-			<td width="100%" align="justify">Selama hutang Debitur belum dibayar lunas kepada PENERIMA KUASA, Kuasa ini tidak akan berakhir oleh karena sebab-sebab apapun juga, termasuk tetapi tidak terbatas oleh sebab-sebab yang tercantum dalam pasal 1813, 1814 dan 1816 Kitab Undang-Undang Hukum Perdata Indonesia.</td>
-		</tr>
-		<br>
-		<tr>
-			<td width="100%"></td>
-		</tr>
-		<tr>
-			<td width="100%" align="left"><?php echo $cabang->fs_kota_cabang; ?>, <?php echo tanggal_indo($detail->fd_tanggal_perjanjian); ?></td>
-		</tr>
-		<tr>
-			<td width="25%" align="left">PEMBERI KUASA</td>
-			<td width="10%"></td>
-			<td width="25%" align="left">PENERIMA KUASA,</td>
-			<td width="10%"></td>
-			<td width="30%" align="left">MENYETUJUI,</td>
-		</tr>
-		<tr>
-			<td width="35%"></td>
-			<td width="30%" align="left">PT. MANDIRI FINANCE INDONESIA</td>
+			<td width="30%" align="left">PEMBERI KUASA</td>
+			<td width="20%"></td>
+			<td width="30%" align="left">PENERIMA KUASA,</td>
+			<td width="20%"></td>
 		</tr>
 		<br>
 		<tr>
@@ -93,26 +137,17 @@
 		</tr>
 		<br>
 		<tr>
-			<td width="25%" align="left" style="border-top: 1px solid black;"><?php echo $detail->fs_nama_konsumen; ?></td>
-			<td width="10%"></td>
-			<td width="25%" align="left" style="border-top: 1px solid black;">
+			<td width="30%" align="left" style="border-top: 1px solid black;"><?php echo strtoupper($detail->fs_nama_konsumen); ?></td>
+			<td width="20%"></td>
+			<td width="30%" align="left" style="border-top: 1px solid black;">
 				<?php if (!empty($nama->fs_nama_ca)) {
-						echo $nama->fs_nama_ca;
+						echo strtoupper($nama->fs_nama_ca);
 					} else {
-						echo $cabang->fs_nama_pimpinan;
+						echo strtoupper($pk_nama->fs_nama_referensi);
 					}
 				?>
 			</td>
-			<td width="10%"></td>
-			<td width="25%" align="left" style="border-top: 1px solid black;">
-				<?php 
-					if ($detail->fs_nama_penjamin <> '' && $detail->fs_nama_pasangan <> '') {
-						echo $detail->fs_nama_penjamin;
-					} else if ($detail->fs_nama_penjamin == '' && $detail->fs_nama_pasangan <> '') {
-						echo $detail->fs_nama_pasangan;
-					}
-				 ?>
-			</td>
+			<td width="20%"></td>
 		</tr>
 	</tbody>
 </table>

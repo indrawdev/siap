@@ -131,6 +131,66 @@ class MSearch extends CI_Model
 		return $sSQL;
 	}
 
+	function ambilSdm($sCari)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_struktur_fungsi");
+	
+		
+		$xSQL = $xSQL.("
+			ORDER BY fs_kode_cabang ASC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilSdm2($sCari)
+	{
+		$xSQL = ("
+			SELECT	a.*,b.*, c.*
+			FROM	tm_struktur_fungsi a JOIN tm_cabang b ON a.fs_kode_cabang=b.fs_kode_cabang JOIN tm_jabatan c ON a.fs_kode_jabatan=c.fs_kode_jabatan");
+	
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			WHERE a.fs_nik LIKE '%".trim($sCari)."%'");
+
+		}
+
+		$xSQL = $xSQL.("
+			ORDER BY a.fs_kode_cabang ASC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilFungsi($sCari)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_struktur_fungsi");
+		
+
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			WHERE fs_kode_cabang LIKE '%".trim($sCari)."%'
+			OR fs_kode_jabatan LIKE '%".trim($sCari)."%'
+			OR fs_nik LIKE '%".trim($sCari)."%'");
+
+		}
+		
+		$xSQL = $xSQL.("
+			ORDER BY fs_kode_cabang ASC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
 	function ambil_pola($namakoderef)
 	{
 		$xSQL = ("
@@ -208,6 +268,70 @@ class MSearch extends CI_Model
 		return $sSQL;
 	}
 
+	
+
+
+	function ambilSdmAll2($sCari)
+	{
+		$xSQL = ("
+			SELECT	a.*,b.*, c.*
+			FROM	tm_struktur_fungsi a JOIN tm_cabang b ON a.fs_kode_cabang=b.fs_kode_cabang JOIN tm_jabatan c ON a.fs_kode_jabatan=c.fs_kode_jabatan");
+		
+		
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			WHERE a.fs_nik LIKE '%".trim($sCari)."%'");
+
+		}
+	
+		$xSQL = $xSQL.("
+			ORDER BY a.fs_kode_cabang ASC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilSdmAll($sCari)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_struktur_fungsi");
+	
+	
+		$xSQL = $xSQL.("
+			ORDER BY fs_kode_cabang ASC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilFungsiAll($sCari)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_struktur_fungsi");
+	
+		
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			WHERE fs_kode_cabang LIKE '%".trim($sCari)."%'
+			OR fs_kode_jabatan LIKE '%".trim($sCari)."%'
+			OR fs_nik LIKE '%".trim($sCari)."%'");
+
+		}
+
+		$xSQL = $xSQL.("
+			ORDER BY fs_kode_cabang ASC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
 
 	function ambilModelAll($sCari)
 	{
@@ -230,6 +354,32 @@ class MSearch extends CI_Model
 
 		$xSQL = $xSQL.("
 			ORDER BY fs_merek_kendaraan DESC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+
+	function ambilModelAll2($sCari)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_referensi WHERE fs_kode_referensi='merek_kendaraan'");
+	
+		
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND fs_nilai1_referensi LIKE '%".trim($sCari)."%'
+			OR fs_nilai2_referensi LIKE '%".trim($sCari)."%'
+			OR fs_nama_referensi LIKE '%".trim($sCari)."%'");
+
+		}
+
+
+		$xSQL = $xSQL.("
+			ORDER BY fs_nilai1_referensi DESC
 		");
 		
 		$sSQL = $this->db->query($xSQL);
@@ -380,6 +530,30 @@ if (trim($sCari) <> '')
 		
 		$xSQL = $xSQL.("
 			ORDER BY fs_merek_kendaraan LIMIT ".$nStart.",".$nLimit."
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilModel2($sCari,$nStart,$nLimit)
+	{
+		$xSQL = ("
+			SELECT	*
+			FROM	tm_referensi WHERE fs_kode_referensi='merek_kendaraan'");
+		
+		if (trim($sCari) <> '')
+		{
+			$xSQL = $xSQL.("
+			AND fs_nilai1_referensi LIKE '%".trim($sCari)."%'
+			OR fs_nilai2_referensi LIKE '%".trim($sCari)."%'
+			OR fs_nama_referensi LIKE '%".trim($sCari)."%'");
+
+		}
+
+		
+		$xSQL = $xSQL.("
+			ORDER BY fs_nilai1_referensi LIMIT ".$nStart.",".$nLimit."
 		");
 		
 		$sSQL = $this->db->query($xSQL);
@@ -818,22 +992,35 @@ if (trim($sCari) <> '')
 			$xSQL = ("
 			SELECT	*
 			FROM	tx_apk");
+
+			if (trim($sCari) <> '')
+			{
+				$xSQL = $xSQL.("
+				WHERE fn_no_apk LIKE '%".trim($sCari)."%'
+				OR fn_nomor_perjanjian LIKE '%".trim($sCari)."%'
+				OR fs_nama_konsumen LIKE '%".trim($sCari)."%'");
+
+			}
 	
 
 		} else {
 			$xSQL = ("
 			SELECT	*
 			FROM	tx_apk where fs_kode_cabang=".$kode_cabang."");
+
+
+			if (trim($sCari) <> '')
+			{
+				$xSQL = $xSQL.("
+				AND fn_no_apk LIKE '%".trim($sCari)."%'
+				OR fn_nomor_perjanjian LIKE '%".trim($sCari)."%'
+				OR fs_nama_konsumen LIKE '%".trim($sCari)."%'");
+
+			}
 	
 		}
 		
-		if (trim($sCari) <> '')
-		{
-			$xSQL = $xSQL.("
-			WHERE fn_no_apk LIKE '%".trim($sCari)."%'
-			OR fn_nomor_perjanjian LIKE '%".trim($sCari)."%'");
-
-		}
+		
 
 		$xSQL = $xSQL.("
 			ORDER BY fn_no_apk LIMIT ".$nStart.",".$nLimit."
@@ -1152,23 +1339,32 @@ if (trim($sCari) <> '')
 			$xSQL = ("
 			SELECT	*
 			FROM	tx_apk");
+
+			if (trim($sCari) <> '')
+			{
+				$xSQL = $xSQL.("
+				WHERE fn_no_apk LIKE '%".trim($sCari)."%'
+				OR fn_nomor_perjanjian LIKE '%".trim($sCari)."%'
+				OR fs_nama_konsumen LIKE '%".trim($sCari)."%'");
+
+			}
 	
 
 		} else {
 			$xSQL = ("
 			SELECT	*
 			FROM	tx_apk where fs_kode_cabang=".$kode_cabang."");
+
+
+			if (trim($sCari) <> '')
+			{
+				$xSQL = $xSQL.("
+				AND fn_no_apk LIKE '%".trim($sCari)."%'
+				OR fn_nomor_perjanjian LIKE '%".trim($sCari)."%'
+				OR fs_nama_konsumen LIKE '%".trim($sCari)."%'");
+
+			}
 	
-		}
-
-		
-		
-		if (trim($sCari) <> '')
-		{
-			$xSQL = $xSQL.("
-			WHERE fn_no_apk LIKE '%".trim($sCari)."%'
-			OR fn_nomor_perjanjian LIKE '%".trim($sCari)."%'");
-
 		}
 
 		$xSQL = $xSQL.("
@@ -1213,6 +1409,27 @@ if (trim($sCari) <> '')
 		
 		$xSQL = $xSQL.("
 			ORDER BY fs_nama_kota DESC
+		");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilPjjAll()
+	{
+		$xSQL = ("SELECT * FROM tx_apk where fs_flag_transfer='0'");
+		
+		$sSQL = $this->db->query($xSQL);
+		return $sSQL;
+	}
+
+	function ambilPjj($nStart,$nLimit)
+	{
+		$xSQL = ("SELECT * FROM tx_apk where fs_flag_transfer='0'");
+	
+		
+		$xSQL = $xSQL.("
+			ORDER BY fn_nomor_perjanjian LIMIT ".$nStart.",".$nLimit."
 		");
 		
 		$sSQL = $this->db->query($xSQL);
@@ -6534,14 +6751,14 @@ if (trim($sCari) <> '')
 	function valid_userpass($KdComp,$KdUser,$Pass)
 	{
 		$sSQL = $this->db->query("
-			SELECT	a.fs_nik, a.fs_kode_cabang, a.fs_password , a.fs_username , b.fs_flag_login , b.fs_aktif , b.fs_nik
+			SELECT	a.fs_nik, a.fs_kode_cabang, a.fs_password , a.fs_username , b.fs_flag_login , b.fs_aktif , b.fs_nik , a.fs_ip_user
 			FROM	tm_user a JOIN tm_sdm b ON a.fs_nik = b.fs_nik
 			WHERE	a.fs_kode_cabang = '".$KdComp."'
 				AND	a.fs_username = '".$KdUser."'
 				AND	a.fs_password = '".md5($Pass)."'
 				AND	b.fs_aktif = '1'
-				AND	b.fs_flag_login = '1'
 			");
+
 		return $sSQL;
 	}
 	

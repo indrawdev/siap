@@ -178,6 +178,7 @@ class Report extends CI_Controller
 	{
 		$this->load->library('Pdfcustom');
 		$this->load->model('mReport');
+		$data['kop'] = $kop;
 		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
 		$data['detail'] = $this->mReport->detail($kdcab, $apk);
 		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
@@ -186,8 +187,9 @@ class Report extends CI_Controller
 		$html = $this->load->view('print/vangsuran', $data, true);
 		$pdf = new Pdfcustom('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->SetTitle('PERJANJIAN PEMBELIAN DENGAN PEMBAYARAN SECARA ANGSURAN');
+		$pdf->SetPrintHeader(false);
+		$pdf->SetPrintFooter(true);
 		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
-		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 		$pdf->SetAuthor('SIAP');
@@ -425,6 +427,7 @@ class Report extends CI_Controller
 		$pdf->Output('perjanjian-penyerahan-hak-milih-secara-fidusia.pdf', 'I');	
 	}
 
+	/*
 	function jaminanfidusia($kdcab, $apk, $kop)
 	{
 		$this->load->library('Pdf');
@@ -455,7 +458,44 @@ class Report extends CI_Controller
 		$pdf->lastPage();
 		$pdf->Output('surat-kuasa-pembebanan-jaminan-fidusia.pdf', 'I');
 	}
+	*/
 
+	function jaminanfidusia($kdcab, $apk, $kop)
+	{
+		$this->load->library('Pdf');
+		$this->load->model('mReport');
+		$data['kop'] = $kop;
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+		$data['pk_nama'] = $this->mReport->penerima_kuasa('N');
+		$data['pk_alamat'] = $this->mReport->penerima_kuasa('A');
+		$data['pk_jabatan'] = $this->mReport->penerima_kuasa('J');
+
+		// referensi
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+
+		$html = $this->load->view('print/vjaminanfidusia', $data, true);
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf->SetTitle('SURAT KUASA PEMBERIAN JAMINAN FIDUSIA');
+		$pdf->SetPrintHeader(false);
+		$pdf->SetPrintFooter(false);
+		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
+		$pdf->SetAutoPageBreak(True, PDF_MARGIN_FOOTER);
+		$pdf->SetAuthor('SIAP');
+		$pdf->SetDisplayMode('real', 'default');
+		$pdf->SetFont('', '', 9, '', false);
+		if ($kop == 1) {
+			$pdf->setCellHeightRatio(1.35);
+		} else {
+			$pdf->setCellHeightRatio(1.40);
+		}
+		$pdf->AddPage('P', 'A4');
+		$pdf->writeHTML($html, true, false, true, false, '');
+		$pdf->lastPage();
+		$pdf->Output('surat-kuasa-pemberian-jaminan-fidusia.pdf', 'I');	
+	}
 
 	function asuransi($kdcab, $apk, $kop)
 	{
@@ -752,4 +792,38 @@ class Report extends CI_Controller
 		$pdf->lastPage();
 		$pdf->Output('surat-pemblokiran-bpkb.pdf', 'I');
 	}
+
+	function penolakan($kdcab, $apk, $kop)
+	{
+		$this->load->library('Pdf');
+		$this->load->model('mReport');
+		$data['kop'] = $kop;
+		$data['cabang'] = $this->mReport->cabang($kdcab, $apk);
+		$data['detail'] = $this->mReport->detail($kdcab, $apk);
+		$data['pjj'] = $this->mReport->pjj($kdcab, $apk);
+		$data['dealer'] = $this->mReport->dealer($kdcab, $apk);
+		$data['kendaraan'] = $this->mReport->kendaraan($kdcab, $apk);
+		$data['nama'] = $this->mReport->check_nama($kdcab, $apk);
+		
+		$html = $this->load->view('print/vpenolakan', $data, true);
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf->SetTitle('SURAT PENOLAKAN');
+		$pdf->SetPrintHeader(false);
+		$pdf->SetPrintFooter(false);
+		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
+		$pdf->SetAutoPageBreak(True, PDF_MARGIN_FOOTER);
+		$pdf->SetAuthor('SIAP');
+		$pdf->SetDisplayMode('real', 'default');
+		$pdf->SetFont('', '', 11, '', false);
+		if ($kop == 1) {
+			$pdf->setCellHeightRatio(1.40);
+		} else {
+			$pdf->setCellHeightRatio(1.50);
+		}
+		$pdf->AddPage('P', 'A4');
+		$pdf->writeHTML($html, true, false, true, false, '');
+		$pdf->lastPage();
+		$pdf->Output('surat-penolakan.pdf', 'I');
+	}
+
 }

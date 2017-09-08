@@ -1,6 +1,17 @@
 <?php for ($i = 1; $i <= 1; $i++) : ?>
 <table border="0" align="center" width="100%">
 	<thead>
+		<?php if ($kop == 1) : ?>
+		<tr>
+			<td width="20%" align="left"><img src="assets/img/mandiri-finance.png" /></td>
+			<td width="40%"></td>
+			<td width="40%" align="right" style="font-size: 6px">
+				<b>PT. MANDIRI FINANCE INDONESIA</b><br><?php echo $cabang->fs_nama_cabang; ?><br><?php echo $cabang->fs_alamat_cabang; ?><br>Telp: <?php echo $cabang->fs_telfon_cabang; ?>, Fax: <?php echo $cabang->fs_fax_cabang; ?></td>
+		</tr>
+		<?php endif ;?>
+		<tr>
+			<td width="100%"></td>
+		</tr>
 	</thead>
 	<tbody>
 		<tr>

@@ -39,7 +39,12 @@
 		</tr>
 		<br>
 		<tr>
-			<td width="100%" align="justify"><b><?php echo $cabang->fs_nama_pimpinan; ?></b>, selaku Kepala Cabang, oleh karena itu bertindak untuk dan atas nama PT. Mandiri Finance Indonesia, berkedudukan di Jakarta Selatan,</td>
+			<td width="100%" align="justify"><b><?php if (!empty($nama->fs_nama_ca)) {
+						echo $nama->fs_nama_ca;
+					} else {
+						echo $cabang->fs_nama_pimpinan;
+					}
+				?></b>, selaku Kepala Cabang, oleh karena itu bertindak untuk dan atas nama PT. Mandiri Finance Indonesia, berkedudukan di Jakarta Selatan,</td>
 		</tr>
 		<br>
 		<tr>
@@ -97,7 +102,7 @@
 			<td width="2%">e.</td>
 			<td width="20%" align="left">Warna</td>
 			<td width="1%">:</td>
-			<td width="75%" align="left"><?php echo $detail->fs_warna_kendaraan; ?></td>
+			<td width="75%" align="left"><?php echo strtoupper($detail->fs_warna_kendaraan); ?></td>
 		</tr>
 		<tr>
 			<td width="2%"></td>

@@ -26,13 +26,12 @@ class Kontrak extends CI_Controller
 		$nLimit = trim($this->input->post('limit'));
 
 		$cari = trim($this->input->post('fs_cari'));
-		$sFlag = trim($this->input->post('fs_keputusan_kredit'));
 
 		$this->db->query(NOLOCK);
 		$this->load->model('mKontrak');
-		$sSQL = $this->mKontrak->listApkAll($cari,$sFlag);
+		$sSQL = $this->mKontrak->listApkAll($cari);
 		$xTotal = $sSQL->num_rows();
-		$sSQL = $this->mKontrak->listApk($cari,$nStart,$nLimit,$sFlag);
+		$sSQL = $this->mKontrak->listApk($cari,$nStart,$nLimit);
 		$this->db->query(NOLOCK2);
 		$xArr = array();
 		if ($sSQL->num_rows() > 0)
@@ -55,6 +54,7 @@ class Kontrak extends CI_Controller
 						'fs_masa_ktp_konsumen' => ascii_to_entities(trim($xRow->fs_masa_ktp_konsumen)),
 						'fs_telepon_konsumen' => ascii_to_entities(trim($xRow->fs_telepon_konsumen)),
 						'fs_handphone_konsumen' => ascii_to_entities(trim($xRow->fs_handphone_konsumen)),
+						'fs_keputusan_kredit' => ascii_to_entities(trim($xRow->fs_keputusan_kredit))
 					);
 			}
 		}
@@ -67,11 +67,13 @@ class Kontrak extends CI_Controller
 		$nLimit = trim($this->input->post('limit'));
 
 		$cari = trim($this->input->post('fs_cari'));
+		$sFlag = trim($this->input->post('fs_keputusan_kredit'));
+
 		$this->db->query(NOLOCK);
 		$this->load->model('mKontrak');
-		$sSQL = $this->mKontrak->listDokAll($cari);
+		$sSQL = $this->mKontrak->listDokAll($cari,$sFlag);
 		$xTotal = $sSQL->num_rows();
-		$sSQL = $this->mKontrak->listDok($cari,$nStart,$nLimit);
+		$sSQL = $this->mKontrak->listDok($cari,$sFlag,$nStart,$nLimit);
 		$this->db->query(NOLOCK2);
 		$xArr = array();
 		if ($sSQL->num_rows() > 0)
@@ -79,10 +81,10 @@ class Kontrak extends CI_Controller
 			foreach ($sSQL->result() as $xRow)
 			{
 				$xArr[] = array(
-						'fs_kode_dokumen'		=> ascii_to_entities(trim($xRow->fs_kode_dokumen)),
-						'fs_nama_dokumen'		=> ascii_to_entities(trim($xRow->fs_nama_dokumen)),
-						'fs_template_dokumen'	=> ascii_to_entities(trim($xRow->fs_template_dokumen)),
-						'fn_batas_cetak'	=> ascii_to_entities(trim($xRow->fn_batas_cetak))
+						'fs_kode_dokumen' => ascii_to_entities(trim($xRow->fs_kode_dokumen)),
+						'fs_nama_dokumen' => ascii_to_entities(trim($xRow->fs_nama_dokumen)),
+						'fs_template_dokumen' => ascii_to_entities(trim($xRow->fs_template_dokumen)),
+						'fn_batas_cetak' => ascii_to_entities(trim($xRow->fn_batas_cetak))
 					);
 			}
 		}
@@ -100,21 +102,17 @@ class Kontrak extends CI_Controller
 			$this->load->model('mKontrak');
 			$xkddoc = $this->mKontrak->dokumen($kddok);
 			$xhitung = $this->mKontrak->hitung($kddok, $kdcab, $noapk);
-			$xtotal = $xhitung->num_rows();
-
-			if ($xtotal <= $xkddoc->fn_batas_cetak)
-			{
-				$hasil = array(
-					'sukses'	=> true,
-					'hasil'		=> 'lanjut'
-				);
-				echo json_encode($hasil);
-			}
 			
-			if ($xtotal > $xkddoc->fn_batas_cetak) {
+			if ($xhitung->num_rows() > $xkddoc->fn_batas_cetak) {
 				$hasil = array(
 					'sukses'	=> true,
 					'hasil'		=> 'habis'
+				);
+				echo json_encode($hasil);
+			} else {
+				$hasil = array(
+					'sukses'	=> true,
+					'hasil'		=> 'lanjut'
 				);
 				echo json_encode($hasil);
 			}
@@ -135,12 +133,14 @@ class Kontrak extends CI_Controller
 		$kddok = trim($this->input->post('fs_kode_dokumen'));
 		$cek = trim($this->input->post('fs_cek'));
 		$namaca = trim($this->input->post('fs_nama_ca'));
+		$jabatanca = trim($this->input->post('fs_jabatan_ca'));
 
 		$insert = array(
 					'fs_kode_cabang' => $kdcab,
 					'fn_no_apk' => $noapk,
 					'fs_kode_dokumen' => $kddok,
 					'fs_nama_ca' => strtoupper($namaca),
+					'fs_jabatan_ca' => strtoupper($jabatanca),
 					'fs_iduser_cetak' => trim($this->session->userdata('gUser')),
 					'fd_tanggal_cetak' => trim(date('Y-m-d H:i:s'))
 				);

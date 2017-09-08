@@ -34,7 +34,7 @@ Ext.onReady(function() {
 			'fs_kota_konsumen', 'fs_kodepos_konsumen',
 			'fs_ktp_konsumen','fs_masa_ktp_konsumen',
 			'fs_masa_ktp_konsumen','fs_telepon_konsumen',
-			'fs_handphone_konsumen'
+			'fs_handphone_konsumen','fs_keputusan_kredit'
 		],
 		pageSize: 25,
 		proxy: {
@@ -80,7 +80,8 @@ Ext.onReady(function() {
 			{text: "Kota", dataIndex: 'fs_kota_konsumen', menuDisabled: true, width: 100},
 			{text: "Kode Pos", dataIndex: 'fs_kodepos_konsumen', menuDisabled: true, width: 100},
 			{text: "Telepon", dataIndex: 'fs_telepon_konsumen', menuDisabled: true, width: 100},
-			{text: "Handphone", dataIndex: 'fs_handphone_konsumen', menuDisabled: true, width: 100}
+			{text: "Handphone", dataIndex: 'fs_handphone_konsumen', menuDisabled: true, width: 100},
+			{text: "Keputusan Kredit", dataIndex: 'fs_keputusan_kredit', menuDisabled: true, hidden: true}
 		],
 		tbar: [{
 			flex: 1,
@@ -130,6 +131,9 @@ Ext.onReady(function() {
 				Ext.getCmp('txtKdCab').setValue(record.get('fs_kode_cabang'));
 				Ext.getCmp('txtNoApk').setValue(record.get('fn_no_apk'));
 				Ext.getCmp('cboApk').setValue(record.get('fs_nama_konsumen'));
+				Ext.getCmp('txtKeputusan').setValue(record.get('fs_keputusan_kredit'));
+				Ext.getCmp('cboDok').setValue('');
+				Ext.getCmp('txtKdDok').setValue('');
 				winCari.hide();
 			}
 		},
@@ -212,7 +216,8 @@ Ext.onReady(function() {
 		listeners: {
 			beforeload: function(store) {
 				Ext.apply(store.getProxy().extraParams, {
-					'fs_cari': Ext.getCmp('txtCari2').getValue()
+					'fs_cari': Ext.getCmp('txtCari2').getValue(),
+					'fs_keputusan_kredit': Ext.getCmp('txtKeputusan').getValue()
 				});
 			}
 		}
@@ -354,6 +359,15 @@ Ext.onReady(function() {
 		xtype: 'textfield'
 	};
 
+	var txtJabatanCA = {
+		anchor: '95%',
+		fieldLabel: 'Jabatan',
+		emptyText: 'JIKA DIKOSONGKAN, AKAN DIISI JABATAN KEPALA CABANG',
+		id: 'txtJabatanCA',
+		name: 'txtJabatanCA',
+		xtype: 'textfield'
+	};
+
 	var txtKdCab = {
 		id: 'txtKdCab',
 		name: 'txtKdCab',
@@ -371,6 +385,13 @@ Ext.onReady(function() {
 	var txtKdDok = {
 		id: 'txtKdDok',
 		name: 'txtKdDok',
+		xtype: 'textfield',
+		hidden: true
+	};
+
+	var txtKeputusan = {
+		id: 'txtKeputusan',
+		name: 'txtKeputusan',
 		xtype: 'textfield',
 		hidden: true
 	};
@@ -469,7 +490,8 @@ Ext.onReady(function() {
 				'fs_kode_cabang': kdcab,
 				'fn_no_apk': noapk,
 				'fs_kode_dokumen': Ext.getCmp('txtKdDok').getValue(),
-				'fs_nama_ca': Ext.getCmp('txtNamaCA').getValue()
+				'fs_nama_ca': Ext.getCmp('txtNamaCA').getValue(),
+				'fs_jabatan_ca': Ext.getCmp('txtJabatanCA').getValue()
 			},
 			success: function(response) {
 				var xtext = Ext.decode(response.responseText);
@@ -529,6 +551,8 @@ Ext.onReady(function() {
 		Ext.getCmp('txtNoApk').setValue('');
 		Ext.getCmp('txtKdDok').setValue('');
 		Ext.getCmp('txtNamaCA').setValue('');
+		Ext.getCmp('txtJabatanCA').setValue('');
+		Ext.getCmp('txtKeputusan').setValue('');
 		Ext.getCmp('cekKop').setValue('');
 		grupApk.load();
 		grupDok.load();
@@ -563,7 +587,9 @@ Ext.onReady(function() {
 						txtKdCab,
 						txtNoApk,
 						txtKdDok,
-						txtNamaCA
+						txtNamaCA,
+						txtJabatanCA,
+						txtKeputusan
 					]
 				},{
 					flex: 1,

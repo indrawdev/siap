@@ -73,7 +73,7 @@ class Mmastersurveyor extends CI_Model
 		return $sSQL;
 	}
 
-	function cekKode($sKode,$sCabang)
+	function cekKode($sKode, $sCabang)
 	{
 		$xSQL = ("
 			SELECT fs_kode_surveyor

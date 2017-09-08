@@ -136,6 +136,17 @@ class TransferApk extends CI_Controller
 				$single = $this->mTransferApk->single($noapk[$i], $kdcabang);
 				foreach ($single->result() as $row) {
 
+						// REVISI 'karena di database sudah terlanjur jadi = T'
+						if (!empty($row->fs_komersial)) { 
+							if ($row->fs_komersial == 'T') {
+								$komersial = 'N';
+							} else {
+								$komersial = $row->fs_komersial;
+							}
+						} else {
+							$komersial = '';
+						}
+
 						dbase_add_record($db1, array(
 							'A', $row->fn_no_apk, $row->fs_jenis_pembiayaan, 
 							date("Ymd", strtotime($row->fd_tgl_apk)), $row->fs_kode_lokasi, 
@@ -167,8 +178,8 @@ class TransferApk extends CI_Controller
 							date("Ymd", strtotime($row->fd_tanggal_buat_keputusan)), 
 							$row->fs_catatan_analisa, '', $row->fs_salesman, '',
 							date("Ymd", strtotime($row->fd_tanggal_buat)), 
-							(string) $row->fs_kerja_sejak_konsumen, (string) $row->fs_tinggal_sejak,
-							'mamik wulandari', $row->fs_jenis_asuransi, '', $row->fs_handphone_konsumen,
+							(string) substr($row->fs_kerja_sejak_konsumen, -4, 4).substr($row->fs_kerja_sejak_konsumen, 0, 2), (string) substr($row->fs_tinggal_sejak, -4, 4).substr($row->fs_tinggal_sejak, 0, 2),
+							$row->fs_iduser_buat, $row->fs_jenis_asuransi, '', $row->fs_handphone_konsumen,
 							$row->fs_email_konsumen, '', 'X', 1, 1, $row->fs_iduser_buat, 1, 1, $row->fs_iduser_buat, 
 							0, 0, '', '', $row->fs_ktp_konsumen, date("Ymd", strtotime($row->fs_masa_ktp_konsumen)), $row->fs_npwp_konsumen,
 							'', $row->fs_nama_ibu_kandung, $row->fs_usaha_pekerjaan_konsumen, $row->fs_kelurahan_konsumen,
@@ -186,8 +197,8 @@ class TransferApk extends CI_Controller
 							'A', $row->fn_no_apk, $row->fs_jenis_pembiayaan, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 							$row->fs_garasi, $row->fs_repeat_order, $row->fs_kondisi_lingkungan, $row->fs_kondisi_kantor,
 							$row->fs_skala_perusahaan_konsumen, 0, 0, 0, '', $row->fs_score, $row->fs_grade,
-							$row->fs_kode_paket, '', '', $row->fn_premi_asuransi_gross, $row->fn_jumlah_kali_kredit,
-							$row->fs_pertama_kali_kredit, '', '', '', '', '', $row->fs_komersial, 
+							$row->fs_kode_paket, '', '', $row->fn_premi_asuransi, $row->fn_jumlah_kali_kredit,
+							$row->fs_pertama_kali_kredit, '', '', '', '', '', $komersial, 
 							$row->fs_nama_perusahaan_konsumen
 						));
 
@@ -230,15 +241,16 @@ class TransferApk extends CI_Controller
 
 				$dtl = $this->mTransferApk->detail($noapk[$i], $kdcabang);
 				foreach ($dtl->result() as $row) {
-						$cair_dealer = $row->fs_cair_ke_dealer;
-						if ($cair_dealer == 0) {
+						if (!empty($row->fs_cair_ke_dealer)) { 
+							$cair_dealer = $row->fs_cair_ke_dealer; 
+						} else {
 							$cair_dealer = '';
 						}
-
+						
 						dbase_add_record($db2, array(
 							'S', $row->fn_no_apk, $row->fs_kode_transaksi, 
 							$row->fs_nama_transaksi, $row->fn_nilai_transaksi, 
-							$row->fs_tagih_ke_konsumen, $cair_dealer, ''
+							$row->fs_tagih_ke_konsumen, $cair_dealer , ''
 						));
 				}
 

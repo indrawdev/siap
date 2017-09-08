@@ -718,7 +718,7 @@
 			<td width="2%"></td>
 			<td width="10%" align="left">Asuransi Gross</td>
 			<td width="1%">:</td>
-			<td width="8%" align="right"><?php echo number_format($detail->fn_premi_asuransi_gross); ?></td>
+			<td width="8%" align="right"><?php echo number_format($detail->fn_premi_asuransi); ?></td>
 			<td width="5%" align="right">
 				<?php
 					if (!empty($detail->fn_premi_asuransi_gross) && !empty($detail->fn_harga_otr)) {
@@ -1166,7 +1166,25 @@
 						<tr>
 							<td width="30%" align="left">Score / Grade</td>
 							<td width="2%">:</td>
-							<td width="60%" align="left"><?php if (!empty($detail->fs_score)) { echo $detail->fs_score; } else { echo '-'; } ?> / <?php if (!empty($detail->fs_grade)) { echo $detail->fs_grade; } else { echo '-'; } ?></td>
+							<td width="60%" align="left">
+								<?php 
+									if ($detail->fs_flag_keputusan == '1') {
+										if (!empty($detail->fs_score)) { 
+											echo $detail->fs_score; 
+										} else { 
+											echo '-'; 
+										}
+										echo '/';
+										if (!empty($detail->fs_grade)) {
+											echo $detail->fs_grade;
+										} else {
+											echo '-';
+										}
+									} else {
+										echo '- / -';
+									}
+								?>	
+							</td>
 						</tr>
 						<tr>
 							<td width="30%" align="left">Keputusan</td>
@@ -1178,8 +1196,12 @@
 							<td width="2%">:</td>
 							<td width="60%" align="left">
 								<?php 
-									if (!empty($detail->fd_tanggal_buat_keputusan)) { 
-										echo date("d/m/Y", strtotime($detail->fd_tanggal_buat_keputusan));
+									if ($detail->fs_flag_keputusan == '1') {
+										if (!empty($detail->fd_tanggal_buat_keputusan)) { 
+											echo date("d/m/Y", strtotime($detail->fd_tanggal_buat_keputusan));
+										} else {
+											echo '-';
+										}
 									} else {
 										echo '-';
 									}

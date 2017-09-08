@@ -8,14 +8,14 @@ class MKontrak extends CI_Model
 		$this->load->database();
 	}
 
-	function listApkAll($sCari,$sFlag)
+	function listApkAll($sCari)
 	{
 
 		$xSQL = ("
-			SELECT *
+			SELECT * 
 			FROM tx_apk
-			WHERE fs_keputusan_kredit = '".trim($sFlag)."'
-			AND fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			WHERE fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."' 
+			AND (fs_keputusan_kredit = 'Y' OR fs_keputusan_kredit = 'N')
 		");
 
 		if (trim($sCari) <> '')
@@ -31,13 +31,13 @@ class MKontrak extends CI_Model
 		return $sSQL;
 	}
 
-	function listApk($sCari,$nStart,$nLimit,$sFlag)
+	function listApk($sCari,$nStart,$nLimit)
 	{
 		$xSQL = ("
 			SELECT * 
 			FROM tx_apk
-			WHERE fs_keputusan_kredit = '".trim($sFlag)."'
-			AND fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			WHERE fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."' 
+			AND (fs_keputusan_kredit = 'Y' OR fs_keputusan_kredit = 'N')
 		");
 
 		if (trim($sCari) <> '')
@@ -57,11 +57,13 @@ class MKontrak extends CI_Model
 
 	}
 
-	function listDokAll($sCari)
+	function listDokAll($sCari,$sFlag)
 	{
 		$xSQL = ("
 			SELECT *
-			FROM tm_dokumen_cetak WHERE fn_flag_preview = '0'
+			FROM tm_dokumen_cetak 
+			WHERE fn_flag_preview = '0'
+			AND fs_setuju = '".trim($sFlag)."'
 		");
 
 		if (trim($sCari) <> '')
@@ -76,11 +78,13 @@ class MKontrak extends CI_Model
 		return $sSQL;
 	}
 
-	function listDok($sCari,$nStart,$nLimit)
+	function listDok($sCari,$sFlag,$nStart,$nLimit)
 	{
 		$xSQL = ("
 			SELECT *
-			FROM tm_dokumen_cetak WHERE fn_flag_preview = '0'
+			FROM tm_dokumen_cetak 
+			WHERE fn_flag_preview = '0'
+			AND fs_setuju = '".trim($sFlag)."'
 		");
 
 		if (trim($sCari) <> '')

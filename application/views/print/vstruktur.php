@@ -113,7 +113,7 @@
 			<td width="3%" align="left">e.</td>
 			<td width="32%" align="left">Nomor Rangka / Mesin</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php echo $detail->fs_no_rangka; ?></td>
+			<td width="61%" align="left"><?php echo $detail->fs_no_rangka .' / '. $detail->fs_no_mesin; ?></td>
 		</tr>
 		<tr>
 			<td width="3%" align="left"></td>
@@ -176,7 +176,7 @@
 			<td width="3%" align="left">10.</td>
 			<td width="35%" align="left">Jangka Waktu Pembiayaan</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php echo $detail->fn_bulan_masa_angsuran_dealer; ?></td>
+			<td width="61%" align="left"><?php echo $detail->fn_bulan_masa_angsuran_dealer . ' Bulan'; ?></td>
 		</tr>
 		<tr>
 			<td width="3%" align="left">11.</td>
@@ -214,11 +214,11 @@
 					{
 						if ($jenis_asuransi->fs_nama_referensi <> 'MIX')
 						{
-							echo $asuransi_notmix->fn_bulan_masa_angsuran_dealer;
+							echo $asuransi_notmix->fn_bulan_masa_angsuran_dealer .' Bulan';
 						}
 						else 
 						{
-							echo $asuransi_mix->fn_tahun_ke;
+							echo $asuransi_mix->fn_tahun_ke .' Bulan';
 						}
 					}
 					else 
@@ -276,13 +276,13 @@
 			<td width="3%" align="left">15.</td>
 			<td width="35%" align="left">Denda Keterlambatan Angsuran</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php if(!empty($denda_perhari->fs_nilai1_referensi)) { echo $denda_perhari->fs_nilai1_referensi * 100 . "%"; } else { echo '-'; }?></td>
+			<td width="61%" align="left"><?php if(!empty($denda_perhari->fs_nilai1_referensi)) { echo $denda_perhari->fs_nilai1_referensi * 100 . "% <i>per hari dari jumlah angsuran per bulan.</i>"; } else { echo '-'; }?></td>
 		</tr>
 		<tr>
 			<td width="3%" align="left">16.</td>
 			<td width="35%" align="left">Pinalti Pelunasan</td>
 			<td width="1%">:</td>
-			<td width="61%" align="left"><?php if(!empty($pinalti_lunas->fs_nilai1_referensi)) { echo $pinalti_lunas->fs_nilai1_referensi . "%"; } else { echo '-'; }?></td>
+			<td width="61%" align="left"><?php if(!empty($pinalti_lunas->fs_nilai1_referensi)) { echo $pinalti_lunas->fs_nilai1_referensi . "% <i>(dari nilai sisa pokok pembayaran terakhir)</i>"; } else { echo '-'; }?></td>
 		</tr>
 		<tr>
 			<td width="3%" align="left">17.</td>
@@ -321,7 +321,7 @@
 				<?php if (!empty($nama->fs_nama_ca)) {
 						echo $nama->fs_nama_ca;
 					} else {
-						echo $cabang->fs_nama_pimpinan;
+						echo strtoupper($cabang->fs_nama_pimpinan);
 					}
 				?>
 			</td>

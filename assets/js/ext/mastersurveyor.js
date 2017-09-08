@@ -81,7 +81,62 @@ Ext.onReady(function() {
 			dataIndex: 'fs_kode_surveyor',
 			menuDisabled: true, 
 			text: 'Kode Surveyor',
+			locked: true,
 			width: 100
+		},{
+			xtype:'actioncolumn',
+			locked: true,
+			width:20,
+			items: [{
+				iconCls: 'icon-delete',
+				tooltip: 'Delete',
+				handler: function(grid, rowIndex, colIndex, e) {
+					var str = grid.getStore().getAt(rowIndex).get('fs_kode_surveyor');
+					if (str) {
+						Ext.MessageBox.show({
+							title:'Delete record',
+							msg: 'Would you like to delete?',
+							buttons: Ext.Msg.YESNO,
+							icon: Ext.Msg.QUESTION,
+							fn: function(btn){
+								if (btn == "yes"){
+									Ext.Ajax.request({
+										url : 'mastersurveyor/remove/',
+										params : {
+											'fs_kode_surveyor' : str
+										},
+										success: function(response) {
+											var xtext = Ext.decode(response.responseText);
+											Ext.MessageBox.show({
+												buttons: Ext.MessageBox.OK,
+												closable: false,
+												icon: Ext.MessageBox.INFO,
+												message: xtext.hasil,
+												title: 'SIAP'
+											});
+											grupGridSurveyor.load();
+										},
+										failure: function(response) {
+											var xtext = Ext.decode(response.responseText);
+											Ext.MessageBox.show({
+												buttons: Ext.MessageBox.OK,
+												closable: false,
+												icon: Ext.MessageBox.INFO,
+												message: xtext.hasil,
+												title: 'SIAP'
+											});
+										}
+									});
+								}
+								if (btn == "no"){
+							        grupGridSurveyor.load(); 
+							    }
+							}
+						});
+					}
+				},
+				scope: this
+			}]
 		},{
 			dataIndex: 'fs_kode_surveyor_lama',
 			menuDisabled: true, 
@@ -288,6 +343,7 @@ Ext.onReady(function() {
 				method: 'POST',
 				url: 'mastersurveyor/ceksave',
 				params: {
+					'fs_kode_surveyor': Ext.getCmp('txtKodeSurveyor1').getValue(),
 					'fs_nama_surveyor': Ext.getCmp('txtNama').getValue()
 				},
 				success: function(response) {

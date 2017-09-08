@@ -27,13 +27,18 @@
 			<td width="3%" align="left">1.</td>
 			<td width="20%" align="left">Nama</td>
 			<td width="1%">:</td>
-			<td width="76%" align="left"><?php echo $cabang->fs_nama_pimpinan; ?></td>
+			<td width="76%" align="left"><?php if (!empty($nama->fs_nama_ca)) {
+						echo $nama->fs_nama_ca;
+					} else {
+						echo $cabang->fs_nama_pimpinan;
+					}
+				?></td>
 		</tr>
 		<tr>
 			<td width="3%"></td>
 			<td width="20%" align="left">Jabatan</td>
 			<td width="1%">:</td>
-			<td width="76%" align="left"><?php echo $cabang->fs_jabatan_pimpinan; ?></td>
+			<td width="76%" align="left">Business Manager</td>
 		</tr>
 		<br>
 		<tr>

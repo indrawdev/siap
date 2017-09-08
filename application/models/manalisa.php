@@ -186,13 +186,12 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'N' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
 		if (trim($sCari) <> '')
@@ -215,13 +214,12 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'N' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
 		if (trim($sCari) <> '')
@@ -408,13 +406,12 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'Y' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
 		if (trim($sCari) <> '')
@@ -442,13 +439,10 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
-			LEFT JOIN tx_apk_batal_keputusan b 
-			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'Y' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
 		if (trim($sCari) <> '')
@@ -620,14 +614,13 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' 
 			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'N' AND (a.fs_grade = 'C' OR a.fs_grade = 'D')
 		");
 
 		if (trim($sCari) <> '')
@@ -650,14 +643,13 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' 
 			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'N' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'N' AND (a.fs_grade = 'C' OR a.fs_grade = 'D')
 		");
 
 		if (trim($sCari) <> '')
@@ -832,14 +824,13 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1'
 			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'Y' AND (a.fs_grade = 'C' OR a.fs_grade = 'D')
 		");
 
 		if (trim($sCari) <> '')
@@ -867,14 +858,13 @@ class MAnalisa extends CI_Model
 				a.fs_kode_cabang, a.fn_no_apk, a.fn_no_batch, a.fs_kode_lokasi, a.fs_nomor_dealer,
 				a.fs_jenis_piutang, a.fs_pola_transaksi, a.fn_nomor_perjanjian,
 				a.fs_nama_konsumen, a.fs_ktp_konsumen, a.fd_tgl_apk,
-				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score, b.fs_internal_checking,
-				b.fs_reject_checking, b.fs_family_checking
+				a.fs_jenis_pembiayaan, a.fs_grade, a.fs_score
 			FROM tx_apk a
 			LEFT JOIN tx_apk_batal_keputusan b 
 			ON b.fs_kode_cabang = a.fs_kode_cabang AND b.fn_no_apk = a.fn_no_apk
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' 
 			AND a.fs_flag_keputusan_pusat = '1' AND a.fs_flag_transfer = '0'
-			AND a.fs_fleet = 'Y' AND a.fs_keputusan_kredit = 'B'
+			AND a.fs_fleet = 'Y' AND (a.fs_grade = 'C' OR a.fs_grade = 'D')
 		");
 
 		if (trim($sCari) <> '')
@@ -898,9 +888,7 @@ class MAnalisa extends CI_Model
 	function node($nApk, $nKdCab)
 	{
 		$xSQL = ("
-			SELECT fs_ktp_konsumen, fs_nama_konsumen,
-			fd_tanggal_lahir_konsumen, fs_tempat_lahir_konsumen,
-			fs_nama_ibu_kandung, fs_npwp_konsumen, fs_siup_perusahaan
+			SELECT *
 			FROM tx_apk
 			WHERE fn_no_apk = '".trim($nApk)."' AND fs_kode_cabang = '".trim($nKdCab)."'
 		");
@@ -930,7 +918,6 @@ class MAnalisa extends CI_Model
 			FROM tx_apk
 			WHERE fn_no_batch = '".trim($nBatch)."'
 			AND fs_flag_survey = '1'
-			AND fs_flag_keputusan = '0'
 		");
 
 		$xSQL = $xSQL.(" 
@@ -949,7 +936,6 @@ class MAnalisa extends CI_Model
 			FROM tx_apk
 			WHERE fn_no_batch = '".trim($nBatch)."'
 			AND fs_flag_survey = '1'
-			AND fs_flag_keputusan = '0'
 		");
 
 		$xSQL = $xSQL.(" 

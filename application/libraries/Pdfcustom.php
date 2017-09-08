@@ -18,10 +18,28 @@ class Pdfcustom extends TCPDF
  
   	function Footer() 
   	{
-    	$this->SetY(-15);
-      $html = 
-        '<div style="display:inline; color:gray;"><img src="assets/img/ojk-footer.png" style="width:16;height:12;"/> <i>Terdaftar dan dibawah pengawasan Otoritas Jasa Keuangan (OJK)</i></div>';
-      $this->SetFontSize(8);
+    	$this->SetY(-12);
+    	$html = 
+        '<p style="color:gray"><i>Terdaftar dan dibawah pengawasan Otoritas Jasa Keuangan</i></p>';
+    	$this->SetFontSize(8);
     	$this->WriteHTML($html, true, 0, true, 0);
   	}
+    /*
+    function Footer() 
+    {
+      $this->SetY(-15);
+      $html = 
+        '<table>
+          <tbody>
+          <tr>
+            <td width="47%" align="left"></td>
+            <td width="5%" align="left"><img src="assets/img/ojk.png" width="40"/></td>
+            <td width="48%" align="right"><p style="font-size: 8px; color: gray"><i>Terdaftar dan dibawah pengawasan Otoritas Jasa Keuangan (OJK)</i></p></td>
+          </tr>
+          </tbody>
+        </table>';
+      $this->SetFontSize(8);
+      $this->WriteHTML($html, true, 0, true, 0);
+    }
+    */
 }

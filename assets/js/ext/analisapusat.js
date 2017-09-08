@@ -1405,11 +1405,8 @@ Ext.onReady(function() {
 			{text: "Jenis Pembiayaan", dataIndex: 'fs_jenis_pembiayaan', hidden: true, menuDisabled: true},
 			{text: "No. PJJ", dataIndex: 'fs_pjj', locked: true, menuDisabled: true, width: 120},
 			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
-			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
-			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 50},
-			{text: "Internal Checking", dataIndex: 'fs_internal_checking', menuDisabled: true, width: 130},
-			{text: "Reject Checking", dataIndex: 'fs_reject_checking', menuDisabled: true, width: 130},
-			{text: "Family Checking", dataIndex: 'fs_family_checking', menuDisabled: true, width: 130}
+			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 200},
+			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 200},
 		],
 		tbar: [{
 			flex: 1,
@@ -1484,11 +1481,8 @@ Ext.onReady(function() {
 			{text: "Jenis Pembiayaan", dataIndex: 'fs_jenis_pembiayaan', hidden: true, menuDisabled: true},
 			{text: "No. Batch", dataIndex: 'fn_no_batch', locked: true, menuDisabled: true, width: 120},
 			{text: "Nama Konsumen", dataIndex: 'fs_nama_konsumen', locked: true, menuDisabled: true, width: 250},
-			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 50},
-			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 50},
-			{text: "Internal Checking", dataIndex: 'fs_internal_checking', menuDisabled: true, width: 130},
-			{text: "Reject Checking", dataIndex: 'fs_reject_checking', menuDisabled: true, width: 130},
-			{text: "Family Checking", dataIndex: 'fs_family_checking', menuDisabled: true, width: 130}
+			{text: "Score", dataIndex: 'fs_score', menuDisabled: true, width: 200},
+			{text: "Grade", dataIndex: 'fs_grade', menuDisabled: true, width: 200}
 		],
 		tbar: [{
 			flex: 1,
@@ -1875,8 +1869,7 @@ Ext.onReady(function() {
 		hidden: true
 	};
 
-	function fnCekPrint()
-	{
+	function fnCekPrint() {
 		Ext.MessageBox.show({
 			buttons: Ext.MessageBox.YESNO,
 			closable: false,
@@ -1939,8 +1932,7 @@ Ext.onReady(function() {
 		});
 	}
 
-	function fnPrint()
-	{
+	function fnPrint() {
 		var kdcab = Ext.getCmp('txtKdCab').getValue();
 		var noapk = Ext.getCmp('txtNoApk').getValue();
 
