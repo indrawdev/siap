@@ -194,6 +194,12 @@ class MAnalisa extends CI_Model
 			AND a.fs_fleet = 'N' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
+		if ($this->session->userdata('gKodeCabang') <> '00') {
+			$xSQL = $xSQL.(" 
+				AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			");
+		}
+
 		if (trim($sCari) <> '')
 		{
 			$xSQL = $xSQL.("
@@ -221,6 +227,12 @@ class MAnalisa extends CI_Model
 			WHERE a.fs_flag_survey = '1' AND a.fs_flag_keputusan = '1' AND a.fs_flag_transfer = '0'
 			AND a.fs_fleet = 'N' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
+
+		if ($this->session->userdata('gKodeCabang') <> '00') {
+			$xSQL = $xSQL.(" 
+				AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			");
+		}
 
 		if (trim($sCari) <> '')
 		{
@@ -414,6 +426,12 @@ class MAnalisa extends CI_Model
 			AND a.fs_fleet = 'Y' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
+		if ($this->session->userdata('gKodeCabang') <> '00') {
+			$xSQL = $xSQL.(" 
+				AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			");
+		}
+
 		if (trim($sCari) <> '')
 		{
 			$xSQL = $xSQL.("
@@ -445,6 +463,12 @@ class MAnalisa extends CI_Model
 			AND a.fs_fleet = 'Y' AND (a.fs_grade = 'A' OR a.fs_grade = 'B')
 		");
 
+		if ($this->session->userdata('gKodeCabang') <> '00') {
+			$xSQL = $xSQL.(" 
+				AND a.fs_kode_cabang = '".trim($this->session->userdata('gKodeCabang'))."'
+			");
+		}
+		
 		if (trim($sCari) <> '')
 		{
 			$xSQL = $xSQL.("

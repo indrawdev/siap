@@ -290,10 +290,16 @@ Ext.onReady(function() {
 		allowBlank: false,
 		anchor: '100%',
 		fieldLabel: 'Nama Surveyor',
-		emptyText: 'Minimal 5 Karakter',
+		fieldStyle: 'text-transform: uppercase;',
+		emptyText: 'Minimal 3 Karakter',
 		id: 'txtNama',
 		name: 'txtNama',
-		xtype: 'textfield'
+		xtype: 'textfield',
+		listeners: {
+			change: function(field, newValue) {
+				field.setValue(newValue.toUpperCase());
+			}
+		}
 	};
 
 	var txtAlamat = {
@@ -305,6 +311,11 @@ Ext.onReady(function() {
 		id: 'txtAlamat',
 		name: 'txtAlamat',
 		xtype: 'textareafield',
+		listeners: {
+			change: function(field, newValue) {
+				field.setValue(newValue.toUpperCase());
+			}
+		}
 	};
 
 	var txtNoKTP = {

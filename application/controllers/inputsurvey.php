@@ -240,15 +240,16 @@ class InputSurvey extends CI_Controller
 		$nLimit = trim($this->input->post('limit'));
 		$cari = trim($this->input->post('fs_cari'));
 
+		$kdcabang = trim($this->input->post('fs_kode_cabang'));
 		$noapk = trim($this->input->post('fn_no_apk'));
 		$nobatch = trim($this->input->post('fn_no_batch'));
 		$this->load->model('mInputSurvey');
 		if ($noapk <> '')
 		{
 			$this->db->query(NOLOCK);
-			$sSQL = $this->mInputSurvey->apkPendukungAll($noapk, $cari);
+			$sSQL = $this->mInputSurvey->apkPendukungAll($kdcabang, $noapk, $cari);
 			$xTotal = $sSQL->num_rows();
-			$sSQL = $this->mInputSurvey->apkPendukung($noapk,$cari,$nStart,$nLimit);
+			$sSQL = $this->mInputSurvey->apkPendukung($kdcabang,$noapk,$cari,$nStart,$nLimit);
 			$this->db->query(NOLOCK2);
 			$xArr = array();
 			if ($sSQL->num_rows() > 0)
@@ -272,9 +273,9 @@ class InputSurvey extends CI_Controller
 			$xnoapk = $this->mInputSurvey->listdetail($nobatch);
 			foreach ($xnoapk->result() as $row) {
 				$this->db->query(NOLOCK);
-				$sSQL = $this->mInputSurvey->apkPendukungAll($row->fn_no_apk, $cari);
+				$sSQL = $this->mInputSurvey->apkPendukungAll($kdcabang, $row->fn_no_apk, $cari);
 				$xTotal = $sSQL->num_rows();
-				$sSQL = $this->mInputSurvey->apkPendukung($row->fn_no_apk,$cari,$nStart,$nLimit);
+				$sSQL = $this->mInputSurvey->apkPendukung($kdcabang, $row->fn_no_apk,$cari,$nStart,$nLimit);
 				$this->db->query(NOLOCK2);
 				$xArr = array();
 				if ($sSQL->num_rows() > 0)

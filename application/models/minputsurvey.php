@@ -378,7 +378,7 @@ class MInputSurvey extends CI_Model
 		return $sSQL;
 	}
 
-	function apkPendukungAll($nApk, $sCari)
+	function apkPendukungAll($nKdCab, $nApk, $sCari)
 	{
 		$xSQL = ("
 			SELECT a.fs_kode_dokumen, a.fs_dokumen_upload, a.fs_iduser_buat, 
@@ -386,7 +386,7 @@ class MInputSurvey extends CI_Model
 			CASE b.fs_wajib WHEN '1' THEN 'WAJIB DIISI' WHEN '0' THEN 'PILIHAN' END wajib
 			FROM tx_apk_data_pendukung a 
 			JOIN  tm_data_pendukung b  ON a.fs_kode_dokumen = b.fs_kode_dokumen
-			WHERE a.fn_no_apk IN ('".trim($nApk)."')
+			WHERE a.fs_kode_cabang = '".trim($nKdCab)."' AND a.fn_no_apk IN ('".trim($nApk)."')
 		");
 
 		if ($this->session->userdata('gKodeCabang') != '00')
@@ -410,7 +410,7 @@ class MInputSurvey extends CI_Model
 		return $sSQL;
 	}
 
-	function apkPendukung($nApk, $sCari, $nStart, $nLimit)
+	function apkPendukung($nKdCab, $nApk, $sCari, $nStart, $nLimit)
 	{
 		$xSQL = ("
 			SELECT a.fs_kode_dokumen, a.fs_dokumen_upload, 
@@ -418,7 +418,7 @@ class MInputSurvey extends CI_Model
 			CASE b.fs_wajib WHEN '1' THEN 'WAJIB DIISI' WHEN '0' THEN 'PILIHAN' END wajib
 			FROM tx_apk_data_pendukung a 
 			JOIN  tm_data_pendukung b  ON a.fs_kode_dokumen = b.fs_kode_dokumen
-			WHERE a.fn_no_apk IN ('".trim($nApk)."')
+			WHERE a.fs_kode_cabang = '".trim($nKdCab)."' AND a.fn_no_apk IN ('".trim($nApk)."')
 		");
 
 		if ($this->session->userdata('gKodeCabang') != '00')

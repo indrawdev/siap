@@ -12,7 +12,7 @@
 			<td width="100%"></td>
 		</tr>
 	</thead>
-	<?php for($i = 1; $i <= 2; $i++) : ?>
+	<?php for($i = 1; $i <= 1; $i++) : ?>
 	<tbody>
 		<tr>
 			<td width="30%"></td>

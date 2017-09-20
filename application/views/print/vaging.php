@@ -1,7 +1,7 @@
 <?php date_default_timezone_set("Asia/Jakarta");
 ?>
 
-<h1 align="center">TABEL AGING SURVEYOR (<?php echo $kategori?>) <?php echo $nama_cabang?> </h1>
+<h1 align="center">TABEL AGING SURVEYOR (<?php echo $kategori?>) <?php echo $nama_cabang?> <br> PERIODE PENCAIRAN : <?php echo $tglfix?> s/d <?php echo $tglfix2;?></h1>
 <table border="1" align="left" width="100%" cellpadding="5px">
 					<thead>
 						<tr>

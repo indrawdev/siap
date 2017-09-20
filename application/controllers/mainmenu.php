@@ -118,7 +118,6 @@ class MainMenu extends CI_Controller
 		}
 
 		
-		//var_dump($ssql->result());die;
 		$arr0 = array();
 		$arr1 = array();
 		$arr2 = array();

@@ -10,8 +10,8 @@ class Login extends CI_Controller
 	function index()
 	{
 
+  
 		   $this->load->view('vlogin');
-		  
 	}
 	
 	function ambil_comp()
@@ -24,6 +24,7 @@ class Login extends CI_Controller
 
 	
 		$out = array_values($array);
+		
 		
 		
 		
@@ -864,7 +865,7 @@ class Login extends CI_Controller
 				$lCount = $lCount - 2;
 				$xCount = substr(trim($kdcount), $lCount, 2);
 				*/
-				if ((trim($usernm) == 'MFI' and trim($userpass) == 'AMGGROUP'))
+				if ((trim($usernm) == 'ADMIN' and trim($userpass) == 'ADMIN123#'))
 				{
 					//set sesi
 					$new = array(
@@ -896,12 +897,25 @@ class Login extends CI_Controller
 					//$ssql = $this->mMainModul->coding($userpass);
 					//$userpass = $ssql;
 					//eof coding pass
-					
+					$ip='';
 					//cari user, password di db
 					$this->load->model('mSearch','',true);
 					$ssql = $this->mSearch->valid_userpass($kode_cabang,$usernm,$userpass);
 
-					//eof cari user, password di db	
+
+					if($ssql->num_rows() > 0){
+						$ssqlz = $ssql->row();
+						//$ip = $ssqlz->fs_ip_user;
+					}
+
+
+					if($ip!=''){
+
+						echo "Login failed! user anda sedang dipakai";
+					
+
+					}else{
+
 
 					if ($ssql->num_rows() > 0)//user, password ada di db
 					{
@@ -909,6 +923,20 @@ class Login extends CI_Controller
 						$usernm = $ssql->fs_username;
 						$nik = $ssql->fs_nik;
 						// $userpass = $ssql->fs_password;
+						
+
+				    	$_IP_ADDRESS = $_SERVER['REMOTE_ADDR']; 
+
+				  
+
+				    	$datax = array(
+						'fs_ip_user' => $_IP_ADDRESS
+						);
+
+				    	$xWhere = "fs_kode_cabang = '".trim($kode_cabang)."' AND fs_username = '".trim($usernm)."'";
+		
+						$this->db->where($xWhere);
+						$this->db->update('tm_user', $datax);
 
 
 						//set sesi
@@ -926,13 +954,21 @@ class Login extends CI_Controller
 			  		  		
 					   //$this->load->view('vlogin');
 					  
-					 
+					 	
 
 					}
 					else//user, password tdk ada di db
 					{
 						echo "'User Code or Password Incorrect!!'";
 					}
+
+						
+
+					}
+
+					//eof cari user, password di db	
+
+					
 				}
 			}
 			else
@@ -1121,7 +1157,19 @@ class Login extends CI_Controller
 	*/
 	function logout()
 	{
+			$kode_cabang = $this->session->userdata('gKodeCabang');
+			$usernm = $this->session->userdata('gUser');
 
+
+
+						$datax = array(
+						'fs_ip_user' => ''
+						);
+
+				    	$xWhere = "fs_kode_cabang = '".trim($kode_cabang)."' AND fs_username = '".trim($usernm)."'";
+		
+						$this->db->where($xWhere);
+						$this->db->update('tm_user', $datax);
 
 		$this->session->sess_destroy();
 		echo "{success:true}";

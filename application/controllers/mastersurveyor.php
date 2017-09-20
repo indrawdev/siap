@@ -88,11 +88,16 @@ class Mastersurveyor extends CI_Controller
 
 	function kodesurveyor($sSurveyor)
 	{
+		$kode_cabang = trim($this->session->userdata('gKodeCabang'));
 		$names = explode(' ', $sSurveyor);
 		if (!empty($names[1])) {
 			return $names[0][0].$names[1][0].$names[0][1].$names[1][1].$names[0][2];
 		} else {
-			return $names[0][0].$names[0][2].$names[0][1].$names[0][4].$names[0][3];
+			if (strlen($names[0]) >= 5) {
+				return $names[0][0].$names[0][2].$names[0][1].$names[0][4].$names[0][3];
+			} else {
+				return $names[0][0].$names[0][1].$names[0][2].$kode_cabang;
+			}
 		}
 		
 	}
@@ -124,7 +129,7 @@ class Mastersurveyor extends CI_Controller
 		}
 		else 
 		{
-			if (strlen($nama_surveyor) >= 5) {
+			if (strlen($nama_surveyor) >= 3) {
 				$xkodesurveyor = $this->kodesurveyor($nama_surveyor);
 				$sSQL = $this->mMasterSurveyor->cekKode($xkodesurveyor, $kode_cabang);
 				if ($sSQL->num_rows() > 0)
@@ -146,7 +151,7 @@ class Mastersurveyor extends CI_Controller
 			} else {
 				$hasil = array(
 						'sukses'	=> false,
-						'hasil'		=> 'Nama surveyor, kurang dari 5 karakter'
+						'hasil'		=> 'Nama surveyor, kurang dari 3 karakter'
 					);
 				echo json_encode($hasil);
 			}

@@ -1356,7 +1356,7 @@ Ext.onReady(function() {
 		listeners: {
 			beforeload: function(store) {
 				Ext.apply(store.getProxy().extraParams, {
-					'fs_cari': Ext.getCmp('txtCari').getValue()
+					'fs_cari': Ext.getCmp('txtCari3').getValue()
 				});
 			}
 		}
@@ -1385,7 +1385,7 @@ Ext.onReady(function() {
 		listeners: {
 			beforeload: function(store) {
 				Ext.apply(store.getProxy().extraParams, {
-					'fs_cari': Ext.getCmp('txtCari').getValue()
+					'fs_cari': Ext.getCmp('txtCari4').getValue()
 				});
 			}
 		}
