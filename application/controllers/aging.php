@@ -591,7 +591,17 @@ class Aging extends CI_Controller
 		
 		//$hasil = $sSQL->result();
 		//$xTotal = $sSQL->num_rows();
+		$thn1 = substr($tglfix,0,4);
+		$bln1 = substr($tglfix,4,2);
+		$tgl1 = substr($tglfix,6,2);
+		$tgl_fix = $tgl1.'-'.$bln1.'-'.$thn1;
 
+		$thn2 = substr($tglfix2,0,4);
+		$bln2 = substr($tglfix2,4,2);
+		$tgl2 = substr($tglfix2,6,2);
+		$tgl_fix2 = $tgl2.'-'.$bln2.'-'.$thn2;
+		$data['tglfix'] = $tgl_fix;
+		$data['tglfix2'] = $tgl_fix2;
 		$data['hasil'] = $query;
 		$data['kategori'] = urldecode($kategori);
 		$data['kode_cabang'] = $kode_cabang;
@@ -637,6 +647,17 @@ class Aging extends CI_Controller
 		
 		//$hasil = $sSQL->result();
 		//$xTotal = $sSQL->num_rows();
+		$thn1 = substr($tglfix,0,4);
+		$bln1 = substr($tglfix,4,2);
+		$tgl1 = substr($tglfix,6,2);
+		$tgl_fix = $tgl1.'-'.$bln1.'-'.$thn1;
+
+		$thn2 = substr($tglfix2,0,4);
+		$bln2 = substr($tglfix2,4,2);
+		$tgl2 = substr($tglfix2,6,2);
+		$tgl_fix2 = $tgl2.'-'.$bln2.'-'.$thn2;
+		$data['tglfix'] = $tgl_fix;
+		$data['tglfix2'] = $tgl_fix2;
 		$data['hasil'] = $query;
 		$data['nama_cabang'] = $nama_cabang;
 		$data['kategori'] = urldecode($kategori);

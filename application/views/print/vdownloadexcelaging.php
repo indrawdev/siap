@@ -18,6 +18,7 @@ header("Expires: 0");
 							<th>Overdue Gross</th>
 							<th>Overdue Nett</th>
 							<th>Tgl Cair</th>
+							<th>Hari</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -28,7 +29,7 @@ header("Expires: 0");
 									$b = $queryz->row();
 
 								if($kategori=='CURRENT'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd=0 and a.ovdnet=0 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd=0 and a.ovdnet=0 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -36,7 +37,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='1-7 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb WHERE a.lamovd>0 and a.lamovd<=7 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb WHERE a.lamovd>0 and a.lamovd<=7 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -44,7 +45,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='8-15 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb   WHERE a.lamovd>7 and a.lamovd<=15 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb   WHERE a.lamovd>7 and a.lamovd<=15 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -52,7 +53,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='16-30 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd>15 and a.lamovd<=30 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd>15 and a.lamovd<=30 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -60,7 +61,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='31-60 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb   WHERE a.lamovd>30 and a.lamovd<=60 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb   WHERE a.lamovd>30 and a.lamovd<=60 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -68,7 +69,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='61-90 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd>60 and a.lamovd<=91 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd>60 and a.lamovd<=91 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -76,7 +77,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='91-120 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd>90 and a.lamovd<=120 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb  WHERE a.lamovd>90 and a.lamovd<=120 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -84,7 +85,7 @@ header("Expires: 0");
 								}
 
 								if($kategori=='> 120 Hari'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb WHERE a.lamovd>120 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb WHERE a.lamovd>120 and a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -93,7 +94,7 @@ header("Expires: 0");
 
 
 								if($kategori=='Total'){
-									$query = $this->db->query("SELECT a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb WHERE a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
+									$query = $this->db->query("SELECT a.lamovd,a.outgrs,a.outnet,a.ovdgrs,a.ovdnet,a.tglupd,b.nampem,c.ptgsvy,b.tglstj FROM tx_arovdd a LEFT JOIN tx_arpjb b ON a.nompjb=b.nompjb LEFT JOIN tx_arapk c ON a.nompjb=c.nompjb WHERE a.kodelk='".$row->kodelk."' and a.nomdel='".$row->nomdel."' and a.jenpiu='".$row->jenpiu."' and a.polpen='".$row->polpen."' and a.nompjb='".$row->nompjb."'");
 
 									
 									$a = $query->row();
@@ -112,10 +113,11 @@ header("Expires: 0");
 							<td><?php echo number_format($a->ovdgrs,0,',','.');?></td>
 							<td><?php echo number_format($a->ovdnet,0,',','.');?></td>
 							<td><?php echo $a->tglstj;?></td>
+							<td><?php echo $a->lamovd;?></td>
 							
 						</tr>
 						<?php }?>
-						<?php $no++; endforeach; ?>
+						<?php endforeach; ?>
 					</tbody>
 				</table>	
 		
